@@ -131,7 +131,7 @@ public:
 	static const int K7CMD_DNCIF_TXDAT = 0x6;
 	static const int K7CMD_DNCIF_DIS_CONFIG = 0x7;
 	static const int K7CMD_HICANN_CHNL = 0x8;
-	static const int K7CMD_ARQ_TIMINGS = 0x9;
+	static const int K7CMD_DNCIF_DELAY = 0x9;
 	static const int K7CMD_ARQ_READ_DOUT = 0xa;
 	static const int K7CMD_ARQ_READ_COUNT = 0xb;
 	static const int K7CMD_ARQ_NETWORK_DEBUG = 0xc;
@@ -1460,8 +1460,6 @@ public:
 	void SetARQMonitorSegment(segment_t const set_segment);
 	void SetARQTimings(
 		unsigned int arbiter_delay, unsigned int master_timeout, unsigned int target_timeout);
-	void K7FPGA_SetARQTimings(
-		unsigned int arbiter_delay, unsigned int master_timeout, unsigned int target_timeout);
 	arqdout_t GetARQDout();
 	arqdout_t K7FPGA_GetARQDout();
 	arqdout_t GetARQDout(segment_t const set_segment);
@@ -2019,7 +2017,7 @@ public:
 	// Kintex7 FPGA JTAG commands
 
 	///////////////////////////
-	// Status bit
+	// Status bits
 	// bit      0: IDLE + pulse event idle
 	// bit      1: link uninitialized
 	// bit      2: last packet witht CRC error
@@ -2028,10 +2026,15 @@ public:
 	// bit      5: receives valid pulse event packet
 	// bit      6: IDLE + configuration idle
 	// bit      7: last received pulse packet contained two events
+	// bits  15:8: CRC count
+	// bits 29:16: FPGA systime counter
+	// bits 35:30: current state of highspeed initialization state machine
+	// bits 43:36: current rx data
+	// bits 51:44: current tx data
 	bool K7FPGA_get_hicannif_status(uint64_t& status)
 	{
 		set_jtag_instr_chain(K7CMD_DNCIF_STATE, pos_fpga);
-		get_jtag_data_chain(status, 30, pos_fpga);
+		get_jtag_data_chain(status, 52, pos_fpga);
 		return true;
 	}
 
@@ -2047,6 +2050,15 @@ public:
 	{
 		set_jtag_instr_chain(K7CMD_DNCIF_RXPLS, pos_fpga);
 		get_jtag_data_chain(pls_packet, 24, pos_fpga);
+		return true;
+	}
+
+	template <typename T>
+	bool K7FPGA_get_hicannif_data_delay(T& delay_val)
+	{
+		set_jtag_instr_chain(K7CMD_DNCIF_DELAY, pos_fpga);
+		get_jtag_data_chain(delay_val, 5, pos_fpga);
+		delay_val &= 0x1f;
 		return true;
 	}
 
@@ -2092,6 +2104,15 @@ public:
 	{
 		set_jtag_instr_chain(K7CMD_DNCIF_TXDAT, pos_fpga);
 		set_jtag_data_chain(txdata, 64, pos_fpga);
+		return true;
+    }
+
+	template <typename T>
+	bool K7FPGA_set_hicannif_data_delay(T delay_val)
+	{
+		unsigned int write_val = (1 << 5) | (delay_val & 0x1f);
+		set_jtag_instr_chain(K7CMD_DNCIF_DELAY, pos_fpga);
+		set_jtag_data_chain(write_val, 6, pos_fpga);
 		return true;
 	}
 

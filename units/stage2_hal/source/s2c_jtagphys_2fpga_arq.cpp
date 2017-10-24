@@ -65,9 +65,7 @@ S2C_JtagPhys2FpgaArq::Commstate S2C_JtagPhys2FpgaArq::Init(
 	set_fpga_reset(jtag->get_ip(), false, false, false, false, /*ARQ:*/ false);
 
 	// FIXME: make configurable
-	if (k7fpga)
-		jtag->K7FPGA_SetARQTimings(0xff, 0x0c8, 0x032);
-	else
+	if (!k7fpga)
 		jtag->SetARQTimings(0xff, 0x0c8, 0x032);
 
 	return returnval;
@@ -94,9 +92,7 @@ S2C_JtagPhys2FpgaArq::Commstate S2C_JtagPhys2FpgaArq::Init(
 		log(Logger::INFO) << "Reenabling FPGAs HICANN-ARQ.";
 		set_fpga_reset(jtag->get_ip(), false, false, false, false, /*ARQ:*/ false);
 		// FIXME: make configurable
-		if (k7fpga)
-			jtag->K7FPGA_SetARQTimings(0xff, 0x0c8, 0x032);
-		else
+		if (!k7fpga)
 			jtag->SetARQTimings(0xff, 0x0c8, 0x032);
 	}
 

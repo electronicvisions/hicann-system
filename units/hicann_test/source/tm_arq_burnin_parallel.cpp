@@ -328,9 +328,7 @@ cout << "test0" << endl << flush;
 #endif
 		local_comm_hs = dynamic_cast<S2C_JtagPhys2FpgaArq*>(comm);
 		// -> AG: WHY all f's??? comm->jtag->SetARQTimings(arbiterdelay, -1ul, -1ul);
-		if (local_comm_hs->is_k7fpga())
-			comm->jtag->K7FPGA_SetARQTimings(arbiterdelay, 0x0c8, 0x01f);
-		else
+		if (!local_comm_hs->is_k7fpga())
 			comm->jtag->SetARQTimings(arbiterdelay, 0x0c8, 0x01f);
 
 		unsigned int curr_ip = comm->jtag->get_ip();

@@ -227,9 +227,7 @@ public:
 		fpga_comm = dynamic_cast<S2C_JtagPhys2Fpga*>(comm);
 
 		// more relaxed HICANN-ARQ timings
-		if (fpga_comm->is_k7fpga())
-			jtag->K7FPGA_SetARQTimings(31, 1000, 30);
-		else
+		if (!fpga_comm->is_k7fpga())
 			jtag->SetARQTimings(31, 1000, 30);
 
 		log(Logger::INFO) << "Try Init() ...";

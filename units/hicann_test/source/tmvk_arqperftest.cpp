@@ -205,9 +205,7 @@ struct TmVKARQPerfTest : public Testmode {
 			bool fail = false;
 			for (size_t avg=0; avg < avg_runs; avg++) {
 				std::cout << "arbiterdelay " << m.arbiterdelay << std::endl;
-				if (local_comm_hs->is_k7fpga())
-					comm->jtag->K7FPGA_SetARQTimings(m.arbiterdelay, /* master: resend timeout since last successful send */ m.fpga_timeouts[0], /* target: ack-timeout */ m.fpga_timeouts[1]);
-				else
+				if (!local_comm_hs->is_k7fpga())
 					comm->jtag->SetARQTimings(m.arbiterdelay, m.fpga_timeouts[0], m.fpga_timeouts[1]);
 
 				// toggle arq reset one more time to update arq timings

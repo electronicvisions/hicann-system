@@ -17,14 +17,6 @@ void jtag_cmdbase::SetARQTimings(unsigned int arbiter_delay, unsigned int master
 	set_jtag_data_chain(set_data, 29, pos_fpga);
 }
 
-void jtag_cmdbase::K7FPGA_SetARQTimings(unsigned int arbiter_delay, unsigned int master_timeout,
-                                          unsigned int target_timeout)
-{
-	set_jtag_instr_chain(K7CMD_ARQ_TIMINGS, pos_fpga);
-	uint64_t set_data = (1 << 25) | ((arbiter_delay & 0x1f) << 20) |
-	                    ((target_timeout & 0x3ff) << 10) | (master_timeout & 0x3ff);
-	set_jtag_data_chain(set_data, 29, pos_fpga);
-}
 
 jtag_cmdbase::arqdout_t jtag_cmdbase::GetARQDout() {
 	// 8*6 bit

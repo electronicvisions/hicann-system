@@ -10,9 +10,10 @@
 #include "spl1_control.h"
 #include "dnc_control.h"
 
-#include "s2comm.h"
 #include "s2c_jtagphys.h"
-#include "testmode.h" 
+#include "s2c_jtagphys_2fpga.h"
+#include "s2comm.h"
+#include "testmode.h"
 
 #define fpga_master   1
 using namespace std;
@@ -25,8 +26,9 @@ public:
 	NeuronControl *nc; //neuron control
 	SPL1Control *spc;
 	DNCControl  *dc;
+	FPGAControl *fpga;
 
-	S2C_JtagPhys* s2c_jtag;
+	S2C_JtagPhys2Fpga* s2c_jtag; // '2Fpga' needed for finding out whether on Kintex7
 
 	double starttime;
 	double clkperiod_bio_dnc;
@@ -80,8 +82,12 @@ public:
 	// test function
 	bool test() 
 	{
-		s2c_jtag = dynamic_cast<S2C_JtagPhys*>(comm);
-		
+		std::cout << "Running testmode tm_l2bench" << std::endl;
+
+		s2c_jtag = dynamic_cast<S2C_JtagPhys2Fpga*>(comm);
+
+		bool is_k7fpga = s2c_jtag->is_k7fpga();
+
 		if(!s2c_jtag){
 			dbg(0) << "Wrong Comm Class!!! Must use -bje (S2C_JtagPhys)! - EXIT" << endl;
 			exit(EXIT_FAILURE);
@@ -90,11 +96,13 @@ public:
 		// ----------------------------------------------------
 		// reset test logic and FPGA
 		// ----------------------------------------------------
-		FPGAControl *fpga = (FPGAControl*) chip[0];
+		fpga = (FPGAControl*) chip[0];
 		fpga->reset();
 
 		jtag->reset_jtag();
-		jtag->FPGA_set_fpga_ctrl(0x1);
+
+		if (!is_k7fpga)
+			jtag->FPGA_set_fpga_ctrl(0x1);
 
 		// disable FPGA arq
 		comm->set_fpga_reset(comm->jtag->get_ip(), false, false, false, false, true); 
@@ -110,41 +118,40 @@ public:
 		this->hc = (HicannCtrl*) chip[FPGA_COUNT+DNC_COUNT+0];
 		nc  = &hc->getNC();
 		spc = &hc->getSPL1Control();
-		dc = (DNCControl*) chip[FPGA_COUNT]; // use DNC
 
-		#ifdef NCSIM
-			hicann_nr = jtag->hicann_addr;
-		#else
-			if (jtag->chain_length == 3)  //one HICANN
-				hicann_nr = hc->addr();
-			else
-				hicann_nr = 7-(hc->addr());
-		#endif
-		cout << "Using DNC channel " << hicann_nr << endl;
-		if (jtag->chain_length == 3) { //one HICANN
-			hicann_jtag_nr = jtag->pos_dnc-1;
-		} else { // 8 HICANNs
-			hicann_jtag_nr = hc->addr();
-		}
-		cout << "HICANN JTAG position " << hicann_jtag_nr << endl;
+		if (!is_k7fpga)
+			dc = (DNCControl*) chip[FPGA_COUNT]; // use DNC
+
+		hicann_jtag_nr = hc->addr();
 		jtag->set_hicann_pos(hicann_jtag_nr);
+		cout << "HICANN JTAG position " << (jtag->pos_hicann) << endl;
+		cout << "FPGA JTAG position " << (jtag->pos_fpga) << endl;
 
 		uint64_t jtagid;
 		jtag->read_id(jtagid,jtag->pos_fpga);
-		if (jtagid != 0xbabebeef)
+		cout << "Read FPGA JTAG ID: 0x" << hex << jtagid << endl;
+		if (((!is_k7fpga) && (jtagid != 0xbabebeef)) || ((is_k7fpga) && (jtagid != 0x1c56c007))) {
+			cout << "Got invalid FPGA JTAG ID -> reset JTAG" << endl;
 			jtag->reset_jtag();
+		}
 
 		jtag->read_id(jtagid,jtag->pos_hicann);
 		cout << "HICANN ID: 0x" << hex << jtagid << endl;
 		if (jtagid != 0x14849434) return false;
 
-		jtag->read_id(jtagid,jtag->pos_dnc);
-		cout << "DNC ID: 0x" << hex << jtagid << endl;
-		if (jtagid != 0x1474346f) return false;
+		if (!is_k7fpga) {
+			jtag->read_id(jtagid, jtag->pos_dnc);
+			cout << "DNC ID: 0x" << hex << jtagid << endl;
+			if (jtagid != 0x1474346f)
+				return false;
+		}
 
-		jtag->read_id(jtagid,jtag->pos_fpga);
-		cout << "FPGA ID: 0x" << hex << jtagid << endl;
-		if (jtagid != 0xbabebeef) return false;
+		hicann_nr = comm->jtag2dnc(hicann_jtag_nr);
+
+		if (!is_k7fpga)
+			cout << "Using DNC channel " << hicann_nr << endl;
+		else
+			cout << "Using HICANN channel " << hicann_nr << endl;
 
 		char c;
 		bool cont=true;
@@ -160,8 +167,19 @@ public:
 			cout << "7: Test HICANN connection for one delay setting " << endl;
 			cout << "x: exit" << endl;
 
-			cin >> c;
-        
+#ifdef NCSIM
+			c = '3'; // eye measurement
+			cout << "Selected option " << c << " for simulation." << endl;
+#else
+			if (is_k7fpga) {
+				c = '3'; // eye measurement
+				cout << "Only option " << c << " supported for Kintex7. Starting it." << endl;
+				cont = false;
+			}
+			else
+				cin >> c;
+#endif
+
 			switch(c) {
 
 				case '1':{
@@ -199,15 +217,28 @@ public:
 				case '3':{
 					bool do_reset = true;
 					printf("Measure complete data eye of HICANN %i\n",hicann_nr);
-				    cout << "With reset after each run (1/0)? ";
-					cin >> do_reset;
-					cout << endl;
+#ifdef NCSIM
+					printf("  -> with reset after each run\n");
+					do_reset = true;
+#else
+					if (is_k7fpga) {
+						printf("  -> with reset after each run\n");
+						do_reset = true;
+					}
+					else {
+						cout << "With reset after each run (1/0)? ";
+						cin >> do_reset;
+						cout << endl;
+					}
+#endif
 
-					this->measureHicannConnection(do_reset);
+					this->measureHicannConnection(do_reset, is_k7fpga);
 					//Shutdown interfaces
-					this->dnc_shutdown();
+					if (!is_k7fpga)
+						this->dnc_shutdown();
+
 					this->hicann_shutdown();
-					jtag->FPGA_start_dnc_packet((fpga_master << 9) + 0x000);
+					jtag->FPGA_start_dnc_packet((fpga_master << 9) + 0x000); // to do: ??
 					printf ("Finished measurement of DNC-HICANN connection\n");
 					
 				} break;
@@ -327,14 +358,14 @@ public:
 				} break;
 
 				case '7':{
-				    unsigned int delay_dnc = 0;
+					unsigned int delay_dnc = 0;
 					unsigned int delay_hicann = 0;
 					bool do_reset = true;
-				    cout << "Delay DNC: ";
+					cout << "Delay DNC: ";
 					cin >> delay_dnc;
-				    cout << "Delay HICANN: ";
+					cout << "Delay HICANN: ";
 					cin >> delay_hicann;
-				    cout << "With reset after each run (1/0)? ";
+					cout << "With reset after each run (1/0)? ";
 					cin >> do_reset;
 					cout << endl;
 				
@@ -398,7 +429,7 @@ public:
 		jtag->DNC_set_lowspeed_ctrl(0xff); // ff = lowspeed
 		jtag->DNC_set_speed_detect_ctrl(0x00); // 00 = no speed detect
 		jtag->HICANN_set_link_ctrl(0x061);
-        
+
 		while ((((state1 & 0x73) != 0x41) || ((state2 & 0x73) != 0x41)) && break_count < 10) {
 			jtag->HICANN_stop_link();
 			jtag->DNC_stop_link(0x0ff);
@@ -472,7 +503,7 @@ public:
 			jtag->set_hicann_pos(i);
 			jtag->HICANN_set_link_ctrl(0x061);
 		}
-        
+
 		while ((no_init != 0) && (break_count < 10)) {
 			for (unsigned int i = 0;i<(jtag->chain_length-2); ++i) {
 				if (((no_init>>i)&0x1) == 1) {
@@ -1047,15 +1078,17 @@ public:
 		jtag->HICANN_set_data_delay(delay_in,delay_out);
 		printf("HICANN delay value: %i\n", (unsigned char)(delay_out&0x3f));
 	}
-	
-	void measureHicannConnection(bool do_reset) {
-		static const int NUM_DELAY = 32;
-		static const int NUM_DATA  = 1000;
+
+	void measureHicannConnection(bool do_reset, bool is_k7fpga)
+	{
+		static const int NUM_DELAY = 32; // number of delay settings to be tested (maximum for HICANN: 32)
+		static const int NUM_DATA  = 1000; // number of test transmissions performed for each delay setting
 		uint64_t jtagid;
 		uint64_t rdata64;
 		uint64_t wdata64;
 		unsigned char state1;
 		uint64_t state2;
+		uint64_t fpga_state;
 		unsigned int error1;
 		unsigned int error2;
 		unsigned int init_error;
@@ -1073,30 +1106,46 @@ public:
 		init_error = 0;
 		data_error = 0;
 
-		for (int i=0; i<NUM_DELAY; ++i) //DNC
+		unsigned int dnc_delay_count = NUM_DELAY;
+		unsigned int dnc_delay_start = 0;
+		if (is_k7fpga)
+			dnc_delay_count = 1;
+
+		for (int i = dnc_delay_start; i < dnc_delay_start+dnc_delay_count; ++i) // DNC
 			for (int j=0; j<NUM_DELAY ; ++j) {  //HICANN
 				//Reset Setup to get defined start point
 				if (do_reset)
 				{
 					jtag->FPGA_set_fpga_ctrl(0x1);
+					this->hicann_shutdown();
+					fpga->reset();
 					jtag->reset_jtag();
 				}
-				jtag->DNC_stop_link(0x1ff);
-				//jtag->DNC_lvds_pads_en(~(0x100+(1<<hicann_nr)));
-				jtag->DNC_set_lowspeed_ctrl(0xff);
-				jtag->DNC_set_speed_detect_ctrl(0x0);
-				jtag->DNC_set_init_ctrl(0x0aaaa);
-				jtag->DNC_set_timestamp_ctrl(0x00);
 
-				for (unsigned int i = 0;(i<(jtag->chain_length-2))&&(i<8); ++i) {
-					jtag->set_hicann_pos(i);
-					jtag->HICANN_stop_link();
-					jtag->HICANN_lvds_pads_en(0);
-					jtag->HICANN_set_link_ctrl(0x020);
+				if (is_k7fpga) {
+					jtag->K7FPGA_set_hicannif(hicann_nr);
+					jtag->K7FPGA_set_hicannif_config(
+						0x008); // stop link, manual init, master enabled
+//						0x00c); // stop link, auto init, master enabled
+				} else {
+					jtag->DNC_stop_link(0x1ff);
+					// jtag->DNC_lvds_pads_en(~(0x100+(1<<hicann_nr)));
+					jtag->DNC_set_lowspeed_ctrl(0xff);
+					jtag->DNC_set_speed_detect_ctrl(0x0);
+					jtag->DNC_set_init_ctrl(0x0aaaa);
+					jtag->DNC_set_timestamp_ctrl(0x00);
 				}
-				jtag->set_hicann_pos(hicann_jtag_nr);
 
-				jtag->DNC_test_mode_en();
+				jtag->HICANN_stop_link();
+				jtag->HICANN_lvds_pads_en(0);
+				//jtag->HICANN_set_link_ctrl(0x020); // manual init
+				jtag->HICANN_set_link_ctrl(0x021); // auto init
+
+				if (is_k7fpga)
+					jtag->K7FPGA_disable_hicannif_config_output();
+				else
+					jtag->DNC_test_mode_en();
+
 				jtag->HICANN_set_test(1);
 
 				for(int m=0   ; m<144;++m) {
@@ -1110,41 +1159,85 @@ public:
 				jtag1.printBoolVect(vec_in);
 				printf("\n");
 				*/
-				jtag->DNC_set_data_delay(vec_in,vec_out);
+
+				if (is_k7fpga)
+					jtag->K7FPGA_set_hicannif_data_delay(i);
+				else
+					jtag->DNC_set_data_delay(vec_in, vec_out);
 
 				delay_in = ~(j & 0x3f);
 				jtag->HICANN_set_data_delay(delay_in,delay_out);
 
-				//printf("HICANN init with data delay %.02X  %.02X\n",delay_out,0x3f &delay_in);
+				std::cout << "HICANN init with data delay " << std::hex << delay_out << "  "
+						  << (0x3f & delay_in) << std::endl;
 
 				//Check Status
 				state1 = 0;
 				state2 = 0;
 				jtagid = 0;
 
-				printf("Delay Setting DNC: %i \t HICANN: %i \t",63-i,63-j);
+				if (is_k7fpga)
+					std::cout << "Delay Setting FPGA: " << i << "\t HICANN: " << (63 - j)
+							  << std::endl;
+				else
+					std::cout << "Delay Setting DNC: " << (63 - i) << "\t HICANN: " << (63 - j)
+							  << std::endl;
 
-				
-				for (unsigned int i = 0;(i<(jtag->chain_length-2))&&(i<8); ++i) {
-					jtag->set_hicann_pos(i);
-					jtag->HICANN_start_link();
-				}
-				jtag->set_hicann_pos(hicann_jtag_nr);
-				
-				
 				while ((((state1 & 0x73) != 0x41) || ((state2 & 0x73) != 0x41)) && jtagid < 1) {
-					jtag->HICANN_stop_link();
-					jtag->DNC_stop_link(0x0ff);
-					jtag->HICANN_start_link();
-					jtag->DNC_start_link(0x000 + (0xff /*& 1<<hicann_nr*/ ) );
+					if (is_k7fpga) {
+						jtag->HICANN_stop_link();
+						jtag->K7FPGA_stop_fpga_link();
+						jtag->HICANN_start_link();
+						jtag->K7FPGA_start_fpga_link();
+					} else {
+						jtag->HICANN_stop_link();
+						jtag->DNC_stop_link(0x0ff);
+						jtag->HICANN_start_link();
+						jtag->DNC_start_link(0x000 + (0xff /*& 1<<hicann_nr*/));
+					}
+#ifdef NCSIM
+					wait(100.0, SC_US);
+#else
+					for (unsigned int nrep=0; nrep<10;++nrep) {
+						if (is_k7fpga) {
+							jtag->K7FPGA_get_hicannif_status(fpga_state);
+							unsigned int init_fsm_state = (fpga_state>>30) & 0x3f;
+							std::cout << "state of init FSM on K7 FPGA: " << std::dec << init_fsm_state << std::endl;
+							unsigned int init_rxdata = (fpga_state>>36) & 0xff;
+							std::cout << "rx data on K7 FPGA: 0x" << std::hex << init_rxdata << std::dec << std::endl;
+							unsigned int init_txdata = (fpga_state>>44) & 0xff;
+							std::cout << "tx data on K7 FPGA: 0x" << std::hex << init_txdata << std::dec << std::endl;
+							std::cout << "complete : " << std::hex << fpga_state << std::dec << std::endl;
+						}
+					}
+#endif
 
-					usleep(5000);
-					jtag->DNC_read_channel_sts(hicann_nr,state1);
-					//snprintf(buf, sizeof(buf), "DNC Status = 0x%02hx\n" ,state1 );
-					//jtag.logging(buf);
+					if (is_k7fpga) {
+						jtag->K7FPGA_get_hicannif_status(fpga_state);
+						state1 = (unsigned char) (fpga_state & 0xff);
+					} else {
+						jtag->DNC_read_channel_sts(hicann_nr, state1);
+					}
+
 					jtag->HICANN_read_status(state2);
-					//snprintf(buf, sizeof(buf), "HICANN Status = 0x%02hx\n" ,state2 );
-					//jtag.logging(buf);
+
+					std::cout << "Status loop " << std::dec << jtagid << ": FPGA: " << std::hex
+							  << ((unsigned int) (state1))
+							  << ", HICANN: " << ((unsigned int) (state2)) << std::endl;
+
+					// additional status information for Kintex7
+					if (is_k7fpga) {
+						unsigned int init_fsm_state = (fpga_state>>30) & 0x3f;
+						std::cout << "state of init FSM on K7 FPGA: " << std::dec << init_fsm_state << std::endl;
+						std::cout << "complete FPGA state: " << std::hex << fpga_state << std::dec << std::endl;
+					
+						uint64_t read_delay_val = 0;
+						jtag->K7FPGA_get_hicannif_data_delay(read_delay_val);
+						if (read_delay_val != i)
+							std::cout << "WARNING: read-back of delay value was " << read_delay_val
+									  << ", but should be " << i << "." << std::endl;
+					}
+
 					++jtagid;
 				}
 
@@ -1158,8 +1251,17 @@ public:
 					for (int num_data=0;num_data<NUM_DATA;++num_data) {
 						wdata64 = (((uint64)((rand() % 0xffff)+1) << 48)) + (((uint64)((rand() % 0xffffff)+1) << 24)) + (uint64)((rand() % 0xffffff)+1);
 						//jtag.DNC_start_config(hicann_nr,wdata64);
-						jtag->DNC_start_pulse(hicann_nr,wdata64&0x7fff);
-						//usleep(10);
+						if (is_k7fpga) {
+							jtag->K7FPGA_set_hicannif_tx_data(wdata64 & 0x7fff);
+							jtag->K7FPGA_set_hicannif_control(0x2);
+						} else {
+							jtag->DNC_start_pulse(hicann_nr, wdata64 & 0x7fff);
+						}
+
+#ifdef NCSIM
+						wait(1, SC_US);
+#endif
+
 						jtag->HICANN_get_rx_data(rdata64);
 
 						if ( (rdata64&0x7fff) != (wdata64&0x7fff) ) {
@@ -1174,9 +1276,17 @@ public:
 						wdata64 = (((uint64)((rand() % 0xffff)+1) << 48)) + (((uint64)((rand() % 0xffffff)+1) << 24)) + (uint64)((rand() % 0xffffff)+1);
 						jtag->HICANN_set_tx_data(wdata64);
 						jtag->HICANN_start_cfg_pkg();
-						//usleep(10);
-						jtag->DNC_set_channel(hicann_nr);
-						jtag->DNC_get_rx_data(rdata64);
+
+#ifdef NCSIM
+						wait(1, SC_US);
+#endif
+
+						if (is_k7fpga) {
+							jtag->K7FPGA_get_hicannif_rx_cfg(rdata64);
+						} else {
+							jtag->DNC_set_channel(hicann_nr);
+							jtag->DNC_get_rx_data(rdata64);
+						}
 
 						if (rdata64 != wdata64) {
 							++error2;
@@ -1195,26 +1305,23 @@ public:
 
 				eye_stat[i][j][0]=error1;
 				eye_stat[i][j][1]=error2;
-				
-				
-				jtag->DNC_test_mode_dis();
-				jtag->HICANN_set_test(0);
 
-				//Stop all components in dnc
-				if (do_reset)
-				{
-					this->dnc_shutdown();
-					this->hicann_shutdown();
-				}
+
+				if (is_k7fpga)
+					jtag->K7FPGA_enable_hicannif_config_output();
+				else
+					jtag->DNC_test_mode_dis();
+
+				jtag->HICANN_set_test(0);
 			}
 			//printf("Successfull inits : %i  Successfull Data Transmissions : %i\n",NUM_DELAY-init_error,NUM_DELAY-init_error-data_error);
 			printf("\n\n** Results *** \nData eye:\n");
-			printf("      HICANN Delay\n");
-			printf("       ");
+			printf("	  HICANN Delay\n");
+			printf("	   ");
 			for(int i=0;i<NUM_DELAY;++i) printf("%1i ",((63-i)/10));printf("\n");
-			printf("       ");
+			printf("	   ");
 			for(int i=0;i<NUM_DELAY;++i) printf("%1i ",((63-i)%10));printf("\n");
-			for(int i=0;i<NUM_DELAY;++i) {
+			for (int i = dnc_delay_start; i < dnc_delay_start+dnc_delay_count; ++i) {
 				if(NUM_DELAY/2-1 == i) printf("D ");
 				else if(NUM_DELAY/2-0 == i) printf("N ");
 				else if(NUM_DELAY/2+1 == i) printf("C ");
@@ -1234,6 +1341,31 @@ public:
 				}
 				printf("\n");
 			}
+			if (is_k7fpga)
+				printf("\nLegend: 'O': Okay, 'X': init failed, '+': trans. errors FPGA->HICANN, '-': trans. errors HICANN->FPGA, '/': trans. errors both directions\n");
+			else
+				printf("\nLegend: 'O': Okay, 'X': init failed, '+': trans. errors DNC->HICANN, "
+					   "'-': trans. errors HICANN->DNC, '/': trans. errors both directions\n");
+
+			// do automatic init and extract FPGA delay setting
+			if (hc->GetCommObj()->Init(hc->addr(), false, true) != Stage2Comm::ok)
+		 		printf("Automatic init failed.\n");
+			else
+				printf("Automatic init successful.\n");
+
+			jtag->K7FPGA_get_hicannif_status(fpga_state);
+			std::cout << "FPGA state: 0x" << std::hex << fpga_state << std::dec << std::endl;
+			std::cout << "FPGA init status: " << std::hex << (unsigned int)(fpga_state&0xff) << std::dec << std::endl;
+		 	unsigned int init_fsm_state = (fpga_state>>30) & 0x3f;
+			std::cout << "state of init FSM on K7 FPGA: " << std::dec << init_fsm_state << std::endl;
+			unsigned int init_rxdata = (fpga_state>>36) & 0xff;
+			std::cout << "rx data on K7 FPGA: 0x" << std::hex << init_rxdata << std::dec << std::endl;
+			unsigned int init_txdata = (fpga_state>>44) & 0xff;
+			std::cout << "tx data on K7 FPGA: 0x" << std::hex << init_txdata << std::dec << std::endl;
+			uint64_t read_delay_val = 0;
+			jtag->K7FPGA_get_hicannif_data_delay(read_delay_val);
+			std::cout << "FPGA delay value after automatic init: " << std::dec << read_delay_val << std::endl;
+
 	}
 
 

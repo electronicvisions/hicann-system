@@ -113,9 +113,7 @@ public:
 		S2C_JtagPhys2FpgaArq * arq_comm = dynamic_cast<S2C_JtagPhys2FpgaArq*>(comm);
 
 		// set arbiter delay to determine wether we can trigger DNC bug...
-		if (comm->is_k7fpga())
-			comm->jtag->K7FPGA_SetARQTimings(0x4, 0x0c8, 0x032);
-		else
+		if (!comm->is_k7fpga())
 			comm->jtag->SetARQTimings(0x4, 0x0c8, 0x032);
 
 		comm->set_fpga_reset(comm->jtag->get_ip(), false, false, false, false, true); // set reset

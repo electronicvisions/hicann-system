@@ -246,35 +246,24 @@ bool HostALController::sendFPGAConfigPacket(uint64_t const payload)
 			continue;
 		}
 		arq_ptr->receive(curr_pck);
+#ifndef NCSIM
 		if (curr_pck.pid != application_layer_packet_types::FPGACONFIG) {
-#ifdef NCSIM
-			LOG4CXX_FATAL(logger, "sendFPGAConfigPacket: unexpected response packet type " << std::hex << curr_pck.pid);
-#else
 			throw std::runtime_error(
 				"sendFPGAConfigPacket: unexpected response packet type " +
 				std::to_string(curr_pck.pid));
-#endif
 		}
 		if (curr_pck.len > 1) {
-#ifdef NCSIM
-			LOG4CXX_FATAL(logger, "sendFPGAConfigPacket: unexpected response packet length " << curr_pck.len);
-#else
 			throw std::runtime_error(
 				"sendFPGAConfigPacket: unexpected response packet length " +
 				std::to_string(curr_pck.len));
-#endif
 		}
+
 		uint64_t const response_payload = curr_pck.pdu[0];
 		if (response_payload != payload) {
-#ifdef NCSIM
-			LOG4CXX_FATAL(logger, "sendFPGAConfigPacket: unexpected response packet payload " << std::hex << response_payload << " != " << payload);
-#else
 			throw std::runtime_error(
 				"sendFPGAConfigPacket: unexpected response packet payload " +
 				std::to_string(response_payload) + " != " + std::to_string(payload));
-#endif
 		}
-#ifndef NCSIM
 		auto chrono_end = std::chrono::system_clock::now();
 		auto elapsed =
 			std::chrono::duration_cast<std::chrono::microseconds>(chrono_end - chrono_start);
