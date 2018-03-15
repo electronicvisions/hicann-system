@@ -296,7 +296,11 @@ public:
 		unsigned int hicann_nr,
 		unsigned int hicann_addr,
 		bool k7fpga = false)
-		: hicann_num(hicann_nr), is_kintex(k7fpga)
+		: pulsefifo_mode(0),
+		  tracefifo_mode(0),
+		  fifoloop_mode(0),
+		  filter_nrn0_mode(0),
+		  hicann_num(hicann_nr), is_kintex(k7fpga)
 	{
 		for (unsigned int i = 0; i < hicann_nr; i++) {
 			physical_available_hicanns.set(i);
