@@ -236,7 +236,6 @@ public:
 					std::cout << "Starting JTAG access at time " << sc_simulation_time()
 							  << "ns" << std::endl;
 #endif
-					std::cout << *arq_comm  << std::endl;
 				}
 #endif
 
@@ -275,7 +274,6 @@ public:
 					std::cout << "Starting JTAG access at time " << sc_simulation_time()
 							  << "ns" << std::endl;
 #endif
-					std::cout << *arq_comm  << std::endl;
 				}
 			}
 		}

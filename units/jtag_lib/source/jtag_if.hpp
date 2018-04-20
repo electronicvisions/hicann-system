@@ -44,7 +44,14 @@
 #include "jtag_state.hpp"
 #include "jtag_stdint.h"
 
+#include <memory>
 #include <vector>
+
+#ifdef NCSIM
+#include "ARQStreamWrap.h"
+#else
+#include "sctrltp/ARQStream.h"
+#endif // NCSIM
 
 namespace jtag_lib_v2 {
 
@@ -110,6 +117,7 @@ protected:
 public:
 	virtual bool getCableInfo(const uint8_t, cable_info&);
 	virtual bool createSession(const char*, const uint16_t) = 0;
+	virtual bool createSession(std::shared_ptr<sctrltp::ARQStream>);
 	virtual bool closeSession();
 	virtual bool enumCables(uint8_t&, const bool) = 0;
 	virtual bool openCable(const uint8_t, const uint32_t, const bool) = 0;

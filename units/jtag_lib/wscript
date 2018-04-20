@@ -2,6 +2,9 @@
 import platform, os, sys
 
 
+def depends(ctx):
+    ctx('sctrltp', branch='master')
+
 def options(ctx):
     ctx.load('compiler_cxx')
 
@@ -20,11 +23,13 @@ def build(ctx):
     ctx(
         target          = 'jtag_lib_inc',
         export_includes = 'source',
+        use             = ['sctrl_inc'],
     )
 
     ctx.objects(
         target    = 'jtag_lib_obj',
         source    = [ctx.path.find_resource('source/%s' % x) for x in SOURCES],
-        use       = ['jtag_lib_inc', 'jtag_lib_dl', 'BOOST4JTAGLIB'],
+        use       = ['jtag_lib_inc', 'jtag_lib_dl', 'BOOST4JTAGLIB', 's2hal_inc', 'sctrl_inc', 'arqstream_obj', 'systemc_config', 'logger_obj'],
+        # communication_inc already included in arqstream_obj
         cxxflags  = ['-fPIC', '-DNO_SYSTEMC_LIB']
     )

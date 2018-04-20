@@ -162,6 +162,11 @@ bool jtag_lib_v2::jtag_if::getCableToOpen(
 	return true;
 }
 
+bool jtag_lib_v2::jtag_if::createSession(std::shared_ptr<sctrltp::ARQStream>)
+{
+	throw std::runtime_error("JTAG-via-HostARQ version not implemented");
+}
+
 bool jtag_lib_v2::jtag_if::closeSession()
 {
 	this->closeCable();

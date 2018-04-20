@@ -45,7 +45,6 @@
 #include "stage2_conf.h"     // units/stage2_conf
 #include "arq.h"             // units/arq
 #include "jtag_cmdbase.h"
-//#include "jtag_cmdbase_arq.h" // deprecated?
 #include "jtag_cmdbase_fpgadnchicann_full.h"
 
 namespace py_details {

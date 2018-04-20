@@ -413,7 +413,7 @@ public:
 	/// 1    :    enable looopback
 	bool DNC_set_loopback(unsigned char wdata)
 	{
-		uint64_t channel = (uint64_t)wdata;
+		uint64_t channel = (uint64_t) wdata;
 		set_jtag_instr_chain(CMD_LOOPBACK_CTRL, pos_dnc);
 
 		set_jtag_data_chain(channel, 8, pos_dnc);
@@ -427,7 +427,7 @@ public:
 	/// 1    :    memory is heap, transmit pulses to HICANN l1 channel
 	bool DNC_set_l1direction(uint64_t wdata)
 	{
-		uint64_t channel = (uint64_t)wdata;
+		uint64_t channel = (uint64_t) wdata;
 		set_jtag_instr_chain(CMD_SET_HEAP_MODE, pos_dnc);
 
 		set_jtag_data_chain(channel, 64, pos_dnc);
@@ -494,7 +494,7 @@ public:
 		DNC_set_channel(channel);
 		uint64_t status_tmp;
 		DNC_read_status(status_tmp);
-		status = (unsigned char)status_tmp;
+		status = (unsigned char) status_tmp;
 		return true;
 	}
 
@@ -682,7 +682,7 @@ public:
 
 	//////////////////////////////////////////////////////////////////////////////
 	/// .
-	template<typename T>
+	template <typename T>
 	bool bypass(const T wdata, unsigned int length, T& rdata)
 	{
 		set_jtag_instr_chain(CMD_BYPASS, chain_length - 1);
@@ -1091,7 +1091,7 @@ public:
 	{
 		uint64_t state;
 		FPGA_get_status(state);
-		rdata = (unsigned char)(state >> 6);
+		rdata = (unsigned char) (state >> 6);
 
 		return true;
 	}
@@ -1712,7 +1712,7 @@ public:
 	///  1 times 15 bit
 	///  current set: 	14--------------0
 	///               	TX_PAD RX_PAD DES
-	template<typename T>
+	template <typename T>
 	bool HICANN_set_ibias(const T& wdata, T& rdata)
 	{
 		set_jtag_instr_chain(CMD3_SET_IBIAS, pos_hicann);
@@ -1784,7 +1784,7 @@ public:
 	bool HICANN_arq_write_ctrl(unsigned short wdata0, unsigned short wdata1)
 	{
 		set_jtag_instr_chain(CMD3_ARQ_CTRL, pos_hicann);
-		unsigned long wdata = ((unsigned long)wdata0 << 16) | wdata1;
+		unsigned long wdata = ((unsigned long) wdata0 << 16) | wdata1;
 		set_jtag_data_chain(wdata, 32, pos_hicann);
 		return true;
 	}
@@ -1922,7 +1922,7 @@ public:
 
 		uint64_t ctrlreg_tmp;
 		get_jtag_data_chain(ctrlreg_tmp, 8, pos_fpga);
-		ctrlreg = (unsigned char)ctrlreg_tmp;
+		ctrlreg = (unsigned char) ctrlreg_tmp;
 		return true;
 	}
 

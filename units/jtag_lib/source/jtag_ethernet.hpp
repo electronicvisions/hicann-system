@@ -46,6 +46,19 @@
 #include "jtag_state.hpp"
 #include "jtag_stdint.h"
 
+#include "host_al_controller.h"
+
+// for packet
+#include "sctrltp/ARQFrame.h"
+
+#ifdef NCSIM
+  #include "ARQStreamWrap.h"
+#else
+  #include "sctrltp/ARQStream.h"
+#endif // NCSIM
+
+#include <memory>
+
 #define MAX_BUFFER_DEPTH 1400
 
 namespace jtag_lib_v2 {
@@ -62,6 +75,7 @@ private:
 	uint32_t m_uiBufferDepth;
 	uint16_t m_uiMajorVersion;
 	uint16_t m_uiMinorVersion;
+	std::shared_ptr<sctrltp::ARQStream> m_pARQStream;
 	bool m_bNibbleHigh;
 	bool m_bUseSystemC;
 	bool m_bRxData;
@@ -79,6 +93,7 @@ public:
 	jtag_ethernet(const bool);
 	virtual ~jtag_ethernet();
 	virtual bool createSession(const char*, const uint16_t);
+	virtual bool createSession(std::shared_ptr<sctrltp::ARQStream>);
 	virtual bool enumCables(uint8_t&, const bool);
 	virtual bool openCable(const uint8_t, const uint32_t, const bool);
 	virtual bool closeCable();

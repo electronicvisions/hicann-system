@@ -463,6 +463,15 @@ bool jtag_lib_v2::jtag_access::createSession(const char* szHost, const uint16_t 
 	return this->m_pJtagIf->createSession(szHost, uiPort);
 }
 
+bool jtag_lib_v2::jtag_access::createSession(std::shared_ptr<sctrltp::ARQStream> arq_stream)
+{
+	if (!this->checkCable(true)) {
+		return false;
+	}
+
+	return this->m_pJtagIf->createSession(arq_stream);
+}
+
 bool jtag_lib_v2::jtag_access::closeSession()
 {
 	if (!this->checkCable(true))

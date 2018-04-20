@@ -43,6 +43,8 @@
 
 #include "logger.h"
 
+#include <boost/asio.hpp>
+
 
 static log4cxx::LoggerPtr logger = log4cxx::Logger::getLogger("hicann-system.tests2");
 
@@ -130,10 +132,9 @@ bool EthernetSoftwareIF::init(const uint16_t uiPort)
 
 int EthernetSoftwareIF::sendUDP(const uint32_t uiTargetIP, const uint16_t uiPort, const void *pszData, const uint16_t uiDataBytes)
 {
-	_log(Logger::DEBUG0) << "EthernetSoftwareIF::sendUDP";
-	_log(Logger::WARNING) << "EthernetSoftwareIF::sendUDP: uiTargetIP " << uiTargetIP
-						  << Logger::flush;
-	_log(Logger::WARNING) << "EthernetSoftwareIF::sendUDP: uiPort " << uiPort << Logger::flush;
+	_log(Logger::DEBUG0) << "EthernetSoftwareIF::sendUDP: uiTargetIP " << boost::asio::ip::address_v4(uiTargetIP).to_string()
+						 << Logger::flush;
+	_log(Logger::DEBUG0) << "EthernetSoftwareIF::sendUDP: uiPort " << uiPort << Logger::flush;
 
 	#ifdef NCSIM
         // simulation mode

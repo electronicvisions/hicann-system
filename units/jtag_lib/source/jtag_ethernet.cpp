@@ -42,11 +42,16 @@
 #include "jtag_extern.h"
 #include "jtag_logger.hpp"
 #include "jtag_stdint.h"
+#include "sctrltp/us_sctp_defs.h"
 
+#include <stdexcept>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
+#include <chrono>
+
+#include <boost/format.hpp>
 
 #ifdef _WIN32
 #ifdef _MSC_VER
@@ -67,6 +72,7 @@
 #define CMD_JTAG 0x0C
 #define CMD_SINGLE 0x3A
 #define CMD_BULK 0x33
+#define ARQ_JTAG_TIMEOUT 100000 // us
 
 jtag_lib_v2::jtag_ethernet::jtag_ethernet(const bool bUseSystemC)
 	: m_pEthSocket(0),
@@ -74,11 +80,27 @@ jtag_lib_v2::jtag_ethernet::jtag_ethernet(const bool bUseSystemC)
 	  m_uiBufferDepth(DEFAULT_BUFFER_DEPTH),
 	  m_uiMajorVersion(0),
 	  m_uiMinorVersion(0),
+	  m_pARQStream(NULL),
 	  m_bNibbleHigh(false),
 	  m_bUseSystemC(bUseSystemC),
 	  m_bRxData(false),
 	  m_bNamedSocket(false)
 {}
+
+bool jtag_lib_v2::jtag_ethernet::createSession(std::shared_ptr<sctrltp::ARQStream> arq_stream)
+{
+	/* release socket if it is already created */
+	if (this->m_pEthSocket) {
+		delete this->m_pEthSocket;
+	}
+
+	this->m_pARQStream = arq_stream;
+
+	/* mark libraries open */
+	this->setSessionOpen(true);
+
+	return true;
+}
 
 bool jtag_lib_v2::jtag_ethernet::createSession(const char* szAddr, const uint16_t uiPort)
 {
@@ -371,7 +393,9 @@ bool jtag_lib_v2::jtag_ethernet::closeCable()
 		this->flushCable();
 
 		/* close socket */
-		this->m_pEthSocket->close();
+		if (this->m_pEthSocket) {
+			this->m_pEthSocket->close();
+		}
 
 		/* mark cable as closed */
 		this->setCableOpen(false);
@@ -873,82 +897,185 @@ jtag_lib_v2::jtag_ethernet::~jtag_ethernet()
 
 bool jtag_lib_v2::jtag_ethernet::sendData(const uint16_t uiLength)
 {
-	if (!uiLength)
+	if (!uiLength) {
 		return true;
+	}
 
-	this->m_uiSendSize = uiLength;
-	int iResult;
-	if (this->m_bNamedSocket)
-		iResult = this->m_pEthSocket->sendto(this->m_auiSendBuffer, uiLength, 0, 0);
-	else
-		iResult = this->m_pEthSocket->sendto(
-			this->m_auiSendBuffer, uiLength, (struct sockaddr*) &this->m_sockAddr,
-			sizeof(struct sockaddr_in));
-	if (iResult < 0) {
-		const int iError = this->m_pEthSocket->lasterror();
-		const char* szError = eth_socket_base::strerror(iError);
-		if (szError)
-			jtag_logger::sendMessage(MSG_ERROR, "sendData: %s (%d).\n", szError, iError);
-		return false;
-	}
-	if (!iResult) {
-		jtag_logger::sendMessage(
-			MSG_ERROR,
-			"sendData: Nothing was transferred, but %d "
-			"Bytes requested to sent.\n",
-			uiLength);
-		return false;
-	}
-	if (iResult != uiLength) {
-		jtag_logger::sendMessage(
-			MSG_ERROR,
-			"sendData: Only %d Bytes were transferred, "
-			"but %d requested.\n",
-			iResult, uiLength);
-		return false;
+	if (this->m_pEthSocket) {
+		this->m_uiSendSize = uiLength;
+		int iResult;
+		if (this->m_bNamedSocket)
+			iResult = this->m_pEthSocket->sendto(this->m_auiSendBuffer, uiLength, 0, 0);
+		else
+			iResult = this->m_pEthSocket->sendto(
+				this->m_auiSendBuffer, uiLength, (struct sockaddr*) &this->m_sockAddr,
+				sizeof(struct sockaddr_in));
+		if (iResult < 0) {
+			const int iError = this->m_pEthSocket->lasterror();
+			const char* szError = eth_socket_base::strerror(iError);
+			if (szError)
+				jtag_logger::sendMessage(MSG_ERROR, "sendData: %s (%d).\n", szError, iError);
+			return false;
+		}
+		if (!iResult) {
+			jtag_logger::sendMessage(
+				MSG_ERROR,
+				"sendData: Nothing was transferred, but %d "
+				"Bytes requested to sent.\n",
+				uiLength);
+			return false;
+		}
+		if (iResult != uiLength) {
+			jtag_logger::sendMessage(
+				MSG_ERROR,
+				"sendData: Only %d Bytes were transferred, "
+				"but %d requested.\n",
+				iResult, uiLength);
+			return false;
+		}
+	} else if (this->m_pARQStream) {
+		sctrltp::packet curr_pck;
+		curr_pck.pid = application_layer_packet_types::JTAGBULK;
+		curr_pck.len = ((uiLength + 4) + 7) / 8; // 64bit words
+		size_t padded_length = curr_pck.len * 8 - 4;
+
+		// align to 64bit words: append zeros if necessary
+		for (size_t nbyte = uiLength; nbyte < padded_length; ++nbyte) {
+			this->m_auiSendBuffer[nbyte] = 0;
+		}
+
+		memcpy((uint8_t*) (curr_pck.pdu) + 4, this->m_auiSendBuffer, padded_length);
+
+		*((uint32_t*) (curr_pck.pdu)) = (uiLength + 3) / 4; // 4 bytes per 32 bit word
+
+		// reorder data in 32bit blocks, will be reversed in
+		// hmf-fpga/units/jtag_udp_if/source/rtl/verilog/jtag_eth_if.v
+		for (size_t nword = 1; nword < ((size_t)uiLength + 7) / 4; ++nword) {
+			*((uint32_t*) (curr_pck.pdu) + nword) = ntohl(*((uint32_t*) (curr_pck.pdu) + nword));
+		}
+
+#ifdef NCSIM
+		while (this->m_pARQStream->send_buffer_full()) {
+			wait(10.0, SC_US);
+		}
+#endif
+
+		if (!this->m_pARQStream->send(curr_pck)) {
+			jtag_lib_v2::jtag_logger::sendMessage(
+				jtag_lib_v2::MSG_ERROR, "sendData: ARQ.send() not successful.\n");
+			return false;
+		}
+		return true;
+	} else {
+		throw std::runtime_error("sending data without open session");
 	}
 	return true;
 }
 
 uint16_t jtag_lib_v2::jtag_ethernet::receiveData(const uint16_t uiLength)
 {
-	uint8_t uiRetries = 0;
-	int iResult = 0;
-	do {
-		iResult = this->m_pEthSocket->recvDataAvail();
+	if (this->m_pEthSocket) {
+		uint8_t uiRetries = 0;
+		int iResult = 0;
+		do {
+			iResult = this->m_pEthSocket->recvDataAvail();
+			if (iResult < 0) {
+				const int iError = this->m_pEthSocket->lasterror();
+				const char* szError = eth_socket_base::strerror(iError);
+				if (szError)
+					jtag_logger::sendMessage(MSG_ERROR, "receiveData: %s (%d).\n", szError, iError);
+			}
+			uiRetries++;
+		} while (!iResult && uiRetries < 3);
+
+		if (!iResult) {
+			jtag_logger::sendMessage(MSG_ERROR, "receiveData: Waiting for data timed out.\n");
+			return 0;
+		}
+
+		if (this->m_bNamedSocket) {
+			iResult = this->m_pEthSocket->recvfrom(this->m_auiReceiveBuffer, uiLength, 0, 0, 0);
+			if (!iResult)
+				jtag_logger::sendMessage(MSG_ERROR, "receiveData: Server closed connection.\n");
+		} else {
+			sockaddr_in sock_addr_rcv;
+			int iSockLen = sizeof(struct sockaddr_in);
+			iResult = this->m_pEthSocket->recvfrom(
+				this->m_auiReceiveBuffer, uiLength, 0, (struct sockaddr*) &sock_addr_rcv,
+				&iSockLen);
+		}
 		if (iResult < 0) {
 			const int iError = this->m_pEthSocket->lasterror();
 			const char* szError = eth_socket_base::strerror(iError);
 			if (szError)
 				jtag_logger::sendMessage(MSG_ERROR, "receiveData: %s (%d).\n", szError, iError);
+			return 0;
 		}
-		uiRetries++;
-	} while (!iResult && uiRetries < 3);
+		return iResult;
+	} else if (this->m_pARQStream) {
+		// wait to receive
+#ifdef NCSIM
+		for (size_t i = 0; i < 10; i++) {
+			if (m_pARQStream->received_packet_available()) {
+				break;
+			}
+			wait(10, SC_US);
+		}
+		if (!m_pARQStream->received_packet_available()) {
+			throw std::runtime_error("No response after simulating 100us");
+		}
+#else
+		auto start_wait = std::chrono::steady_clock::now();
+		unsigned int sleep_duration_in_us = TO_RES;
+		std::chrono::duration<int, std::micro> timeout(ARQ_JTAG_TIMEOUT);
+		while (!m_pARQStream->received_packet_available()) {
+			if ((std::chrono::steady_clock::now() - start_wait) > timeout) {
+				std::stringstream debug_msg;
+				throw std::runtime_error("No JTAG response received.");
+			}
 
-	if (!iResult) {
-		jtag_logger::sendMessage(MSG_ERROR, "receiveData: Waiting for data timed out.\n");
-		return 0;
-	}
 
-	if (this->m_bNamedSocket) {
-		iResult = this->m_pEthSocket->recvfrom(this->m_auiReceiveBuffer, uiLength, 0, 0, 0);
-		if (!iResult)
-			jtag_logger::sendMessage(MSG_ERROR, "receiveData: Server closed connection.\n");
+			if ((usleep(sleep_duration_in_us) != 0) && (errno != EINTR)) {
+				throw std::runtime_error("usleep failed");
+			}
+			sleep_duration_in_us *= 2;
+		}
+#endif
+
+		// receive packet
+		sctrltp::packet curr_pck;
+		m_pARQStream->receive(curr_pck);
+
+		// re-order 32bit words in host byte order
+		for (unsigned int nword = 1; nword < 2 * curr_pck.len; ++nword) {
+			*((uint32_t*) (curr_pck.pdu) + nword) = ntohl(*((uint32_t*) (curr_pck.pdu) + nword));
+		}
+
+		// bits 32-48 contain number of TDO bits in response
+		uint16_t response_bits = (curr_pck.pdu[0] >> 32) & 0xffff;
+
+		// first 32bit contain length in 32bit words,
+		// multiply by 4 to get number of bytes
+		uint16_t actual_length = 4 * (*(uint32_t*) (curr_pck.pdu));
+
+		if (curr_pck.pid == application_layer_packet_types::JTAGBULK) {
+			memcpy(this->m_auiReceiveBuffer, (uint8_t*) (curr_pck.pdu) + 4, actual_length);
+			// overwrite everything above response_bits + 4*8 with zeros, stop at byte actual_length
+			for (size_t current_bit = 4 * 8 + response_bits; current_bit < actual_length * 8;
+				 current_bit++) {
+				size_t index = current_bit / 8;
+				size_t pos = current_bit % 8;
+				// clear current bit
+				this->m_auiReceiveBuffer[index] &= ~(1 << pos);
+			}
+			return actual_length;
+		} else {
+			// at this point we expect to not receive HICANN config or spikes yet
+			throw std::runtime_error("Received ARQ packet of non-JTAG type.");
+		}
 	} else {
-		sockaddr_in sock_addr_rcv;
-		int iSockLen = sizeof(struct sockaddr_in);
-		iResult = this->m_pEthSocket->recvfrom(
-			this->m_auiReceiveBuffer, uiLength, 0, (struct sockaddr*) &sock_addr_rcv, &iSockLen);
+		throw std::runtime_error("receiving data without open session");
 	}
-	if (iResult < 0) {
-		const int iError = this->m_pEthSocket->lasterror();
-		const char* szError = eth_socket_base::strerror(iError);
-		if (szError)
-			jtag_logger::sendMessage(MSG_ERROR, "receiveData: %s (%d).\n", szError, iError);
-		return 0;
-	}
-
-	return iResult;
 }
 
 bool jtag_lib_v2::jtag_ethernet::readTDO(const uint16_t uiBitsToRead, const bool bFinal)

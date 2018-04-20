@@ -10,11 +10,17 @@
 #include <arpa/inet.h>
 #include "jtag_access.hpp"
 #include "jtag_cmdbase.h"
+#include "FPGAConnectionId.h"
 #include "logger.h"
 extern "C" {
 #include <stdint.h>
 }
 
+#ifdef NCSIM
+#include "ARQStreamWrap.h"
+#else
+#include "sctrltp/ARQStream.h"
+#endif // NCSIM
 
 //////////////////////////////////////////////////////////////////////////////////
 /// .
@@ -100,6 +106,16 @@ public:
 		return true;
 	}
 
+	bool initJtagV2(std::shared_ptr<sctrltp::ARQStream> arq_stream, unsigned int speed)
+	{
+		if (!this->createSession(arq_stream))
+			return false;
+		FPGAConnectionId::IPv4::bytes_type my_ip = FPGAConnectionId::IPv4::from_string(arq_stream->get_remote_ip()).to_bytes();
+		fpga_ip = ip_number(my_ip[0], my_ip[1], my_ip[2], my_ip[3]);
+
+		return continue_init(speed);
+	}
+
 	bool initJtagV2(unsigned int ip, unsigned int port, unsigned int speed)
 	{
 		struct in_addr addr;
@@ -110,6 +126,12 @@ public:
 		if (!this->createSession(szRemoteIP, port))
 			return false;
 
+		return continue_init(speed);
+	}
+
+private:
+	bool continue_init(unsigned int speed)
+	{
 		uint8_t uiCables;
 		if (!this->enumCables(uiCables))
 			return false;
@@ -123,7 +145,7 @@ public:
 		if (!this->setDeviceCount(chain_length))
 			return false;
 
-		if (!this->setDeviceInfo(0, 4, 0x1c56c007))
+		if (!this->setDeviceInfo(0, IRW_K7FPGA, 0x1c56c007))
 			return false;
 
 		for (unsigned int nhicann = 0; nhicann < hicann_num; ++nhicann) {
@@ -139,7 +161,7 @@ public:
 		return true;
 	}
 
-
+public:
 	//////////////////////////////////////////////////////////////////////////////
 	/// .
 	void set_jtag_instr_chain(unsigned int command, unsigned char position)
@@ -216,7 +238,7 @@ public:
 
 	////////////////////////////////////////////////////////////////////////////
 	/// Special JTAG function to set all JTAG_IR of HICANNs with same value
-	void set_hicanns_ir_chain (unsigned char cmd)
+	void set_hicanns_ir_chain(unsigned char cmd)
 	{
 		std::vector<uint32_t> cmd_vect;
 		for (int j = chain_length-1; j >= 0; --j) {
