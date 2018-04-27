@@ -212,8 +212,6 @@ public:
 				usleep(10000);
 
 				cout << "sending TMS_SYS_START pulse (NOT WORKING with jtag_lib_v2!)" << endl;
-				// jtag->jtag_write(0, 1);
-				// jtag->jtag_write(0, 0);
 
 				cout << "reset test logic" << endl;
 				jtag->reset_jtag();
