@@ -69,15 +69,17 @@ void ReticleControl::init(bool on_wafer=true) {
 	access.reset(new CommAccess(connid, pmu_ip));
 
 	jtag.reset(new myjtag_full(true, /*dnc?*/!kintex, available_hicanns, 0, kintex));
-	if(!jtag->open(jtag_lib::JTAG_ETH))
-		LOG4CXX_FATAL(logger, "JTAG open failed!");
-	if (!jtag->jtag_init(jtag_lib::ip_number(fpga_ip[0],fpga_ip[1],fpga_ip[2],fpga_ip[3]), jtag_port))
-		LOG4CXX_FATAL(logger, "JTAG init failed!");
+	if (!jtag->initJtag(jtag_lib_v2::JTAG_ETHERNET))
+		throw std::runtime_error("JTAG open failed!");
+
+	mLog(Logger::INFO) << "Setting JTAG frequency to 10000 kHz" << Logger::flush;
+	if (!jtag->initJtagV2(
+			jtag->ip_number(fpga_ip[0], fpga_ip[1], fpga_ip[2], fpga_ip[3]), jtag_port,
+			/* speed */ 10000))
+		throw std::runtime_error("JTAG init failed!");
+
 	LOG4CXX_INFO(logger, "Initialized JTAG over ETH communication");
 
-	jtag->jtag_speed(10000);
-	LOG4CXX_INFO(logger, "Setting JTAG frequency to 10000 kHz");
-	jtag->jtag_bulkmode(true);
 
 	if (arq_mode) {
 		LOG4CXX_INFO(logger, "Activating HostARQ communication mode");
@@ -230,7 +232,6 @@ ReticleControl::~ReticleControl(){
 			LOG4CXX_WARN(logger, msg.str());
 		}
 	}
-
 	LOG4CXX_DEBUG(logger, "Deleted ReticleControl instance for reticle (" << x << "," << y << ")");
 }
 

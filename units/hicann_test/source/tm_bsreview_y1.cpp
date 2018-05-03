@@ -443,16 +443,17 @@ public:
 		//otherwise the instance assumes to have zeros in all registers
 		for (uint i=0;i<num_hicanns;i++) {
 			// first initialize JTAG
-			if(!jtag_ret[i]->open(jtag_lib::JTAG_ETH)){
-			  log(Logger::ERROR)<< "JTAG open failed!" ;
-			  exit(EXIT_FAILURE);
+			if (!jtag_ret[i]->initJtag(jtag_lib_v2::JTAG_ETHERNET)) {
+				log(Logger::ERROR) << "JTAG open failed!";
+				exit(EXIT_FAILURE);
 			}
-			if (!jtag_ret[i]->jtag_init( jtag_lib::ip_number(fpga_ip[i][0],fpga_ip[i][1],fpga_ip[i][2],fpga_ip[i][3]), jtag_port[i])) {
+			if (!jtag_ret[i]->initJtagV2(
+					jtag_ret[i]->ip_number(
+						fpga_ip[i][0], fpga_ip[i][1], fpga_ip[i][2], fpga_ip[i][3]),
+					jtag_port[i], 10000)) {
 				log(Logger::ERROR)<< "JTAG init failed!" ;
 				exit(EXIT_FAILURE);
 			}
-			jtag_ret[i]->jtag_speed(10000);
-			jtag_ret[i]->jtag_bulkmode(true);
 	
 			select_hicann(i);
 		

@@ -126,7 +126,7 @@ def build(ctx):
         ctx(
             target          = 'tests2',
             features        = 'cxx cxxprogram',
-            use             = [ 'tests2_obj', 'TESTS2USE', 'USB', 'sctrl', 'tud_jtag' ],
+            use             = [ 'tests2_obj', 'TESTS2USE', 'USB', 'sctrl', 'jtag_lib_inc' ],
             install_path    = 'bin',
         )
 
@@ -163,7 +163,7 @@ def build(ctx):
         features = 'gtest cxx cxxprogram',
         test_main = 'source/gtest.cpp',
         source = gtests_srcs,
-        use = [ 's2hal_obj', 'arqstream_obj', 'sctrl', 'tud_jtag', 'BOOST4TESTS2' ],
+        use = [ 's2hal_obj', 'arqstream_obj', 'sctrl', 'jtag_lib_inc', 'BOOST4TESTS2' ],
         install_path = 'bin',
         skip_run = True, # needs lots of hardware ;p
     )

@@ -9,12 +9,16 @@
   #include "sctrltp/ARQStream.h"
 #endif // NCSIM
 
+// for JTAG: named socket
+#include <boost/thread/thread.hpp>
+
 namespace facets {
  
 class S2C_JtagPhys2FpgaArq : public S2C_JtagPhys2Fpga {
 public:
 	typedef unsigned int dncid_t;
 	S2C_JtagPhys2FpgaArq(CommAccess const & access, myjtag_full* j, bool on_reticle, dncid_t dncid, bool use_k7fpga=false, std::string shm_name = "testit");
+	~S2C_JtagPhys2FpgaArq();
 
 	// override some S2C_JtagPhys2Fpga functions
 	Commstate Init(std::bitset<8> hicann, bool silent=false, bool force_highspeed_init=false, bool return_on_error=false); // added hostal init
@@ -67,6 +71,11 @@ private:
 	HostALController hostalctrl;
 	unsigned int bulk;
 	unsigned int max_bulk;
+
+	// named socket for JTAG
+	boost::thread* jtag_listener_thread;
+	static bool jtag_running;
+	static void jtag_listener(S2C_JtagPhys2FpgaArq* my_caller, const char* fpga_ip);
 
 	// print out state of the FPGA-HICANN ARQ connection
 	friend std::ostream & operator<< (std::ostream &, S2C_JtagPhys2FpgaArq const &);

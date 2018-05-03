@@ -44,6 +44,8 @@
 #include "logger.h"
 
 
+static log4cxx::LoggerPtr logger = log4cxx::Logger::getLogger("hicann-system.tests2");
+
 EthernetSoftwareIF::EthernetSoftwareIF() : udp_socket(-1)
 	,_log(Logger::instance())
 {}
@@ -129,6 +131,9 @@ bool EthernetSoftwareIF::init(const uint16_t uiPort)
 int EthernetSoftwareIF::sendUDP(const uint32_t uiTargetIP, const uint16_t uiPort, const void *pszData, const uint16_t uiDataBytes)
 {
 	_log(Logger::DEBUG0) << "EthernetSoftwareIF::sendUDP";
+	_log(Logger::WARNING) << "EthernetSoftwareIF::sendUDP: uiTargetIP " << uiTargetIP
+						  << Logger::flush;
+	_log(Logger::WARNING) << "EthernetSoftwareIF::sendUDP: uiPort " << uiPort << Logger::flush;
 
 	#ifdef NCSIM
         // simulation mode
@@ -168,9 +173,14 @@ int EthernetSoftwareIF::sendUDP(const uint32_t uiTargetIP, const uint16_t uiPort
 		rc = sendto(this->udp_socket, pszData, uiDataBytes, 0, (const struct sockaddr *)&(this->remoteServAddr), sizeof(this->remoteServAddr));
 	#endif
 
+
 	if ( rc < 0 )
 	{
 		_log(Logger::WARNING) << "EthernetSoftwareIF::sendUDP: cannot write data to socket (" << rc << ")" << Logger::flush;
+		_log(Logger::WARNING) << "EthernetSoftwareIF::sendUDP: sin_port was "
+							  << ntohs(this->remoteServAddr.sin_port) << Logger::flush;
+		_log(Logger::WARNING) << "EthernetSoftwareIF::sendUDP: sin_addr.s_addr was "
+							  << ntohl(this->remoteServAddr.sin_addr.s_addr) << Logger::flush;
 		perror("EthernetSoftwareIF::sendUDP perror");
 		return 0;
 	}

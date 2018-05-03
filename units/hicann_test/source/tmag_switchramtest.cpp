@@ -219,7 +219,7 @@ public:
 		usleep(500);
 #endif
 
-		uint32_t rbulks = 4;
+		uint32_t rbulks = 1;
 		for(uint i=startaddr;i<=maxaddr;i++){
 			lc->read_cfg(i);
 

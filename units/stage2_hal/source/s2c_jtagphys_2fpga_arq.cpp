@@ -1,21 +1,46 @@
 #include "s2c_jtagphys_2fpga_arq.h"
 
+// for JTAG: named socket
+#include <sys/socket.h>
+#include <sys/types.h>
+
+#include <boost/chrono.hpp>
+
 using namespace facets;
 using namespace std;
 
 // Class S2C_JtagPhys2FpgaArq :
 
-S2C_JtagPhys2FpgaArq::S2C_JtagPhys2FpgaArq(CommAccess const & access, myjtag_full *j, bool on_reticle, dncid_t dncid, bool use_k7fpga, std::string shm_name) :
-	S2C_JtagPhys2Fpga(access, j, on_reticle, use_k7fpga),
-	dncid(dncid),
-    #ifdef FPGA_BOARD_BS_K7
-    hostarq(shm_name, "192.168.0.128", /*listen port*/ 1234, "192.168.0.1", /*target port*/ 1234), // to do: set correct host IP
-    #else
-    hostarq(shm_name, "192.168.1.2", /*listen port*/ 1234, access.getFPGAConnectionId().get_fpga_ip().to_string().c_str(), /*target port*/ 1234), // to do: set correct host IP
-    #endif
-	hostalctrl(access.getFPGAConnectionId().get_fpga_ip().to_ulong(), 1234),
-	bulk(0),
-	max_bulk(MAX_PDUWORDS)
+bool S2C_JtagPhys2FpgaArq::jtag_running = false;
+
+S2C_JtagPhys2FpgaArq::S2C_JtagPhys2FpgaArq(
+	CommAccess const& access,
+	myjtag_full* j,
+	bool on_reticle,
+	dncid_t dncid,
+	bool use_k7fpga,
+	std::string shm_name)
+	: S2C_JtagPhys2Fpga(access, j, on_reticle, use_k7fpga),
+	  dncid(dncid),
+#ifdef FPGA_BOARD_BS_K7
+	  hostarq(
+		  shm_name,
+		  "192.168.0.128",
+		  /*listen port*/ 1234,
+		  "192.168.0.1",
+		  /*target port*/ 1234), // to do: set correct host IP
+#else
+	  hostarq(
+		  shm_name,
+		  "192.168.1.2",
+		  /*listen port*/ 1234,
+		  access.getFPGAConnectionId().get_fpga_ip().to_string().c_str(),
+		  /*target port*/ 1234), // to do: set correct host IP
+#endif
+	  hostalctrl(access.getFPGAConnectionId().get_fpga_ip().to_ulong(), 1234),
+	  bulk(0),
+	  max_bulk(MAX_PDUWORDS),
+	  jtag_listener_thread(NULL)
 {
 	#ifdef NCSIM
 	#ifndef FPGA_BOARD_BS_K7
@@ -29,8 +54,28 @@ S2C_JtagPhys2FpgaArq::S2C_JtagPhys2FpgaArq(CommAccess const & access, myjtag_ful
 	hostalctrl.setEthernetIF( &(hostarq.pimpl->eth_soft) );
 	#endif
 
-	// initFPGAConnection in Init()
+	this->jtag_listener_thread = new boost::thread(
+		jtag_listener, this, access.getFPGAConnectionId().get_fpga_ip().to_string().c_str());
+
+	for (unsigned int nwait = 0; nwait < 100; ++nwait) {
+		if (jtag_running)
+			break;
+
+		usleep(10000);
+	}
 }
+
+
+S2C_JtagPhys2FpgaArq::~S2C_JtagPhys2FpgaArq()
+{
+	if (this->jtag_listener_thread != NULL) {
+		jtag_running = false;
+		// listener thread sometimes keeps waiting for data, force return after timeout
+		jtag_listener_thread->try_join_for(boost::chrono::milliseconds(500));
+		delete jtag_listener_thread;
+	}
+}
+
 
 void S2C_JtagPhys2FpgaArq::initHostAL() {
 	log(Logger::INFO) << "Initialisation start: " << /*sc_simulation_time() <<*/ endl;
@@ -155,6 +200,86 @@ S2C_JtagPhys2FpgaArq::Commstate S2C_JtagPhys2FpgaArq::Receive(IData & /*d*/) {
 }
 
 namespace facets {
+
+void S2C_JtagPhys2FpgaArq::jtag_listener(S2C_JtagPhys2FpgaArq* my_caller, const char* fpga_ip)
+{
+	const unsigned int JTAG_MTU_BYTE = 1440;
+
+	// initialize named socket for JTAG
+	int jtag_socket = socket(AF_UNIX, SOCK_STREAM, 0);
+	if (jtag_socket < 0) {
+		my_caller->log(Logger::ERROR) << "Could not create named socket for JTAG.";
+		return;
+	}
+
+	struct sockaddr_un namesock;
+	namesock.sun_family = AF_UNIX;
+	strcpy(namesock.sun_path, fpga_ip);
+	unlink(namesock.sun_path);
+
+	if (bind(jtag_socket, (struct sockaddr*) &namesock, sizeof(struct sockaddr_un)) < 0) {
+		my_caller->log(Logger::ERROR) << "Could not bind named socket for JTAG." << endl;
+		close(jtag_socket);
+		return;
+	}
+
+	if (listen(jtag_socket, 1) < 0) {
+		my_caller->log(Logger::ERROR) << "Socket listen failed." << endl;
+		close(jtag_socket);
+		return;
+	}
+
+	my_caller->log(Logger::INFO) << "Named socket created successfully. ID: " << (jtag_socket)
+								 << ". Waiting for JTAG to connect...";
+	jtag_running = true;
+
+	struct sockaddr_un remote;
+	socklen_t remote_sock_length = 0;
+	int in_sock = accept(jtag_socket, (struct sockaddr*) &remote, &remote_sock_length);
+	if (in_sock < 0) {
+		my_caller->log(Logger::ERROR) << "Error during socket accept.";
+		close(jtag_socket);
+		return;
+	}
+
+	my_caller->log(Logger::INFO) << "JTAG detected. Now listening to data...";
+
+	// main listener loop
+	char rec_buf[JTAG_MTU_BYTE];
+	while (jtag_running) {
+		// test if something was sent by software-JTAG
+		int rec_len = recv(in_sock, rec_buf + 4, JTAG_MTU_BYTE - 4, MSG_DONTWAIT);
+		if (rec_len > 0) {
+			*((uint32_t*) (rec_buf)) = (rec_len + 3) / 4;
+			for (unsigned int nword = 1; nword < (static_cast<unsigned int>(rec_len) + 7) / 4; ++nword)
+				*((uint32_t*) (rec_buf) + nword) = ntohl(*((uint32_t*) (rec_buf) + nword));
+
+			my_caller->getHostAL()->sendJTAG(rec_len + 4, rec_buf);
+		}
+
+		// test if something was sent back from FPGA-JTAG
+		sctrltp::packet jtag_rec = my_caller->getHostAL()->getReceivedJTAGData();
+		if (jtag_rec.len) {
+			unsigned int jtag_len_32bit = *((uint32_t*) (jtag_rec.pdu));
+
+			for (unsigned int nword = 1; nword < jtag_len_32bit + 1; ++nword)
+				*((uint32_t*) (jtag_rec.pdu) + nword) =
+					htonl(*((uint32_t*) (jtag_rec.pdu) + nword));
+
+			if (send(in_sock, (uint32_t*) (jtag_rec.pdu) + 1, 4 * jtag_len_32bit, MSG_DONTWAIT) <
+				0) {
+				my_caller->log(Logger::ERROR) << "Error during sending to named socket.";
+			}
+		}
+
+		usleep(1000);
+	}
+
+	// clean-up
+	my_caller->log(Logger::INFO) << "Closing named socket with ID " << jtag_socket;
+	close(jtag_socket);
+}
+
 
 std::ostream & operator<< (std::ostream & o, S2C_JtagPhys2FpgaArq const & s) {
 	// please note, the jtag commands to read-out the state registers are not

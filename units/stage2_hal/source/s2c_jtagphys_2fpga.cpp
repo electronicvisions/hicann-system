@@ -150,7 +150,6 @@ S2C_JtagPhys2Fpga::Commstate S2C_JtagPhys2Fpga::Init(std::bitset<8> hicann, bool
 	        }
 
 	        std::bitset<9> ret = fpga_dnc_init(silent);
-	        this->printHighspeedSettings();
 
 	        log(Logger::DEBUG0) << "S2C_JtagPhys2Fpga::Init: result of highspeed init: " << ret.to_string() << flush;
 
@@ -407,125 +406,6 @@ unsigned int S2C_JtagPhys2Fpga::initAllConnections(bool silent) {
 	return 0x100 + ((~no_init)&((1<<(jtag->chain_length-2))-1));
 }
 
-unsigned int S2C_JtagPhys2Fpga::initAllConnections(bool silent, std::vector<unsigned char> delays) {
-
-	if ( ( delays.size() != 16 && jtag->chain_length == 10 ) || ( delays.size() != 2 && jtag->chain_length == 3 ) ) {
-		log(Logger::ERROR) << "S2C_JtagPhys2Fpga::initAllConnections: Number of init values ( " << delays.size() << " ) for comm wrong, abort!" << flush;
-		exit(EXIT_FAILURE);
-	}		
-
-	unsigned char state1[9] = {0,0,0,0,0,0,0,0,0};
-	uint64_t state2[9] = {0,0,0,0,0,0,0,0,0};
-	unsigned int break_count = 0;
-	std::vector<bool> vec_in(144,false);
-	std::vector<bool> vec_out(144,false);
-	int delay_out = 0;
-	unsigned short no_init = 0xff;
-	if(jtag->chain_length == 10) {
-		no_init = 0xff;
-	} else {
-		no_init = 0x01;
-	}
-
-	// do NOT reset the setup here, again since this MUST be done correctly in advance!
-	//jtag->DNC_lvds_pads_en(~(0x100+(1<<hicann_nr)));
-	
-	//Stop all HICANN channels and start DNCs FPGA channel
-	jtag->DNC_start_link(0x100);
-	//Start FPGAs DNc channel
-	jtag->FPGA_start_dnc_packet((fpga_master << 9) + 0x100);
-
-	if(!silent) log(Logger::INFO) << "Start FPGA-DNC initialization:" << flush;
-
-	while ((((state1[8] & 0x1) == 0)||((state2[8] & 0x1) == 0)) && break_count<10) {
-		usleep(90000);
-		jtag->DNC_read_channel_sts(8,state1[8]);
-		if(!silent) log(Logger::INFO) << "DNC Status = 0x" << hex << ((uint)state1[8]) << " ";
-
-		jtag->FPGA_get_status(state2[8]);
-		if(!silent) log(Logger::INFO) << "FPGA Status = 0x" << hex << ((uint)state2[8]) << " RUN:" << dec << break_count << flush;
-		++break_count;
-	}
-	
-	if (break_count == 10) {
-		jtag->DNC_stop_link(0x1ff);
-		jtag->FPGA_start_dnc_packet((fpga_master << 9) + 0x000);
-		if(!silent) log(Logger::INFO) << "ERROR in FPGA-DNC initialization --> EXIT" << flush;
-		return 0;
-	}
-	break_count = 0;
-
-	if(!silent) log(Logger::INFO) << "Start manual DNC-HICANN initialization: " << flush;
-	jtag->DNC_set_lowspeed_ctrl(0xff); // ff = lowspeed
-	jtag->DNC_set_speed_detect_ctrl(0x00); // 00 = no speed detect
-	jtag->DNC_set_init_ctrl(0x0aaaa);
-
-	for (unsigned int i = 0;i<(jtag->chain_length-2); ++i) {
-		// lowspeed all HICANNs
-		jtag->set_hicann_pos(i);
-		jtag->HICANN_set_link_ctrl(0x060);
-	}
-
-	for(int m=0   ; m<144;++m) {
-		vec_in[m]  = 1;
-		vec_out[m] = 1;
-	}
-	for(unsigned int i=0; i<(jtag->chain_length-2);  ++i) {
-		jtag->set_hicann_pos(i);
-		jtag->HICANN_set_data_delay((uint64_t)(delays[(2*i)] & 0x3f),(uint64_t&)delay_out);
-		for(int m=6; m>0;  --m)
-			vec_in[(16*6+(8-jtag2dnc(i))*6)-m] = ((delays[(2*i)+1] & 0x3f) >> (6-m)) & 0x1;
-	}
-
-	/*printf("\nDelay Vector DNC : 0x");
-	jtag->printBoolVect(vec_in);
-	printf("\n");*/
-	
-	jtag->DNC_set_data_delay(vec_in,vec_out);
-
-	for (unsigned int i=0;i<(jtag->chain_length-2); ++i) {
-		jtag->set_hicann_pos(i);
-		jtag->DNC_stop_link(1<<jtag2dnc(i));
-		jtag->HICANN_stop_link();
-
-		break_count = 0;
-
-		while ((((state1[i] & 0x73) != 0x41) || ((state2[i] & 0x73) != 0x41)) && break_count < 1) {
-			jtag->HICANN_stop_link();
-			jtag->DNC_stop_link(1<<jtag2dnc(i));
-			jtag->HICANN_start_link();
-			jtag->DNC_start_link(0x000 + (0xff & (1<<jtag2dnc(i))));
-
-			usleep(5000);
-			jtag->DNC_read_channel_sts(jtag2dnc(i),state1[i]);
-			if(!silent) log(Logger::INFO) << "  DNCIF  " << jtag2dnc(i) << " Status = 0x" << hex << (unsigned int)state1[i];
-			jtag->HICANN_read_status(state2[i]);
-			if(!silent) log(Logger::INFO) << "  HICANN " << i << " Status = 0x" << hex << (unsigned int)state2[i] << flush;
-			++break_count;
-		}
-	
-		if (((state1[i] & 0x73) == 0x41) || ((state2[i] & 0x73) == 0x41))
-			no_init &= (~(1<<i));
-	}
-
-	if(!silent) log(Logger::INFO) << "*************************************" << flush;
-
-	if (no_init == 0) {
-		if(!silent) log(Logger::INFO) << "Sucessfull init DNC-HICANN connection " << flush;
-	} else {
-		for (unsigned i = 0;i<jtag->chain_length-2; ++i) {
-			if(!silent) log(Logger::INFO) << "Init channel "<< dec << i << " with DNC state: 0x" << hex << ((uint)state1[i]) << " and HICANN state 0x" << hex << ((uint)state2[i]) << flush;
-			/*if(((no_init>>i)&0x1) == 1) {
-				hicann_jtag_nr = i;
-				jtag->set_hicann_pos(hicann_jtag_nr);
-				this->hicann_shutdown();
-			}*/
-		}
-	}
-
-	if(!silent) log(Logger::INFO) << "Successfull FPGA-DNC-HICANN initialization" << flush;
-	return 0x100 + ((~no_init)&((1<<(jtag->chain_length-2))-1));
-}
 
 // ###################################
 // deprecated
@@ -738,34 +618,6 @@ unsigned int S2C_JtagPhys2Fpga::get_transmission_errors() {
 	return this->trans_error_count;
 }
 
-
-void S2C_JtagPhys2Fpga::printHighspeedSettings()
-{
-	// DNC, connection to FPGA
-	std::vector<bool> vec_in(144,false);
-	std::vector<bool> vec_out(144,false);
-	for(int m=0   ; m<144;++m) {
-		vec_in[m]  = 1;
-		vec_out[m] = 1;
-	}
-
-	jtag->DNC_set_data_delay(vec_in,vec_out);
-	log(Logger::INFO) << "DNC FPGAif delay values:";
-	jtag->printDelayFPGA(vec_out, log(Logger::INFO));
-
-	for (unsigned int nhicann=0;nhicann<jtag->chain_length-2;++nhicann)
-	{
-		// DNC, connections to HICANN
-		log(Logger::INFO) << "DNC HICANNif " << jtag2dnc(nhicann) << " delay value: " << dec << (unsigned int)(jtag->getVecDelay(jtag2dnc(nhicann)+16,vec_out));
-
-		// HICANNs, connections to DNC
-		uint64_t delay_in  = 0xffffffffffffffffull;
-		uint64_t delay_out = 0xffffffffffffffffull;
-		jtag->set_hicann_pos(nhicann);
-		jtag->HICANN_set_data_delay(delay_in,delay_out);
-		log(Logger::INFO) << "HICANN " << jtag2dnc(nhicann) << " delay value: " << (delay_out&0x3f);
-	}
-}
 
 namespace {
 //helper function for packet formating for trigger_systime and trigger_experiment

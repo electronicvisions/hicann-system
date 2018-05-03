@@ -1027,6 +1027,10 @@ void HostALController::fill_receive_buffer(bool /*with_jtag*/)
 					break;
 				}
 
+				case application_layer_packet_types::JTAGBULK: {
+					this->jtag_receive_buffer.push_back(curr_pck);
+					break;
+				}
 
 				default:
 				{

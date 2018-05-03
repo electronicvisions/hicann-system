@@ -1,0 +1,317 @@
+#include "jtag_state.hpp"
+
+const jtag_lib_v2::jtag_state::tms_pattern_t jtag_lib_v2::jtag_state::m_cTMSPattern[16][16] =
+	{/*
+	  \ To       | Test-Logic-Reset | Run-Test-Idle |
+	   \         |  Select-DR-Scan  |   Capture-DR  |  Shift-DR  |  Exit1-DR  |  Pause-DR  |
+   Exit2-DR  | Update-DR | From \        |  Select-IR-Scan  |   Capture-IR  |  Shift IR  |  Exit1-IR
+   |  Pause-IR  |  Exit2-IR  | Update-IR |
+*/
+
+	 /* Test-Logic-Reset */ {{1, 0x01},
+							 {1, 0x00},
+							 {2, 0x01},
+							 {3, 0x02},
+							 {4, 0x04},
+							 {4, 0x05},
+							 {5, 0x0A},
+							 {6, 0x15},
+							 {5, 0x0B},
+							 {3, 0x03},
+							 {4, 0x06},
+							 {5, 0x0C},
+							 {5, 0x0D},
+							 {6, 0x1A},
+							 {7, 0x35},
+							 {6, 0x1B}},
+	 /* Run-Test-Idle    */
+	 {{3, 0x07},
+	  {1, 0x00},
+	  {1, 0x01},
+	  {2, 0x01},
+	  {3, 0x04},
+	  {3, 0x05},
+	  {4, 0x0A},
+	  {5, 0x15},
+	  {4, 0x0B},
+	  {2, 0x03},
+	  {3, 0x03},
+	  {4, 0x0C},
+	  {4, 0x0D},
+	  {5, 0x1A},
+	  {6, 0x35},
+	  {5, 0x1B}},
+	 /* Select-DR-Scan   */
+	 {{2, 0x03},
+	  {4, 0x06},
+	  {0, 0x00},
+	  {1, 0x00},
+	  {2, 0x00},
+	  {2, 0x01},
+	  {3, 0x02},
+	  {4, 0x05},
+	  {3, 0x03},
+	  {1, 0x01},
+	  {2, 0x02},
+	  {3, 0x04},
+	  {3, 0x05},
+	  {4, 0x0A},
+	  {5, 0x15},
+	  {4, 0x0B}},
+	 /* Capture-DR       */
+	 {{5, 0x1F},
+	  {3, 0x06},
+	  {3, 0x07},
+	  {0, 0x00},
+	  {1, 0x00},
+	  {1, 0x01},
+	  {2, 0x02},
+	  {3, 0x05},
+	  {2, 0x03},
+	  {4, 0x0F},
+	  {5, 0x1E},
+	  {6, 0x3C},
+	  {6, 0x3D},
+	  {7, 0x7A},
+	  {8, 0xF4},
+	  {7, 0x7B}},
+	 /* Shift-DR         */
+	 {{5, 0x1F},
+	  {3, 0x06},
+	  {3, 0x07},
+	  {4, 0x0E},
+	  {0, 0x00},
+	  {1, 0x01},
+	  {2, 0x02},
+	  {3, 0x05},
+	  {2, 0x03},
+	  {4, 0x0F},
+	  {5, 0x1E},
+	  {6, 0x3C},
+	  {6, 0x3D},
+	  {7, 0x7A},
+	  {8, 0xF4},
+	  {7, 0x7B}},
+	 /* Exit1-DR         */
+	 {{4, 0x0F},
+	  {2, 0x01},
+	  {2, 0x03},
+	  {3, 0x06},
+	  {4, 0x0C},
+	  {0, 0x00},
+	  {1, 0x00},
+	  {2, 0x01},
+	  {1, 0x01},
+	  {3, 0x07},
+	  {4, 0x0E},
+	  {5, 0x1C},
+	  {5, 0x1D},
+	  {6, 0x3A},
+	  {7, 0x74},
+	  {6, 0x3B}},
+	 /* Pause-DR         */
+	 {{5, 0x1F},
+	  {3, 0x06},
+	  {3, 0x07},
+	  {4, 0x0E},
+	  {2, 0x02},
+	  {3, 0x05},
+	  {0, 0x00},
+	  {1, 0x01},
+	  {2, 0x03},
+	  {4, 0x0F},
+	  {5, 0x1E},
+	  {6, 0x3C},
+	  {6, 0x3D},
+	  {7, 0x7A},
+	  {8, 0xF4},
+	  {7, 0x7B}},
+	 /* Exit2-DR         */
+	 {{4, 0x0F},
+	  {2, 0x02},
+	  {2, 0x03},
+	  {3, 0x06},
+	  {4, 0x0C},
+	  {2, 0x01},
+	  {3, 0x02},
+	  {0, 0x00},
+	  {1, 0x01},
+	  {3, 0x07},
+	  {4, 0x0E},
+	  {5, 0x1C},
+	  {5, 0x1D},
+	  {6, 0x3A},
+	  {7, 0x74},
+	  {6, 0x3B}},
+	 /* Update-DR        */
+	 {{3, 0x07},
+	  {1, 0x00},
+	  {1, 0x01},
+	  {2, 0x02},
+	  {3, 0x04},
+	  {3, 0x05},
+	  {4, 0x0A},
+	  {5, 0x15},
+	  {0, 0x00},
+	  {2, 0x03},
+	  {3, 0x06},
+	  {4, 0x0C},
+	  {4, 0x0D},
+	  {6, 0x1A},
+	  {6, 0x34},
+	  {5, 0x1B}},
+	 /* Select-IR        */
+	 {{1, 0x01},
+	  {4, 0x06},
+	  {4, 0x07},
+	  {5, 0x0E},
+	  {6, 0x1C},
+	  {6, 0x1D},
+	  {7, 0x3A},
+	  {8, 0x75},
+	  {7, 0x3B},
+	  {0, 0x00},
+	  {1, 0x00},
+	  {2, 0x00},
+	  {2, 0x01},
+	  {3, 0x02},
+	  {4, 0x04},
+	  {3, 0x03}},
+	 /* Capture-IR       */
+	 {{5, 0x1F},
+	  {3, 0x06},
+	  {3, 0x07},
+	  {4, 0x0E},
+	  {5, 0x1C},
+	  {5, 0x1D},
+	  {6, 0x3A},
+	  {7, 0x75},
+	  {6, 0x3B},
+	  {4, 0x0F},
+	  {0, 0x00},
+	  {1, 0x00},
+	  {1, 0x01},
+	  {2, 0x02},
+	  {3, 0x04},
+	  {2, 0x03}},
+	 /* Shift-IR         */
+	 {{5, 0x1F},
+	  {3, 0x06},
+	  {3, 0x07},
+	  {4, 0x0E},
+	  {5, 0x1C},
+	  {5, 0x1D},
+	  {6, 0x3A},
+	  {7, 0x75},
+	  {6, 0x3B},
+	  {4, 0x0F},
+	  {5, 0x1E},
+	  {0, 0x00},
+	  {1, 0x01},
+	  {2, 0x02},
+	  {3, 0x04},
+	  {2, 0x03}},
+	 /* Exit1-IR         */
+	 {{4, 0x0F},
+	  {2, 0x01},
+	  {2, 0x03},
+	  {3, 0x06},
+	  {4, 0x0C},
+	  {4, 0x0D},
+	  {5, 0x1A},
+	  {6, 0x35},
+	  {5, 0x1B},
+	  {3, 0x07},
+	  {4, 0x0E},
+	  {5, 0x1C},
+	  {0, 0x00},
+	  {1, 0x00},
+	  {2, 0x00},
+	  {1, 0x01}},
+	 /* Pause-IR         */
+	 {{5, 0x1F},
+	  {3, 0x06},
+	  {3, 0x07},
+	  {4, 0x0E},
+	  {5, 0x1C},
+	  {5, 0x1D},
+	  {6, 0x3A},
+	  {7, 0x75},
+	  {6, 0x3B},
+	  {4, 0x0F},
+	  {5, 0x1E},
+	  {2, 0x02},
+	  {3, 0x05},
+	  {0, 0x00},
+	  {1, 0x01},
+	  {2, 0x03}},
+	 /* Exit2-IR         */
+	 {{4, 0x0F},
+	  {2, 0x02},
+	  {2, 0x03},
+	  {3, 0x06},
+	  {4, 0x0C},
+	  {4, 0x0D},
+	  {5, 0x1A},
+	  {6, 0x35},
+	  {5, 0x1B},
+	  {3, 0x07},
+	  {4, 0x0E},
+	  {1, 0x01},
+	  {2, 0x01},
+	  {3, 0x02},
+	  {0, 0x00},
+	  {1, 0x01}},
+	 /* Update-IR        */
+	 {{3, 0x07},
+	  {1, 0x00},
+	  {1, 0x01},
+	  {2, 0x02},
+	  {3, 0x04},
+	  {3, 0x05},
+	  {4, 0x0A},
+	  {5, 0x15},
+	  {4, 0x0B},
+	  {2, 0x03},
+	  {3, 0x06},
+	  {4, 0x0C},
+	  {4, 0x0D},
+	  {5, 0x1A},
+	  {6, 0x35},
+	  {0, 0x00}}};
+
+jtag_lib_v2::jtag_state::jtag_state() : m_eCurrentState(UNKNOWN_JTAG_STATE) {}
+
+bool jtag_lib_v2::jtag_state::setJtagState(const enum jtag_lib_v2::eJtagState eState)
+{
+	if (eState > UNKNOWN_JTAG_STATE)
+		return false;
+	this->m_eCurrentState = eState;
+	return true;
+}
+
+bool jtag_lib_v2::jtag_state::getTmsPatternForState(
+	const enum jtag_lib_v2::eJtagState eState, uint16_t& uiPattern, uint8_t& uiBits)
+{
+	if (eState >= UNKNOWN_JTAG_STATE)
+		return false;
+
+	enum eJtagState eStartState = this->m_eCurrentState;
+	if (this->m_eCurrentState == UNKNOWN_JTAG_STATE)
+		eStartState = TEST_LOGIC_RESET;
+
+	const jtag_lib_v2::jtag_state::tms_pattern_t pattern =
+		jtag_state::m_cTMSPattern[eStartState][eState];
+	uint16_t uiTmsPattern = pattern.uiPattern;
+	uint8_t uiShiftBits = pattern.uiLength;
+	if (this->m_eCurrentState == UNKNOWN_JTAG_STATE) {
+		uiShiftBits += 5;
+		uiTmsPattern = (uiTmsPattern << 5) | 0x1F;
+	}
+
+	uiBits = uiShiftBits;
+	uiPattern = uiTmsPattern;
+
+	this->m_eCurrentState = eState;
+	return true;
+}

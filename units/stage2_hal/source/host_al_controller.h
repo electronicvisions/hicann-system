@@ -43,8 +43,9 @@ extern "C" {
 // FACETS/BrainScaleS Stage2 Host <-> 
 // FPGA Communication" - Rev 0.1
 namespace application_layer_packet_types {
-enum e {
-	JTAGBULK = 0x0C33,  //!< send and receive a bulk of JTGA nibbles to/from FPGA
+enum e
+{
+	JTAGBULK = 0x06A4, //!< send and receive a bulk of JTGA nibbles to/from FPGA
 	FPGATRACE = 0x0CA5,
 	FPGAPLAYBACK = 0x0C5A,
 	FPGACONFIG = 0x0C1B,
@@ -226,10 +227,10 @@ class HostALController
 		/// get number of trace pulses that are currently in host buffer - used from HALBE.
 		/// function looks for pulses that have arrived at the host first
 		unsigned int getTraceBufferSize();
-		
-        /// activate writing of spike data to file in binary format
-        void activateBinarySpikeDataFileWrite(bool set_active=true);
-        
+
+		/// activate writing of spike data to file in binary format
+		void activateBinarySpikeDataFileWrite(bool set_active = true);
+
 		/// send data to the FPGA playback memory
 		/// 
 		bool sendFPGAPlayback(std::vector<uint32_t> &payload, double timeout=100.0);

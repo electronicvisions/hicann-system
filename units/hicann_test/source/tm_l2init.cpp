@@ -255,11 +255,9 @@ public:
                 cout << "reset test logic" << endl;
                 jtag->reset_jtag();
 
-                cout << "sending TMS_SYS_START pulse..." << endl;
-                jtag->jtag_write(0, 1);
-                jtag->jtag_write(0, 0);
+				cout << "sending TMS_SYS_START pulse: NOT SUPPORTED with JtagLibV2!" << endl;
 
-                cout << "reset test logic" << endl;
+				cout << "reset test logic" << endl;
                 jtag->reset_jtag();
 
                 uint64_t syst=0xf0f0;

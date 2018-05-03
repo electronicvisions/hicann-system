@@ -81,8 +81,6 @@ public:
 	
 	unsigned int get_transmission_errors();
 
-	void printHighspeedSettings();
-
 	/// trigger start of systime in FPGA.
 	/// if enable is false, systime counter gets primed
 	/// if listen_global is true, the FPGA reacts to the external trigger pin only,

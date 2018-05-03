@@ -152,7 +152,7 @@ template<class T> void fir(std::vector<T> &res, const std::vector<T> &data,const
     typedef eth_jtag_test myjtag_full;
   #endif
 #else
-typedef jtag_cmdbase_fpgadnchicann_full<jtag_lib::jtag_hub> myjtag_full;
+typedef jtag_cmdbase_fpgadnchicann_full myjtag_full;
 #endif
 
 // unused macro

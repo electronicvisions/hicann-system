@@ -270,18 +270,8 @@ int main(int argc, char * argv[]){
 			jtag_p = new S2C_JtagPhys(access, jtf, on_reticle);
 			comm   = jtag_p;
 			log(Logger::INFO)<< "JTAG communication model selected" << flush;
-			log(Logger::INFO)<< "Using USB device..." << flush;
-			if(!jtf->open(jtag_lib::JTAG_USB, 0)){
-				log(Logger::ERROR)<< "JTAG open failed!" << flush;
-				exit(EXIT_FAILURE);
-			}
-			log(Logger::INFO) << "setting JTAG frequency to " << jtag_speed << "kHz" << flush;
-			jtf->jtag_speed(jtag_speed);
-			if (!jtf->jtag_init()) {
-				log(Logger::ERROR)<< "JTAG init failed!" << flush;
-				exit(EXIT_FAILURE);
-			}
-			jtf->jtag_bulkmode(true);
+			log(Logger::INFO) << "Using USB device: NOT YET SUPPORTED for JtagLibV2!" << flush;
+			exit(EXIT_FAILURE);
 		}break;
 
 		case jtag_multi:{
@@ -292,18 +282,8 @@ int main(int argc, char * argv[]){
 			jtag_p = new S2C_JtagPhys(access, jtf, on_reticle);
 			comm   = jtag_p;
 			log(Logger::INFO)<< "JTAG cain communication model selected" << flush;
-			log(Logger::INFO)<< "Using USB device..." << flush;
-			if(!jtf->open(jtag_lib::JTAG_USB, 0)){
-				log(Logger::ERROR)<< "JTAG open failed!" << flush;
-				exit(EXIT_FAILURE);
-			}
-			log(Logger::INFO) << "setting JTAG frequency to " << jtag_speed << "kHz" << flush;
-			jtf->jtag_speed(jtag_speed);
-			if (!jtf->jtag_init()) {
-				log(Logger::ERROR)<< "JTAG init failed!" << flush;
-				exit(EXIT_FAILURE);
-			}
-			jtf->jtag_bulkmode(true);
+			log(Logger::INFO) << "Using USB device: NOT YET SUPPORTED for JtagLibV2!" << flush;
+			exit(EXIT_FAILURE);
 		}break;
 
 		case jtag_full:{
@@ -314,18 +294,8 @@ int main(int argc, char * argv[]){
 			jtag_p = new S2C_JtagPhys(access, jtf, on_reticle);
 			comm   = jtag_p;
 			log(Logger::INFO)<< "JTAG cain communication model selected" << flush;
-			log(Logger::INFO)<< "Using USB device..." << flush;
-			if(!jtf->open(jtag_lib::JTAG_USB, 0)){
-				log(Logger::ERROR)<< "JTAG open failed!" << flush;
-				exit(EXIT_FAILURE);
-			}
-			log(Logger::INFO) << "setting JTAG frequency to " << jtag_speed << "kHz" << flush;
-			jtf->jtag_speed(jtag_speed);
-			if (!jtf->jtag_init()) {
-				log(Logger::ERROR)<< "JTAG init failed!" << flush;
-				exit(EXIT_FAILURE);
-			}
-			jtf->jtag_bulkmode(true);
+			log(Logger::INFO) << "Using USB device: NOT YET SUPPORTED for JtagLibV2!" << flush;
+			exit(EXIT_FAILURE);
 		}break;
 
 		case jtag_2fpga:{
@@ -336,18 +306,8 @@ int main(int argc, char * argv[]){
 			jtag_p2f = new S2C_JtagPhys2Fpga(access, jtf, on_reticle, k7_setup);
 			comm     = jtag_p2f;
 			log(Logger::INFO)<< "JTAG chain communication model selected" << flush;
-			log(Logger::INFO)<< "Using USB device..." << flush;
-			if(!jtf->open(jtag_lib::JTAG_USB, 0)){
-				log(Logger::ERROR)<< "JTAG open failed!" << flush;
-				exit(EXIT_FAILURE);
-			}
-			log(Logger::INFO) << "setting JTAG frequency to " << jtag_speed << "kHz" << flush;
-			jtf->jtag_speed(jtag_speed);
-			if (!jtf->jtag_init()) {
-				log(Logger::ERROR)<< "JTAG init failed!" << flush;
-				exit(EXIT_FAILURE);
-			}
-			jtf->jtag_bulkmode(true);
+			log(Logger::INFO) << "Using USB device: NOT YET SUPPORTED for JtagLibV2!" << flush;
+			exit(EXIT_FAILURE);
 		}break;
 
 		case jtag_eth:{
@@ -360,17 +320,18 @@ int main(int argc, char * argv[]){
 			log(Logger::INFO)<< "JTAG chain communication model selected" << flush;
 			log(Logger::INFO)<< "Using ETHERNET device..." << flush;
 			log(Logger::INFO)<< "Initialized application layer" << flush;
-			if(!jtf->open(jtag_lib::JTAG_ETH)){
+			if (!jtf->initJtag(jtag_lib_v2::JTAG_ETHERNET)) {
 				log(Logger::ERROR)<< "JTAG open failed!" << flush;
 				exit(EXIT_FAILURE);
 			}
-			if (!jtf->jtag_init( jtag_lib::ip_number(fpga_ip[0],fpga_ip[1],fpga_ip[2],fpga_ip[3]), jtag_port)) {
+
+			log(Logger::INFO) << "setting JTAG frequency to " << jtag_speed << "kHz" << flush;
+			if (!jtf->initJtagV2(
+					jtf->ip_number(fpga_ip[0], fpga_ip[1], fpga_ip[2], fpga_ip[3]), jtag_port,
+					jtag_speed)) {
 				log(Logger::ERROR)<< "JTAG init failed!" << flush;
 				exit(EXIT_FAILURE);
 			}
-			jtf->jtag_speed(jtag_speed);
-			log(Logger::INFO) << "setting JTAG frequency to " << jtag_speed << "kHz" << flush;
-			jtf->jtag_bulkmode(true);
 		}break;
 
 		case jtag_eth_fpga:{
@@ -383,22 +344,22 @@ int main(int argc, char * argv[]){
 			log(Logger::INFO)<< "JTAG chain communication model selected" << flush;
 			log(Logger::INFO)<< "Using ETHERNET device..." << flush;
 			log(Logger::INFO)<< "Initialized application layer" << flush;
-			if(!jtf->open(jtag_lib::JTAG_ETH)){
+			if (!jtf->initJtag(jtag_lib_v2::JTAG_ETHERNET)) {
 				log(Logger::ERROR)<< "JTAG open failed!" << flush;
 				exit(EXIT_FAILURE);
 			}
 
-			if (!jtf->jtag_init( jtag_lib::ip_number(fpga_ip[0],fpga_ip[1],fpga_ip[2],fpga_ip[3]), jtag_port)) {
+			log(Logger::INFO) << "setting JTAG frequency to " << jtag_speed << "kHz" << flush;
+			if (!jtf->initJtagV2(
+					jtf->ip_number(fpga_ip[0], fpga_ip[1], fpga_ip[2], fpga_ip[3]), jtag_port,
+					jtag_speed)) {
 				log(Logger::ERROR)<< "JTAG init failed!" << flush;
 				exit(EXIT_FAILURE);
 			}
-			jtf->jtag_speed(jtag_speed);
-			log(Logger::INFO) << "setting JTAG frequency to " << jtag_speed << "kHz" << flush;
-			jtf->jtag_bulkmode(true);
 		}break;
 
 		case jtag_eth_fpga_arq:{
-			unsigned int curr_ip = jtag_lib::ip_number(fpga_ip[0],fpga_ip[1],fpga_ip[2],fpga_ip[3]);
+			unsigned int curr_ip = jtf->ip_number(fpga_ip[0], fpga_ip[1], fpga_ip[2], fpga_ip[3]);
 			if (active_hicanns.any())
 				jtf   = new myjtag_full(true, !k7_setup, active_hicanns, tar_jtag_hicann, k7_setup);
 			else
@@ -408,24 +369,25 @@ int main(int argc, char * argv[]){
 			comm      = jtag_p2fa;
 
 			// reset fpga before doing something else
-			curr_ip = jtag_lib::ip_number(fpga_ip[0],fpga_ip[1],fpga_ip[2],fpga_ip[3]);
 			Stage2Comm::set_fpga_reset(curr_ip, true,  true,  true,  true,  true);
 			Stage2Comm::set_fpga_reset(curr_ip, false, false, false, false, false);
 
 			log(Logger::INFO)<< "JTAG chain communication model selected" << flush;
-			log(Logger::INFO)<< "Using ETHERNET device..." << flush;
+			log(Logger::INFO) << "Using ETHERNET device via ARQ..." << flush;
 			log(Logger::INFO)<< "Initialized application layer" << flush;
-			if(!jtf->open(jtag_lib::JTAG_ETH)){
+			if (!jtf->initJtag(jtag_lib_v2::JTAG_ETHERNET)) {
 				log(Logger::ERROR)<< "JTAG open failed!" << flush;
+				delete jtag_p2fa;
 				exit(EXIT_FAILURE);
 			}
-			if (!jtf->jtag_init( jtag_lib::ip_number(fpga_ip[0],fpga_ip[1],fpga_ip[2],fpga_ip[3]), jtag_port)) {
-				log(Logger::ERROR)<< "JTAG init failed!" << flush;
-				exit(EXIT_FAILURE);
-			}
-			jtf->jtag_speed(jtag_speed);
 			log(Logger::INFO) << "setting JTAG frequency to " << jtag_speed << "kHz" << flush;
-			jtf->jtag_bulkmode(true);
+			// jtag port 0 indicates named socket to hostARQ
+			// TODO not using ARQ here yet
+			if (!jtf->initJtagV2(curr_ip, jtag_port, jtag_speed)) {
+				log(Logger::ERROR)<< "JTAG init failed!" << flush;
+				delete jtag_p2fa;
+				exit(EXIT_FAILURE);
+			}
 		}break;
 
 		case jtag_wafer:{ //testing communication, will be deleted and reinstated in ReticleControl later
@@ -515,9 +477,12 @@ int main(int argc, char * argv[]){
 	
 	// close jtag interface
 	if(jtf != NULL){
-		jtf->jtag_close();
-		jtf->close();
+		jtf->closeSession();
 	}
+
+	if (jtag_p2fa != NULL)
+		delete jtag_p2fa;
+
 	// Testmodes return true on success
 	if (result) return(EXIT_SUCCESS);
 	else return(EXIT_FAILURE);
