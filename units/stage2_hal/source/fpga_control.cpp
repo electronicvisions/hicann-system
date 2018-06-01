@@ -13,8 +13,6 @@
 
 #ifndef NCSIM
 static log4cxx::LoggerPtr logger = log4cxx::Logger::getLogger("hicann-system.FPGACtrl");
-#else
-const uint16_t PTYPE_STATS = 0x8004;
 #endif
 
 namespace facets {

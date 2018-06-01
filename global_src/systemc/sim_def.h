@@ -64,7 +64,7 @@
 	Example: reticale with position[3][2] is enabled.
 */
 //Simulation stuff for PCB
-#define DNC_COUNT 1			///<number of DNCs for ONE wafer/PCB system
+#define DNC_COUNT 0			///<number of DNCs for ONE wafer/PCB system
 #define DNC_FPGA 4						///<how many dncs are connected to an fpga
 #define FPGA_COUNT 1	///<number of fpgas in a wafer/PCB system
 

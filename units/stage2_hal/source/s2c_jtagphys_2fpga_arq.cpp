@@ -33,7 +33,14 @@ S2C_JtagPhys2FpgaArq::S2C_JtagPhys2FpgaArq(
 #endif
 	hostalctrl.setARQStream(p_ARQStream.get());
 #ifdef NCSIM
-	hostalctrl.setEthernetIF(&(p_ARQStream.pimpl->eth_soft));
+	hostalctrl.setEthernetIF(&(p_ARQStream.get()->pimpl->eth_soft));
+
+	log(Logger::INFO) << "Initialisation start: " << /*sc_simulation_time() <<*/ endl;
+	if (hostalctrl.initFPGAConnection(0x112)) {
+		log(Logger::INFO) << "TUD_TESTBENCH:NOTE:TESTPASS: Transport Layer initialisation sequence "
+							 "performed successfully."
+						  << endl;
+	}
 #endif
 }
 
@@ -42,30 +49,9 @@ S2C_JtagPhys2FpgaArq::~S2C_JtagPhys2FpgaArq()
 {
 }
 
-
-void S2C_JtagPhys2FpgaArq::initHostAL()
-{
-	log(Logger::INFO) << "Initialisation start: " << /*sc_simulation_time() <<*/ endl;
-	if (hostalctrl.isInitialized()) {
-		log(Logger::INFO) << "FPGA Connection already initialized";
-	} else if (hostalctrl.initFPGAConnection(0x112)) {
-		log(Logger::INFO) << "TUD_TESTBENCH:NOTE:TESTPASS: Transport Layer initialisation sequence "
-							 "performed successfully."
-						  << endl;
-	} else {
-		log(Logger::ERROR)
-			<< "TUD_TESTBENCH:NOTE:TESTFAIL: Transport Layer initialisation sequence failed."
-			<< endl;
-		log(Logger::ERROR) << "Initialisation end: " << /*sc_simulation_time() <<*/ endl;
-		;
-		log(Logger::ERROR) << "Aborting any further tests." << endl;
-	}
-}
-
 S2C_JtagPhys2FpgaArq::Commstate S2C_JtagPhys2FpgaArq::Init(
 	int hicann_jtag_nr, bool silent, bool force_highspeed_init, bool return_on_error)
 {
-	initHostAL();
 	S2C_JtagPhys2FpgaArq::Commstate returnval =
 		S2C_JtagPhys2Fpga::Init(hicann_jtag_nr, silent, force_highspeed_init, return_on_error);
 
@@ -85,7 +71,6 @@ S2C_JtagPhys2FpgaArq::Commstate S2C_JtagPhys2FpgaArq::Init(
 S2C_JtagPhys2FpgaArq::Commstate S2C_JtagPhys2FpgaArq::Init(
 	std::bitset<8> hicann, bool silent, bool force_highspeed_init, bool return_on_error)
 {
-	initHostAL();
 	S2C_JtagPhys2FpgaArq::Commstate returnval =
 		S2C_JtagPhys2Fpga::Init(hicann, silent, force_highspeed_init, return_on_error);
 

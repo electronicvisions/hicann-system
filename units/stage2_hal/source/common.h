@@ -59,7 +59,7 @@ extern "C" {
   #ifdef HICANN_DESIGN
      #include "jtag_emulator.h"
   #else
-     #include "eth_jtag_test.h"
+     #include "jtag_cmdbase_fpgadnchicann_full.h"
   #endif
 #else
 #include "jtag_cmdbase_fpgadnchicann_full.h"
@@ -149,7 +149,7 @@ template<class T> void fir(std::vector<T> &res, const std::vector<T> &data,const
   #ifdef HICANN_DESIGN
     typedef jtag_emulator myjtag_full;
   #else
-    typedef eth_jtag_test myjtag_full;
+    typedef jtag_cmdbase_fpgadnchicann_full myjtag_full;
   #endif
 #else
 typedef jtag_cmdbase_fpgadnchicann_full myjtag_full;

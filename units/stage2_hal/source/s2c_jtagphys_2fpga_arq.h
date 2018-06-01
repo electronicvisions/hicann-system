@@ -78,9 +78,6 @@ public:
 	// temporary stuff, for getting access to pulse handling functionality in HostALController
 	HostALController* getHostAL() { return &(this->hostalctrl); }
 
-	// reset HostAL connection
-	void initHostAL();
-
 	// made public only for access from testmodes!
 	dncid_t dncid;
 

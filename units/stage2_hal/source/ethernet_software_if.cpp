@@ -42,11 +42,14 @@
 #endif
 
 #include "logger.h"
+#include "logger_ncsim_compat.h"
 
 #include <boost/asio.hpp>
 
 
+#ifndef NCSIM
 static log4cxx::LoggerPtr logger = log4cxx::Logger::getLogger("hicann-system.tests2");
+#endif
 
 EthernetSoftwareIF::EthernetSoftwareIF() : udp_socket(-1)
 	,_log(Logger::instance())
