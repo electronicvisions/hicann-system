@@ -1,0 +1,2 @@
+ ./tests2 -bje2f 1 0 -ip 192.168.1.19 -jp 1701 -m tm_capo_net -c ../conf/smillner/FGparam_uniform_mod.xml 
+

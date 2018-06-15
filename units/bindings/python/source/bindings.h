@@ -1,0 +1,6 @@
+#include "units/stage2_hal/source/s2hal.h"
+#include "global_src/systemc/hardware_base.h"
+#include "units/stage2_conf/source/stage2_conf.h"
+#include "units/jtag_lib/source/jtag_cmdbase_fpgadnchicann_full.h"
+#include "units/jtag_lib/source/jtag_lib.h"
+#include "units/arq/source/arq.h"

@@ -1,0 +1,70 @@
+
+hicannnr = 0
+
+hc = chips[FPGA_COUNT+DNC_COUNT+hicannnr]
+lc = hc.getLC_cl()
+
+TAG = 1
+ocp_base = OcpStdpCtrl_t.startaddr # top
+# ocp_base = OcpStdpCtrl_b.startaddr # bottom
+rc = CtrlModule(hc.tags[TAG], ocp_base, 0x7fff)
+ll  = hc.tags[0]
+ll.SetDebugLevel(2)
+
+
+## HICANN reset via FPGA reset pulse
+#jtag.FPGA_set_fpga_ctrl(1)
+## JTAG reset
+#jtag.reset_jtag()
+
+# nur bei DNC Aufbau
+#if not hc.GetCommObj().fpga_dnc_init():
+#    raise Exception("ERROR: FPGA-DNC Init failed, abort")
+if  hc.GetCommObj().Init() != Stage2Comm.Commstate.ok:
+    raise Exception("ERROR: Init failed, abort")
+else:
+	 print "Init() ok"
+
+## ARQ (software) reset
+#ll.arq.Reset()
+
+
+
+jtagid=0xf
+res, jtagid = jtf.read_id( jtf.pos_hicann )
+print "HICANN ID: 0x%x" % jtagid
+
+
+
+
+# testmode tmag_switchramtest
+startaddr = 0
+maxaddr   = 63
+datawidth = 4
+testdata = 0
+rcvdata  = 0
+rcvaddr  = 0
+result = True
+#srand(1)
+
+print "start SwitchCtrl access 1:"
+
+import random
+for i in range(startaddr, maxaddr+1):
+    testdata = random.randint( 0, (1<<datawidth)-1 ) # from 0 to 15
+    lc.write_cfg(i, testdata)
+    lc.read_cfg(i)
+
+    rcvaddr, rcvdata = lc.get_read_cfg()
+
+    print "test \t0x%x," % i, "\t0x%x" % testdata, "against \t0x%x," % rcvaddr, "\t0x%x:" % rcvdata,
+
+    if i == rcvaddr and testdata == rcvdata:
+        print "OK :-)"
+    else:
+        print "ERROR :-("
+        result = False
+        break
+
+print "Overall result is", result
+

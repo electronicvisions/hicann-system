@@ -1,0 +1,72 @@
+#!/usr/bin/env python
+import sys, os
+
+from waflib.extras.symwaf2ic import SYMWAF2IC_VERSION
+hicann_test_dir = '/tmp/test' # Some bogus path
+
+def depends(ctx):
+    ctx('hicann-system', 'units/config')
+    ctx('hicann-system', 'units/arq')
+    ctx('hicann-system', 'units/stage2_conf')
+    ctx('hicann-system', 'units/jtag_lib')
+    ctx('hicann-system', 'units/hicann_test')
+    ctx('hicann-system', 'global_src/systemc')
+    ctx('hicann-system', 'units/communication')
+    ctx('sctrltp')
+
+
+def options(ctx):
+    ctx.load('compiler_cxx')
+
+
+def configure(ctx):
+    ctx.load('compiler_cxx')
+
+    ctx.check_cxx(msg = 'Checking for liblockfile', header_name='lockfile.h', lib='lockfile', uselib_store='LOCKFILE')
+    ctx.check_cxx(lib='rt', uselib_store='RT')
+    ctx.check_cxx(lib='gomp', cxxflags='-fopenmp', linkflags='-fopenmp', uselib_store='OPENMP4HICANNSYS', mandatory=False)
+
+
+def build(ctx):
+    # basic sources necessary to build test environment for HICANN chip, requires only ANSI C++ libs
+    SOURCES = '''
+        s2_types.cpp s2comm.cpp s2c_jtagphys.cpp s2c_jtagphys_2fpga.cpp \
+        s2c_jtagphys_2fpga_arq.cpp \
+        ctrlmod.cpp synapse_control.cpp l1switch_control.cpp spl1_control.cpp \
+        fg_control.cpp s2ctrl.cpp hicann_ctrl.cpp neuronbuilder_control.cpp \
+        neuron_control.cpp fpga_control.cpp dnc_control.cpp dncif_control.cpp iboardv2_ctrl.cpp \
+        repeater_control.cpp syn_trans.cpp reticle_control.cpp spinn_controller.cpp \
+        HandleCommFreezeError.cpp RedirectStdout.cpp \
+        ethernet_software_if.cpp host_al_controller.cpp CommAccess.cpp FPGAConnectionId.cpp HMFRunLog.cpp
+    '''.split()
+
+    ctx(target          = 's2hal_inc',
+        use             = [ 'arq_inc', 'communication_inc', 'power_inc' ],
+        export_includes = 'source')
+
+    # build stage2 hal objects (reused by python wrapper)
+    ctx.objects (
+        target          = 's2hal_obj',
+        source          = [ ctx.path.find_resource('source/%s' % x) for x in SOURCES ],
+        export_includes = 'source',
+        use             = [
+            'arq_inc',
+            'hicann_test_inc',
+            's2hal_inc',
+            'config',
+            'systemc_config',
+            'logger_obj',
+            'getch_obj',
+            's2conf_obj',
+            'arq_obj',
+            'tud_jtag',
+            'jtag_lib_obj',
+            'sw_wsiclkboard_inc',
+            'communication_inc',
+            'arqstream_obj',
+            'LOCKFILE',
+            'sctrl',
+            'OPENMP4HICANNSYS',
+            ],
+        cxxflags = ['-fPIC'],
+    )

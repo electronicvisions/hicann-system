@@ -1,0 +1,34 @@
+#!/usr/bin/env python
+import sys, os
+
+try:
+    from waflib.extras.symwaf2ic import SYMWAF2IC_VERSION
+    recurse = lambda *args, **kwargs: None
+    dependencies = []
+    hicann_test_dir = '/tmp/test' # Some bogus path
+except ImportError:
+    from gtest import summary
+    from symwaf2ic import recurse_depends
+    recurse = lambda ctx: recurse_depends(depends, ctx)
+
+
+def depends(ctx):
+    # ctx('hicann-system', 'units/config')
+    pass
+
+
+def options(ctx):
+    ctx.load('compiler_cxx')
+
+    recurse(ctx)
+
+def configure(ctx):
+    ctx.load('compiler_cxx')
+
+    recurse(ctx)
+
+def build(ctx):
+    recurse(ctx)
+
+    ctx(target          = 'hicann_cfg_inc',
+        export_includes = 'source')

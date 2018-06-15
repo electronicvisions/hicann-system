@@ -1,0 +1,27 @@
+# build / waf files
+build/
+.waf*
+.lock-waf*
+
+# generated code
+units/bindings/python/source/generated/
+
+# binary and lib folders
+bin
+lib
+
+# other temp files
+*.sw[pon]
+cscope.out
+*.so
+*.bck
+*.pyc
+
+# results
+units/hicann_test/results
+
+*.orig
+*.BACKUP.*
+*.LOCAL.*
+*.REMOTE.*
+*.BASE.*

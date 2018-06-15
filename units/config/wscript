@@ -1,0 +1,32 @@
+#!/usr/bin/env python
+
+def options(opt):
+    opt.load('compiler_cxx')
+    hopts = opt.get_option_group('HICANN system')
+    if not hopts:
+        hopts = opt.add_option_group('HICANN system')
+    hopts.add_option('--hicann-version', action='store',
+            default=2, type='int', dest='hicann_version',
+            help='Sets HICANN_V define to HICANN version')
+    hopts.add_option('--dnc-version', action='store',
+            default=2, type='int', dest='dnc_version',
+            help='Sets DNC_V define to DNC version')
+
+def configure(cfg):
+    cfg.load('compiler_cxx')
+
+    from waflib.ConfigSet import ConfigSet
+
+    # dirty hack, becuse `write_config_header` env kwarg is broken.
+    tmp = cfg.env
+    cfg.env = ConfigSet()
+    cfg.define('HICANN_V', cfg.options.hicann_version)
+    cfg.define('DNC_V', cfg.options.dnc_version)
+    cfg.write_config_header('config.h')
+    cfg.env = tmp
+
+def build(bld):
+    bld(
+        target          = 'config',
+        export_includes = '.',
+    )

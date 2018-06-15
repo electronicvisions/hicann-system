@@ -1,0 +1,673 @@
+<!DOCTYPE stage2conf>
+<reticle>
+  <type/>
+  <hicann id="0">
+    <output>
+      <op state="1" id="0"/>
+      <op state="1" id="1">0</op>
+    </output>
+    <neurons>
+      <denmem id="0">
+        <El>500</El>
+        <Vt>0</Vt>
+        <Vsyni>0</Vsyni>
+        <Vsynx>0</Vsynx>
+        <Vsyntci>0</Vsyntci>
+        <Vsyntcx>0</Vsyntcx>
+        <Esyni>0</Esyni>
+        <Esynx>0</Esynx>
+      </denmem>
+    </neurons>
+    <fg id="0">
+      <maxcycle>255</maxcycle>
+      <currentwritetime>2</currentwritetime>
+      <voltagewritetime>16</voltagewritetime>
+      <readtime>63</readtime>
+      <acceleratorstep>4</acceleratorstep>
+      <fg_pulselength>8</fg_pulselength>
+      <fg_bias>15</fg_bias>
+      <fg_biasn>0</fg_biasn>
+      <line id="0">
+        <value id="all">0</value>
+        <value id="0">284</value>
+        <value id="2">0</value>
+        <value id="3">0</value>
+        <value id="4">0</value>
+        <value id="5">0</value>
+        <value id="6">0</value>
+        <value id="7">0</value>
+        <value id="8">0</value>
+        <value id="9">0</value>
+        <value id="10">0</value>
+      </line>
+      <line id="1">
+        <value id="all">0</value>
+        <value id="0">1023</value>
+        <value id="2">0</value>
+        <value id="3">0</value>
+        <value id="4">0</value>
+        <value id="5">0</value>
+        <value id="6">0</value>
+        <value id="7">0</value>
+        <value id="8">0</value>
+        <value id="9">0</value>
+        <value id="10">0</value>
+      </line>
+      <line id="2">
+        <value id="all">0</value>
+        <value id="0">200</value>
+        <value id="2">0</value>
+        <value id="3">0</value>
+        <value id="4">0</value>
+        <value id="5">0</value>
+        <value id="6">0</value>
+        <value id="7">0</value>
+        <value id="8">0</value>
+        <value id="9">0</value>
+        <value id="10">0</value>
+      </line>
+      <line id="3">
+        <value id="all">0</value>
+        <value id="0">1023</value>
+        <value id="2">0</value>
+        <value id="3">0</value>
+        <value id="4">0</value>
+        <value id="5">0</value>
+        <value id="6">0</value>
+        <value id="7">0</value>
+        <value id="8">0</value>
+        <value id="9">0</value>
+        <value id="10">0</value>
+      </line>
+      <line id="4">
+        <value id="all">0</value>
+        <value id="0">0</value>
+        <value id="2">0</value>
+        <value id="3">0</value>
+        <value id="4">0</value>
+        <value id="5">0</value>
+        <value id="6">0</value>
+        <value id="7">0</value>
+        <value id="8">0</value>
+        <value id="9">0</value>
+        <value id="10">0</value>
+      </line>
+      <line id="5">
+        <value id="all">1023</value>
+        <value id="0">1023</value>
+        <value id="2">1023</value>
+        <value id="3">1023</value>
+        <value id="4">1023</value>
+        <value id="5">1023</value>
+        <value id="6">1023</value>
+        <value id="7">1023</value>
+        <value id="8">1023</value>
+        <value id="9">1023</value>
+        <value id="10">1023</value>
+      </line>
+      <line id="6">
+        <value id="all">284</value>
+        <value id="0">0</value>
+        <value id="2">284</value>
+        <value id="3">284</value>
+        <value id="4">284</value>
+        <value id="5">284</value>
+        <value id="6">284</value>
+        <value id="7">284</value>
+        <value id="8">284</value>
+        <value id="9">284</value>
+        <value id="10">284</value>
+      </line>
+      <line id="7">
+        <value id="all">0</value>
+        <value id="0">1023</value>
+        <value id="2">0</value>
+        <value id="3">0</value>
+        <value id="4">0</value>
+        <value id="5">0</value>
+        <value id="6">0</value>
+        <value id="7">0</value>
+        <value id="8">0</value>
+        <value id="9">0</value>
+        <value id="10">0</value>
+      </line>
+      <line id="8">
+        <value id="all">511</value>
+        <value id="0">0</value>
+        <value id="2">511</value>
+        <value id="3">511</value>
+        <value id="4">511</value>
+        <value id="5">511</value>
+        <value id="6">511</value>
+        <value id="7">511</value>
+        <value id="8">511</value>
+        <value id="9">511</value>
+        <value id="10">511</value>
+      </line>
+      <line id="9">
+        <value id="all">0</value>
+        <value id="0">20</value>
+        <value id="2">0</value>
+        <value id="3">0</value>
+        <value id="4">0</value>
+        <value id="5">0</value>
+        <value id="6">0</value>
+        <value id="7">0</value>
+        <value id="8">0</value>
+        <value id="9">0</value>
+        <value id="10">0</value>
+      </line>
+      <line id="10">
+        <value id="all">795</value>
+        <value id="0">0</value>
+        <value id="2">795</value>
+        <value id="3">795</value>
+        <value id="4">795</value>
+        <value id="5">795</value>
+        <value id="6">795</value>
+        <value id="7">795</value>
+        <value id="8">795</value>
+        <value id="9">795</value>
+        <value id="10">795</value>
+      </line>
+      <line id="11">
+        <value id="all">133</value>
+        <value id="0">20</value>
+        <value id="2">133</value>
+        <value id="3">133</value>
+        <value id="4">133</value>
+        <value id="5">133</value>
+        <value id="6">133</value>
+        <value id="7">133</value>
+        <value id="8">133</value>
+        <value id="9">133</value>
+        <value id="10">133</value>
+      </line>
+      <line id="12">
+        <value id="all">397</value>
+        <value id="0">0</value>
+        <value id="2">397</value>
+        <value id="3">397</value>
+        <value id="4">397</value>
+        <value id="5">397</value>
+        <value id="6">397</value>
+        <value id="7">397</value>
+        <value id="8">397</value>
+        <value id="9">397</value>
+        <value id="10">397</value>
+      </line>
+      <line id="13">
+        <value id="all">818</value>
+        <value id="0">20</value>
+        <value id="2">818</value>
+        <value id="3">818</value>
+        <value id="4">818</value>
+        <value id="5">818</value>
+        <value id="6">818</value>
+        <value id="7">818</value>
+        <value id="8">818</value>
+        <value id="9">818</value>
+        <value id="10">818</value>
+      </line>
+      <line id="14">
+        <value id="all">795</value>
+        <value id="0">0</value>
+        <value id="2">795</value>
+        <value id="3">795</value>
+        <value id="4">795</value>
+        <value id="5">795</value>
+        <value id="6">795</value>
+        <value id="7">795</value>
+        <value id="8">795</value>
+        <value id="9">795</value>
+        <value id="10">795</value>
+      </line>
+      <line id="15">
+        <value id="all">409</value>
+        <value id="0">20</value>
+        <value id="2">409</value>
+        <value id="3">409</value>
+        <value id="4">409</value>
+        <value id="5">409</value>
+        <value id="6">409</value>
+        <value id="7">409</value>
+        <value id="8">409</value>
+        <value id="9">409</value>
+        <value id="10">409</value>
+      </line>
+      <line id="16">
+        <value id="all">549</value>
+        <value id="0">0</value>
+        <value id="2">549</value>
+        <value id="3">549</value>
+        <value id="4">549</value>
+        <value id="5">549</value>
+        <value id="6">549</value>
+        <value id="7">549</value>
+        <value id="8">549</value>
+        <value id="9">549</value>
+        <value id="10">549</value>
+      </line>
+      <line id="17">
+        <value id="all">818</value>
+        <value id="0">0</value>
+        <value id="2">818</value>
+        <value id="3">818</value>
+        <value id="4">818</value>
+        <value id="5">818</value>
+        <value id="6">818</value>
+        <value id="7">818</value>
+        <value id="8">818</value>
+        <value id="9">818</value>
+        <value id="10">818</value>
+      </line>
+      <line id="18">
+        <value id="all">246</value>
+        <value id="0">0</value>
+        <value id="2">246</value>
+        <value id="3">246</value>
+        <value id="4">246</value>
+        <value id="5">246</value>
+        <value id="6">246</value>
+        <value id="7">246</value>
+        <value id="8">246</value>
+        <value id="9">246</value>
+        <value id="10">246</value>
+      </line>
+      <line id="19">
+        <value id="all">0</value>
+        <value id="0">0</value>
+        <value id="2">0</value>
+        <value id="3">0</value>
+        <value id="4">0</value>
+        <value id="5">0</value>
+        <value id="6">0</value>
+        <value id="7">0</value>
+        <value id="8">0</value>
+        <value id="9">0</value>
+        <value id="10">0</value>
+      </line>
+      <line id="20">
+        <value id="all">568</value>
+        <value id="0">0</value>
+        <value id="2">568</value>
+        <value id="3">568</value>
+        <value id="4">568</value>
+        <value id="5">568</value>
+        <value id="6">568</value>
+        <value id="7">568</value>
+        <value id="8">568</value>
+        <value id="9">568</value>
+        <value id="10">568</value>
+      </line>
+      <line id="21">
+        <value id="all">0</value>
+        <value id="0">0</value>
+        <value id="2">0</value>
+        <value id="3">0</value>
+        <value id="4">0</value>
+        <value id="5">0</value>
+        <value id="6">0</value>
+        <value id="7">0</value>
+        <value id="8">0</value>
+        <value id="9">0</value>
+        <value id="10">0</value>
+      </line>
+      <line id="22">
+        <value id="all">511</value>
+        <value id="0">0</value>
+        <value id="2">511</value>
+        <value id="3">511</value>
+        <value id="4">511</value>
+        <value id="5">511</value>
+        <value id="6">511</value>
+        <value id="7">511</value>
+        <value id="8">511</value>
+        <value id="9">511</value>
+        <value id="10">511</value>
+      </line>
+      <line id="23">
+        <value id="all">409</value>
+        <value id="0">800</value>
+        <value id="2">409</value>
+        <value id="3">409</value>
+        <value id="4">409</value>
+        <value id="5">409</value>
+        <value id="6">409</value>
+        <value id="7">409</value>
+        <value id="8">409</value>
+        <value id="9">409</value>
+        <value id="10">409</value>
+      </line>
+      <line id="all">
+        <value id="all">0</value>
+      </line>
+    </fg>
+    <fg id="all">
+      <maxcycle>255</maxcycle>
+      <currentwritetime>2</currentwritetime>
+      <voltagewritetime>16</voltagewritetime>
+      <readtime>63</readtime>
+      <acceleratorstep>4</acceleratorstep>
+      <fg_pulselength>8</fg_pulselength>
+      <fg_bias>15</fg_bias>
+      <fg_biasn>0</fg_biasn>
+      <line id="0">
+        <value id="all">0</value>
+        <value id="0">284</value>
+        <value id="2">0</value>
+        <value id="3">0</value>
+        <value id="4">0</value>
+        <value id="5">0</value>
+        <value id="6">0</value>
+        <value id="7">0</value>
+        <value id="8">0</value>
+        <value id="9">0</value>
+        <value id="10">0</value>
+      </line>
+      <line id="1">
+        <value id="all">0</value>
+        <value id="0">1023</value>
+        <value id="2">0</value>
+        <value id="3">0</value>
+        <value id="4">0</value>
+        <value id="5">0</value>
+        <value id="6">0</value>
+        <value id="7">0</value>
+        <value id="8">0</value>
+        <value id="9">0</value>
+        <value id="10">0</value>
+      </line>
+      <line id="2">
+        <value id="all">0</value>
+        <value id="0">200</value>
+        <value id="2">0</value>
+        <value id="3">0</value>
+        <value id="4">0</value>
+        <value id="5">0</value>
+        <value id="6">0</value>
+        <value id="7">0</value>
+        <value id="8">0</value>
+        <value id="9">0</value>
+        <value id="10">0</value>
+      </line>
+      <line id="3">
+        <value id="all">0</value>
+        <value id="0">1023</value>
+        <value id="2">0</value>
+        <value id="3">0</value>
+        <value id="4">0</value>
+        <value id="5">0</value>
+        <value id="6">0</value>
+        <value id="7">0</value>
+        <value id="8">0</value>
+        <value id="9">0</value>
+        <value id="10">0</value>
+      </line>
+      <line id="4">
+        <value id="all">0</value>
+        <value id="0">0</value>
+        <value id="2">0</value>
+        <value id="3">0</value>
+        <value id="4">0</value>
+        <value id="5">0</value>
+        <value id="6">0</value>
+        <value id="7">0</value>
+        <value id="8">0</value>
+        <value id="9">0</value>
+        <value id="10">0</value>
+      </line>
+      <line id="5">
+        <value id="all">1023</value>
+        <value id="0">1023</value>
+        <value id="2">1023</value>
+        <value id="3">1023</value>
+        <value id="4">1023</value>
+        <value id="5">1023</value>
+        <value id="6">1023</value>
+        <value id="7">1023</value>
+        <value id="8">1023</value>
+        <value id="9">1023</value>
+        <value id="10">1023</value>
+      </line>
+      <line id="6">
+        <value id="all">284</value>
+        <value id="0">0</value>
+        <value id="2">284</value>
+        <value id="3">284</value>
+        <value id="4">284</value>
+        <value id="5">284</value>
+        <value id="6">284</value>
+        <value id="7">284</value>
+        <value id="8">284</value>
+        <value id="9">284</value>
+        <value id="10">284</value>
+      </line>
+      <line id="7">
+        <value id="all">0</value>
+        <value id="0">1023</value>
+        <value id="2">0</value>
+        <value id="3">0</value>
+        <value id="4">0</value>
+        <value id="5">0</value>
+        <value id="6">0</value>
+        <value id="7">0</value>
+        <value id="8">0</value>
+        <value id="9">0</value>
+        <value id="10">0</value>
+      </line>
+      <line id="8">
+        <value id="all">511</value>
+        <value id="0">0</value>
+        <value id="2">511</value>
+        <value id="3">511</value>
+        <value id="4">511</value>
+        <value id="5">511</value>
+        <value id="6">511</value>
+        <value id="7">511</value>
+        <value id="8">511</value>
+        <value id="9">511</value>
+        <value id="10">511</value>
+      </line>
+      <line id="9">
+        <value id="all">0</value>
+        <value id="0">20</value>
+        <value id="2">0</value>
+        <value id="3">0</value>
+        <value id="4">0</value>
+        <value id="5">0</value>
+        <value id="6">0</value>
+        <value id="7">0</value>
+        <value id="8">0</value>
+        <value id="9">0</value>
+        <value id="10">0</value>
+      </line>
+      <line id="10">
+        <value id="all">795</value>
+        <value id="0">0</value>
+        <value id="2">795</value>
+        <value id="3">795</value>
+        <value id="4">795</value>
+        <value id="5">795</value>
+        <value id="6">795</value>
+        <value id="7">795</value>
+        <value id="8">795</value>
+        <value id="9">795</value>
+        <value id="10">795</value>
+      </line>
+      <line id="11">
+        <value id="all">133</value>
+        <value id="0">20</value>
+        <value id="2">133</value>
+        <value id="3">133</value>
+        <value id="4">133</value>
+        <value id="5">133</value>
+        <value id="6">133</value>
+        <value id="7">133</value>
+        <value id="8">133</value>
+        <value id="9">133</value>
+        <value id="10">133</value>
+      </line>
+      <line id="12">
+        <value id="all">397</value>
+        <value id="0">0</value>
+        <value id="2">397</value>
+        <value id="3">397</value>
+        <value id="4">397</value>
+        <value id="5">397</value>
+        <value id="6">397</value>
+        <value id="7">397</value>
+        <value id="8">397</value>
+        <value id="9">397</value>
+        <value id="10">397</value>
+      </line>
+      <line id="13">
+        <value id="all">818</value>
+        <value id="0">20</value>
+        <value id="2">818</value>
+        <value id="3">818</value>
+        <value id="4">818</value>
+        <value id="5">818</value>
+        <value id="6">818</value>
+        <value id="7">818</value>
+        <value id="8">818</value>
+        <value id="9">818</value>
+        <value id="10">818</value>
+      </line>
+      <line id="14">
+        <value id="all">795</value>
+        <value id="0">0</value>
+        <value id="2">795</value>
+        <value id="3">795</value>
+        <value id="4">795</value>
+        <value id="5">795</value>
+        <value id="6">795</value>
+        <value id="7">795</value>
+        <value id="8">795</value>
+        <value id="9">795</value>
+        <value id="10">795</value>
+      </line>
+      <line id="15">
+        <value id="all">409</value>
+        <value id="0">20</value>
+        <value id="2">409</value>
+        <value id="3">409</value>
+        <value id="4">409</value>
+        <value id="5">409</value>
+        <value id="6">409</value>
+        <value id="7">409</value>
+        <value id="8">409</value>
+        <value id="9">409</value>
+        <value id="10">409</value>
+      </line>
+      <line id="16">
+        <value id="all">549</value>
+        <value id="0">0</value>
+        <value id="2">549</value>
+        <value id="3">549</value>
+        <value id="4">549</value>
+        <value id="5">549</value>
+        <value id="6">549</value>
+        <value id="7">549</value>
+        <value id="8">549</value>
+        <value id="9">549</value>
+        <value id="10">549</value>
+      </line>
+      <line id="17">
+        <value id="all">818</value>
+        <value id="0">0</value>
+        <value id="2">818</value>
+        <value id="3">818</value>
+        <value id="4">818</value>
+        <value id="5">818</value>
+        <value id="6">818</value>
+        <value id="7">818</value>
+        <value id="8">818</value>
+        <value id="9">818</value>
+        <value id="10">818</value>
+      </line>
+      <line id="18">
+        <value id="all">246</value>
+        <value id="0">0</value>
+        <value id="2">246</value>
+        <value id="3">246</value>
+        <value id="4">246</value>
+        <value id="5">246</value>
+        <value id="6">246</value>
+        <value id="7">246</value>
+        <value id="8">246</value>
+        <value id="9">246</value>
+        <value id="10">246</value>
+      </line>
+      <line id="19">
+        <value id="all">0</value>
+        <value id="0">0</value>
+        <value id="2">0</value>
+        <value id="3">0</value>
+        <value id="4">0</value>
+        <value id="5">0</value>
+        <value id="6">0</value>
+        <value id="7">0</value>
+        <value id="8">0</value>
+        <value id="9">0</value>
+        <value id="10">0</value>
+      </line>
+      <line id="20">
+        <value id="all">568</value>
+        <value id="0">0</value>
+        <value id="2">568</value>
+        <value id="3">568</value>
+        <value id="4">568</value>
+        <value id="5">568</value>
+        <value id="6">568</value>
+        <value id="7">568</value>
+        <value id="8">568</value>
+        <value id="9">568</value>
+        <value id="10">568</value>
+      </line>
+      <line id="21">
+        <value id="all">0</value>
+        <value id="0">0</value>
+        <value id="2">0</value>
+        <value id="3">0</value>
+        <value id="4">0</value>
+        <value id="5">0</value>
+        <value id="6">0</value>
+        <value id="7">0</value>
+        <value id="8">0</value>
+        <value id="9">0</value>
+        <value id="10">0</value>
+      </line>
+      <line id="22">
+        <value id="all">511</value>
+        <value id="0">0</value>
+        <value id="2">511</value>
+        <value id="3">511</value>
+        <value id="4">511</value>
+        <value id="5">511</value>
+        <value id="6">511</value>
+        <value id="7">511</value>
+        <value id="8">511</value>
+        <value id="9">511</value>
+        <value id="10">511</value>
+      </line>
+      <line id="23">
+        <value id="all">409</value>
+        <value id="0">800</value>
+        <value id="2">409</value>
+        <value id="3">409</value>
+        <value id="4">409</value>
+        <value id="5">409</value>
+        <value id="6">409</value>
+        <value id="7">409</value>
+        <value id="8">409</value>
+        <value id="9">409</value>
+        <value id="10">409</value>
+      </line>
+      <line id="all">
+        <value id="all">0</value>
+      </line>
+    </fg>
+    <stimulus id="all"></stimulus>
+  </hicann>
+</reticle>

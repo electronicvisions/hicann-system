@@ -1,0 +1,10 @@
+# build directory, binary directory and waf files should be ignored
+/build
+/bin
+/lib
+/tests2
+
+/.waf-*
+/.lock-wscript
+
+/results

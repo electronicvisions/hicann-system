@@ -1,0 +1,88 @@
+<html><head><link type='text/css' href='style.css' rel='stylesheet'></head><body class='pgBgnd'>
+<h3 align='center'>Equations</h3>
+<table width='90%' align='center' border='1' cellpadding='0' cellspacing='0'>
+<tr><td>
+</td></tr><tr><td>
+********** Mapped Logic **********
+</td></tr><tr><td>
+FDCPE_ARESET_L: FDCPE port map (ARESET_L,ARESET_L_D,CLK,NOT ARESET_L33,'0','1');
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ARESET_L_D <= ((LED1 AND ARESET_L)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT LED1 AND count(0) AND count(1) AND count(2) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	count(3) AND count(4) AND count(5) AND count(6) AND count(7)));
+</td></tr><tr><td>
+</td></tr><tr><td>
+FREE1 <= TCK33;
+</td></tr><tr><td>
+</td></tr><tr><td>
+FREE2 <= NOT (((NOT SYSSTART33 AND NOT TMS33)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT TMS33 AND running1)));
+</td></tr><tr><td>
+FTCPE_LED1: FTCPE port map (LED1,LED1_T,CLK,NOT ARESET_L33,'0','1');
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;LED1_T <= (NOT LED1 AND count(0) AND count(1) AND count(2) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	count(3) AND count(4) AND count(5) AND count(6) AND count(7));
+</td></tr><tr><td>
+</td></tr><tr><td>
+LED2 <= SYSSTART33;
+</td></tr><tr><td>
+</td></tr><tr><td>
+LED3 <= TMS33;
+</td></tr><tr><td>
+</td></tr><tr><td>
+TCK <= TCK33;
+</td></tr><tr><td>
+</td></tr><tr><td>
+TDI <= TDI33;
+</td></tr><tr><td>
+</td></tr><tr><td>
+TDO33 <= TDO;
+</td></tr><tr><td>
+</td></tr><tr><td>
+TMS_SYSSTART <= NOT (((NOT SYSSTART33 AND NOT TMS33)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT TMS33 AND running1)));
+</td></tr><tr><td>
+FTCPE_count0: FTCPE port map (count(0),NOT LED1,CLK,NOT ARESET_L33,'0','1');
+</td></tr><tr><td>
+FTCPE_count1: FTCPE port map (count(1),count_T(1),CLK,NOT ARESET_L33,'0','1');
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;count_T(1) <= (NOT LED1 AND count(0));
+</td></tr><tr><td>
+FTCPE_count2: FTCPE port map (count(2),count_T(2),CLK,NOT ARESET_L33,'0','1');
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;count_T(2) <= (NOT LED1 AND count(0) AND count(1));
+</td></tr><tr><td>
+FTCPE_count3: FTCPE port map (count(3),count_T(3),CLK,NOT ARESET_L33,'0','1');
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;count_T(3) <= (NOT LED1 AND count(0) AND count(1) AND count(2));
+</td></tr><tr><td>
+FTCPE_count4: FTCPE port map (count(4),count_T(4),CLK,NOT ARESET_L33,'0','1');
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;count_T(4) <= (NOT LED1 AND count(0) AND count(1) AND count(2) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	count(3));
+</td></tr><tr><td>
+FTCPE_count5: FTCPE port map (count(5),count_T(5),CLK,NOT ARESET_L33,'0','1');
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;count_T(5) <= (NOT LED1 AND count(0) AND count(1) AND count(2) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	count(3) AND count(4));
+</td></tr><tr><td>
+FTCPE_count6: FTCPE port map (count(6),count_T(6),CLK,NOT ARESET_L33,'0','1');
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;count_T(6) <= (NOT LED1 AND count(0) AND count(1) AND count(2) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	count(3) AND count(4) AND count(5));
+</td></tr><tr><td>
+FTCPE_count7: FTCPE port map (count(7),count_T(7),CLK,NOT ARESET_L33,'0','1');
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;count_T(7) <= (NOT LED1 AND count(0) AND count(1) AND count(2) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	count(3) AND count(4) AND count(5) AND count(6));
+</td></tr><tr><td>
+FDCPE_running1: FDCPE port map (running1,running,CLK,NOT ARESET_L33,'0','1');
+</td></tr><tr><td>
+FDCPE_running: FDCPE port map (running,SYSSTART33,CLK,NOT ARESET_L33,'0','1');
+</td></tr><tr><td>
+</td></tr><tr><td>
+Register Legend:
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; FDCPE (Q,D,C,CLR,PRE,CE); 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; FDDCPE (Q,D,C,CLR,PRE,CE); 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; FTCPE (Q,D,C,CLR,PRE,CE); 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; FTDCPE (Q,D,C,CLR,PRE,CE); 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; LDCP  (Q,D,G,CLR,PRE); 
+</td></tr><tr><td>
+</td></tr>
+</table>
+<form><span class="pgRef"><table width="90%" align="center"><tr>
+<td align="left"><input type="button" onclick="javascript:parent.leftnav.showTop()" onmouseover="window.status='goto top of page'; return true;" onmouseout="window.status=''" value="back to top"></td>
+<td align="right"><input type="button" onclick="window.print()" onmouseover="window.status='print page'; return true;" onmouseout="window.status=''" value="print page"></td>
+</tr></table></span></form>
+</body></html>

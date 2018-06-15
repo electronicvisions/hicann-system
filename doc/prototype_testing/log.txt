@@ -1,0 +1,31 @@
+Observed symptoms during initial testing of the HICANN chip:
+
+
+* All correctly binded chips correctly performed:
+
+	* read JTAG ID.
+
+	* perform loopback test using JTAG bypass register
+
+	* current draw proportional to Faraday PLL frequency divider setting
+		-> PLL configuration OK
+		-> BUT: Frequeny analysis of VDD (digital power) showed:
+			- peak at PLL output frequency
+			- ~ 4 times larger peak at f(pllout)/2
+			- NO component at f(pllout)/4 which is the system clock 
+			  driving the majority of the digital part's flip-flops
+
+	* the only reasonable next step was to test the loopack funcitonality of
+		the ARQ unuits using the JTAG interface. This test failed at clock frequencies
+		from 5MHz to 250MHz.
+
+	* Test now OK with the full 250MHz under these circumstances:
+		- Floating Gate power ???
+		- DNC_IF correctly powered. DI_VBIAS_LVDS tied to GND due to incomplete 
+			test setup.
+		- DNC_IF LVDS TX pins shorted to RX pins.
+		- DNC_IF disabled using JTAG system enable command
+		-> loopback on tag 0 and tag 1 ARQ unit OK.
+	
+		
+

@@ -1,0 +1,15 @@
+#reset hicann, set vol and voh and both plls to 100MHz
+cat <<EOF >key
+d
+h
+0
+x
+EOF
+./tests2 $BUSMODE -m tmjs_repeater < key
+cat <<EOF >key
+d
+h
+1
+x
+EOF
+./tests2 $BUSMODE1 -m tmjs_repeater < key

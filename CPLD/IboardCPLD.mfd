@@ -1,0 +1,231 @@
+MDF Database:  version 1.0
+MDF_INFO | IboardCPLD | XC2C64A-5-VQ44
+MACROCELL | 0 | 10 | ARESET_L_MC
+ATTRIBUTES | 2189722370 | 0
+OUTPUTMC | 1 | 0 | 10
+INPUTS | 10 | LED1  | ARESET_L  | count<0>  | count<1>  | count<2>  | count<3>  | count<4>  | count<5>  | count<6>  | count<7>
+INPUTMC | 10 | 1 | 6 | 0 | 10 | 0 | 3 | 0 | 4 | 0 | 5 | 0 | 6 | 0 | 7 | 0 | 13 | 0 | 14 | 0 | 15
+LCT | 1 | 4 | Internal_Name
+EQ | 5 | 
+   ARESET_L := LED1 & ARESET_L
+	# !LED1 & count<0> & count<1> & count<2> & 
+	count<3> & count<4> & count<5> & count<6> & count<7>;	// (2 pt, 10 inp)
+   ARESET_L.CLK  =  CLK;	// GCK	(0 pt, 0 inp)
+    ARESET_L.AR = !ARESET_L33;	// CTR	(1 pt, 1 inp)
+GLOBALS | 1 | 2 | CLK
+
+MACROCELL | 1 | 6 | LED1_MC
+ATTRIBUTES | 2185528066 | 0
+OUTPUTMC | 10 | 0 | 3 | 0 | 4 | 0 | 5 | 0 | 6 | 0 | 7 | 0 | 13 | 0 | 14 | 0 | 15 | 1 | 6 | 0 | 10
+INPUTS | 9 | LED1  | count<0>  | count<1>  | count<2>  | count<3>  | count<4>  | count<5>  | count<6>  | count<7>
+INPUTMC | 9 | 1 | 6 | 0 | 3 | 0 | 4 | 0 | 5 | 0 | 6 | 0 | 7 | 0 | 13 | 0 | 14 | 0 | 15
+LCT | 1 | 4 | Internal_Name
+EQ | 4 | 
+   LED1.T := !LED1 & count<0> & count<1> & count<2> & 
+	count<3> & count<4> & count<5> & count<6> & count<7>;	// (1 pt, 9 inp)
+   LED1.CLK  =  CLK;	// GCK	(0 pt, 0 inp)
+    LED1.AR = !ARESET_L33;	// CTR	(1 pt, 1 inp)
+GLOBALS | 1 | 2 | CLK
+
+MACROCELL | 0 | 3 | count<0>_MC
+ATTRIBUTES | 2185265920 | 0
+OUTPUTMC | 9 | 0 | 4 | 0 | 5 | 0 | 6 | 0 | 7 | 0 | 13 | 0 | 14 | 0 | 15 | 1 | 6 | 0 | 10
+INPUTS | 1 | LED1
+INPUTMC | 1 | 1 | 6
+LCT | 1 | 4 | Internal_Name
+EQ | 3 | 
+   count<0>.T := !LED1;	// (1 pt, 1 inp)
+   count<0>.CLK  =  CLK;	// GCK	(0 pt, 0 inp)
+    count<0>.AR = !ARESET_L33;	// CTR	(1 pt, 1 inp)
+GLOBALS | 1 | 2 | CLK
+
+MACROCELL | 0 | 4 | count<1>_MC
+ATTRIBUTES | 2185265920 | 0
+OUTPUTMC | 8 | 0 | 5 | 0 | 6 | 0 | 7 | 0 | 13 | 0 | 14 | 0 | 15 | 1 | 6 | 0 | 10
+INPUTS | 2 | LED1  | count<0>
+INPUTMC | 2 | 1 | 6 | 0 | 3
+LCT | 1 | 4 | Internal_Name
+EQ | 3 | 
+   count<1>.T := !LED1 & count<0>;	// (1 pt, 2 inp)
+   count<1>.CLK  =  CLK;	// GCK	(0 pt, 0 inp)
+    count<1>.AR = !ARESET_L33;	// CTR	(1 pt, 1 inp)
+GLOBALS | 1 | 2 | CLK
+
+MACROCELL | 0 | 5 | count<2>_MC
+ATTRIBUTES | 2185265920 | 0
+OUTPUTMC | 7 | 0 | 6 | 0 | 7 | 0 | 13 | 0 | 14 | 0 | 15 | 1 | 6 | 0 | 10
+INPUTS | 3 | LED1  | count<0>  | count<1>
+INPUTMC | 3 | 1 | 6 | 0 | 3 | 0 | 4
+LCT | 1 | 4 | Internal_Name
+EQ | 3 | 
+   count<2>.T := !LED1 & count<0> & count<1>;	// (1 pt, 3 inp)
+   count<2>.CLK  =  CLK;	// GCK	(0 pt, 0 inp)
+    count<2>.AR = !ARESET_L33;	// CTR	(1 pt, 1 inp)
+GLOBALS | 1 | 2 | CLK
+
+MACROCELL | 0 | 6 | count<3>_MC
+ATTRIBUTES | 2185265920 | 0
+OUTPUTMC | 6 | 0 | 7 | 0 | 13 | 0 | 14 | 0 | 15 | 1 | 6 | 0 | 10
+INPUTS | 4 | LED1  | count<0>  | count<1>  | count<2>
+INPUTMC | 4 | 1 | 6 | 0 | 3 | 0 | 4 | 0 | 5
+LCT | 1 | 4 | Internal_Name
+EQ | 3 | 
+   count<3>.T := !LED1 & count<0> & count<1> & count<2>;	// (1 pt, 4 inp)
+   count<3>.CLK  =  CLK;	// GCK	(0 pt, 0 inp)
+    count<3>.AR = !ARESET_L33;	// CTR	(1 pt, 1 inp)
+GLOBALS | 1 | 2 | CLK
+
+MACROCELL | 0 | 7 | count<4>_MC
+ATTRIBUTES | 2185265920 | 0
+OUTPUTMC | 5 | 0 | 13 | 0 | 14 | 0 | 15 | 1 | 6 | 0 | 10
+INPUTS | 5 | LED1  | count<0>  | count<1>  | count<2>  | count<3>
+INPUTMC | 5 | 1 | 6 | 0 | 3 | 0 | 4 | 0 | 5 | 0 | 6
+LCT | 1 | 4 | Internal_Name
+EQ | 4 | 
+   count<4>.T := !LED1 & count<0> & count<1> & count<2> & 
+	count<3>;	// (1 pt, 5 inp)
+   count<4>.CLK  =  CLK;	// GCK	(0 pt, 0 inp)
+    count<4>.AR = !ARESET_L33;	// CTR	(1 pt, 1 inp)
+GLOBALS | 1 | 2 | CLK
+
+MACROCELL | 0 | 13 | count<5>_MC
+ATTRIBUTES | 2185265920 | 0
+OUTPUTMC | 4 | 0 | 14 | 0 | 15 | 1 | 6 | 0 | 10
+INPUTS | 6 | LED1  | count<0>  | count<1>  | count<2>  | count<3>  | count<4>
+INPUTMC | 6 | 1 | 6 | 0 | 3 | 0 | 4 | 0 | 5 | 0 | 6 | 0 | 7
+LCT | 1 | 4 | Internal_Name
+EQ | 4 | 
+   count<5>.T := !LED1 & count<0> & count<1> & count<2> & 
+	count<3> & count<4>;	// (1 pt, 6 inp)
+   count<5>.CLK  =  CLK;	// GCK	(0 pt, 0 inp)
+    count<5>.AR = !ARESET_L33;	// CTR	(1 pt, 1 inp)
+GLOBALS | 1 | 2 | CLK
+
+MACROCELL | 0 | 14 | count<6>_MC
+ATTRIBUTES | 2185265920 | 0
+OUTPUTMC | 3 | 0 | 15 | 1 | 6 | 0 | 10
+INPUTS | 7 | LED1  | count<0>  | count<1>  | count<2>  | count<3>  | count<4>  | count<5>
+INPUTMC | 7 | 1 | 6 | 0 | 3 | 0 | 4 | 0 | 5 | 0 | 6 | 0 | 7 | 0 | 13
+LCT | 1 | 4 | Internal_Name
+EQ | 4 | 
+   count<6>.T := !LED1 & count<0> & count<1> & count<2> & 
+	count<3> & count<4> & count<5>;	// (1 pt, 7 inp)
+   count<6>.CLK  =  CLK;	// GCK	(0 pt, 0 inp)
+    count<6>.AR = !ARESET_L33;	// CTR	(1 pt, 1 inp)
+GLOBALS | 1 | 2 | CLK
+
+MACROCELL | 0 | 15 | count<7>_MC
+ATTRIBUTES | 2185265920 | 0
+OUTPUTMC | 2 | 1 | 6 | 0 | 10
+INPUTS | 8 | LED1  | count<0>  | count<1>  | count<2>  | count<3>  | count<4>  | count<5>  | count<6>
+INPUTMC | 8 | 1 | 6 | 0 | 3 | 0 | 4 | 0 | 5 | 0 | 6 | 0 | 7 | 0 | 13 | 0 | 14
+LCT | 1 | 4 | Internal_Name
+EQ | 4 | 
+   count<7>.T := !LED1 & count<0> & count<1> & count<2> & 
+	count<3> & count<4> & count<5> & count<6>;	// (1 pt, 8 inp)
+   count<7>.CLK  =  CLK;	// GCK	(0 pt, 0 inp)
+    count<7>.AR = !ARESET_L33;	// CTR	(1 pt, 1 inp)
+GLOBALS | 1 | 2 | CLK
+
+MACROCELL | 3 | 12 | FREE1_MC
+ATTRIBUTES | 1074004738 | 0
+INPUTS | 1 | TCK33
+INPUTP | 1 | 25
+EQ | 1 | 
+   FREE1 = TCK33;	// (1 pt, 1 inp)
+
+MACROCELL | 3 | 13 | FREE2_MC
+ATTRIBUTES | 1074004738 | 0
+INPUTS | 3 | SYSSTART33  | TMS33  | running1
+INPUTMC | 1 | 0 | 12
+INPUTP | 2 | 31 | 32
+EQ | 2 | 
+   !FREE2 = !SYSSTART33 & !TMS33
+	# !TMS33 & running1;	// (2 pt, 3 inp)
+
+MACROCELL | 0 | 12 | running1_MC
+ATTRIBUTES | 2189460224 | 0
+OUTPUTMC | 2 | 3 | 13 | 0 | 11
+INPUTS | 1 | running
+INPUTMC | 1 | 3 | 0
+LCT | 1 | 4 | Internal_Name
+EQ | 3 | 
+   running1 := running;	// (1 pt, 1 inp)
+   running1.CLK  =  CLK;	// GCK	(0 pt, 0 inp)
+    running1.AR = !ARESET_L33;	// CTR	(1 pt, 1 inp)
+GLOBALS | 1 | 2 | CLK
+
+MACROCELL | 3 | 0 | running_MC
+ATTRIBUTES | 2189459456 | 4
+OUTPUTMC | 1 | 0 | 12
+INPUTS | 0 
+LCT | 1 | 4 | Internal_Name
+EQ | 5 | 
+   
+// Direct Input Register
+running := SYSSTART33;	// (0 pt, 0 inp)
+   running.CLK  =  CLK;	// GCK	(0 pt, 0 inp)
+    running.AR = !ARESET_L33;	// CTR	(1 pt, 1 inp)
+GLOBALS | 1 | 2 | CLK
+
+MACROCELL | 1 | 5 | LED2_MC
+ATTRIBUTES | 1074004738 | 0
+INPUTS | 1 | SYSSTART33
+INPUTP | 1 | 31
+EQ | 1 | 
+   LED2 = SYSSTART33;	// (1 pt, 1 inp)
+
+MACROCELL | 1 | 4 | LED3_MC
+ATTRIBUTES | 1074004738 | 0
+INPUTS | 1 | TMS33
+INPUTP | 1 | 32
+EQ | 1 | 
+   LED3 = TMS33;	// (1 pt, 1 inp)
+
+MACROCELL | 2 | 0 | TCK_MC
+ATTRIBUTES | 1074004738 | 0
+INPUTS | 1 | TCK33
+INPUTP | 1 | 25
+EQ | 1 | 
+   TCK = TCK33;	// (1 pt, 1 inp)
+
+MACROCELL | 0 | 9 | TDI_MC
+ATTRIBUTES | 1074004738 | 0
+INPUTS | 1 | TDI33
+INPUTP | 1 | 26
+EQ | 1 | 
+   TDI = TDI33;	// (1 pt, 1 inp)
+
+MACROCELL | 3 | 6 | TDO33_MC
+ATTRIBUTES | 1074004738 | 0
+INPUTS | 1 | TDO
+INPUTP | 1 | 78
+EQ | 1 | 
+   TDO33 = TDO;	// (1 pt, 1 inp)
+
+MACROCELL | 0 | 11 | TMS_SYSSTART_MC
+ATTRIBUTES | 1074004738 | 0
+INPUTS | 3 | SYSSTART33  | TMS33  | running1
+INPUTMC | 1 | 0 | 12
+INPUTP | 2 | 31 | 32
+EQ | 2 | 
+   !TMS_SYSSTART = !SYSSTART33 & !TMS33
+	# !TMS33 & running1;	// (2 pt, 3 inp)
+
+PIN | CLK | 8192 | 64 | LVTTL | 20 | 12 | 0 | 3 | 0 | 4 | 0 | 5 | 0 | 6 | 0 | 7 | 0 | 13 | 0 | 14 | 0 | 15 | 1 | 6 | 0 | 10 | 3 | 0 | 0 | 12
+PIN | ARESET_L33 | 64 | 64 | LVTTL | 23 | 0
+PIN | TCK33 | 64 | 64 | LVTTL | 25 | 2 | 3 | 12 | 2 | 0
+PIN | SYSSTART33 | 64 | 64 | LVTTL | 31 | 4 | 3 | 13 | 1 | 5 | 0 | 11 | 3 | 0
+PIN | TMS33 | 64 | 64 | LVTTL | 32 | 3 | 3 | 13 | 1 | 4 | 0 | 11
+PIN | TDI33 | 64 | 64 | LVTTL | 26 | 1 | 0 | 9
+PIN | TDO | 64 | 0 | LVCMOS18 | 78 | 1 | 3 | 6
+PIN | ARESET_L | 536871040 | 0 | LVCMOS18 | 81
+PIN | FREE1 | 536871040 | 0 | LVTTL | 48
+PIN | FREE2 | 536871040 | 0 | LVTTL | 49
+PIN | LED1 | 536871040 | 0 | LVTTL | 19
+PIN | LED2 | 536871040 | 0 | LVTTL | 17
+PIN | LED3 | 536871040 | 0 | LVTTL | 16
+PIN | TCK | 536871040 | 0 | LVCMOS18 | 73
+PIN | TDI | 536871040 | 0 | LVCMOS18 | 1
+PIN | TDO33 | 536871040 | 0 | LVTTL | 38
+PIN | TMS_SYSSTART | 536871040 | 0 | LVCMOS18 | 80

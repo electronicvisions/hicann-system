@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml-stylesheet type="text/xsl" href="./env/xml/xsl/icpro_project.xsl"?>
+<project name="p_facets">
+  <subproject name="s_system">
+    <tools>
+      <tool name="ius" version="6.2"/>
+    </tools>
+    <regressions>
+      <definitions path="regressions" file="regressions.xml"/>
+      <database path="regressions" file="regressions_db.xml"/>
+    </regressions>
+    <units path="units" file="units.xml"/>
+    <pdk file="u18_1.2.xml" name="u18" path="resources/u18" vendor="UMC (United Microelectronic Corporation)" version="1.2">
+      <process_option name="6lm20ka"/>
+    </pdk>
+    <icpro version="1.0"/>
+    <resources>
+      <resource file="s_hicann1.xml" name="s_hicann1" path="resources/s_hicann1" version="2009"/>
+    </resources>
+  </subproject>
+</project>

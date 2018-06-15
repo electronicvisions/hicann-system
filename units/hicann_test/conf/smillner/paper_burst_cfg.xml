@@ -1,0 +1,464 @@
+<?xml version="1.0"?>
+<!DOCTYPE stage2conf>
+<reticle>
+	<type>llexperiment</type>
+	<hicann id="0">
+		<output>
+			<op id="0" state="1">0</op>
+								
+			<op id="1" state="1">0</op>
+		</output>
+		<neurons>
+			<denmem id="0">
+				<El>500</El>
+				<Vt>500</Vt>
+				<Vsyni>0</Vsyni>
+				<Vsynx>0</Vsynx>
+				<Vsyntci>0</Vsyntci>
+				<Vsyntcx>0</Vsyntcx>
+				<Esyni>0</Esyni>
+				<Esynx>0</Esynx>
+				
+
+			</denmem>
+		</neurons>
+		<fg id="0">
+			<maxcycle>255</maxcycle>
+			<currentwritetime>2</currentwritetime>
+			<voltagewritetime>16</voltagewritetime>
+			<readtime>63</readtime>
+			<acceleratorstep>4</acceleratorstep>
+			<fg_pulselength>8</fg_pulselength>
+			<fg_bias>15</fg_bias>
+			<fg_biasn>0</fg_biasn>
+		 	<line id="0">
+				<value id="all">0</value>
+				<value id="0">478</value>
+			</line>	
+		 	<line id="1">
+				<value id="all">818</value>
+				<value id="0">1023</value>
+			</line>	
+		 	<line id="2">
+				<value id="all">0</value>
+				<value id="0">0</value>
+			</line>	
+		 	<line id="3">
+				<value id="all">41</value>
+				<value id="0">1023</value>
+			</line>	
+		 	<line id="4">
+				<value id="all">0</value>
+				<value id="0">0</value>
+			</line>	
+		 	<line id="5">
+				<value id="all">609</value>
+				<value id="0">1023</value>
+			</line>	
+		 	<line id="6">
+				<value id="all">500</value>
+				<value id="0">0</value>
+			</line>	
+		 	<line id="7">
+				<value id="all">409</value>
+				<value id="0">1023</value>
+			</line>	
+		 	<line id="8">
+				<value id="all">568</value>
+				<value id="0">0</value>
+			</line>	
+		 	<line id="9">
+				<value id="all">368</value>
+				<value id="0">0</value>
+			</line>	
+		 	<line id="10">
+				<value id="all">796</value>
+				<value id="0">0</value>
+			</line>	
+		 	<line id="11">
+				<value id="all">868</value>
+				<value id="0">0</value>
+			</line>	
+		 	<line id="12">
+				<value id="all">625</value>
+				<value id="0">0</value>
+			</line>	
+		 	<line id="13">
+				<value id="all">50</value>
+				<value id="0">0</value>
+			</line>	
+		 	<line id="14">
+				<value id="all">762</value>
+				<value id="0">0</value>
+			</line>	
+		 	<line id="15">
+				<value id="all">710</value>
+				<value id="0">0</value>
+			</line>	
+		 	<line id="16">
+				<value id="all">796</value>
+				<value id="0">0</value>
+			</line>	
+		 	<line id="17">
+				<value id="all">818</value>
+				<value id="0">0</value>
+			</line>	
+		 	<line id="18">
+				<value id="all">455</value>
+				<value id="0">0</value>
+			</line>	
+		 	<line id="19">
+				<value id="all">409</value>
+				<value id="0">0</value>
+			</line>	
+		 	<line id="20">
+				<value id="all">485</value>
+				<value id="0">0</value>
+			</line>	
+		 	<line id="21">
+				<value id="all">309</value>
+				<value id="0">0</value>
+			</line>	
+		 	<line id="22">
+				<value id="all">568</value>
+				<value id="0">0</value>
+			</line>	
+		 	<line id="23">
+				<value id="all">200</value>
+				<value id="0">0</value>
+			</line>	
+			<line id="all">
+				<value id="all">0</value>
+			</line>	
+		</fg>
+		<fg id="1">
+			<maxcycle>255</maxcycle>
+			<currentwritetime>2</currentwritetime>
+			<voltagewritetime>16</voltagewritetime>
+			<readtime>63</readtime>
+			<acceleratorstep>4</acceleratorstep>
+			<fg_pulselength>8</fg_pulselength>
+			<fg_bias>15</fg_bias>
+			<fg_biasn>0</fg_biasn>
+		 	<line id="0">
+				<value id="all">0</value>
+				<value id="0">478</value>
+			</line>	
+		 	<line id="1">
+				<value id="all">0</value>
+				<value id="0">1023</value>
+			</line>	
+		 	<line id="2">
+				<value id="all">0</value>
+				<value id="0">0</value>
+			</line>	
+		 	<line id="3">
+				<value id="all">0</value>
+				<value id="0">1000</value>
+			</line>	
+		 	<line id="4">
+				<value id="all">0</value>
+				<value id="0">0</value>
+			</line>	
+		 	<line id="5">
+				<value id="all">0</value>
+				<value id="0">1023</value>
+			</line>	
+		 	<line id="6">
+				<value id="all">0</value>
+				<value id="0">0</value>
+			</line>	
+		 	<line id="7">
+				<value id="all">0</value>
+				<value id="0">1023</value>
+			</line>	
+		 	<line id="8">
+				<value id="all">0</value>
+				<value id="0">0</value>
+			</line>	
+		 	<line id="9">
+				<value id="all">100</value>
+				<value id="0">0</value>
+			</line>	
+		 	<line id="10">
+				<value id="all">0</value>
+				<value id="0">0</value>
+			</line>	
+		 	<line id="11">
+				<value id="all">0</value>
+				<value id="0">0</value>
+			</line>	
+		 	<line id="12">
+				<value id="all">0</value>
+				<value id="0">0</value>
+			</line>	
+		 	<line id="13">
+				<value id="all">0</value>
+				<value id="0">0</value>
+			</line>	
+		 	<line id="14">
+				<value id="all">800</value>
+				<value id="0">1023</value>
+			</line>	
+		 	<line id="15">
+				<value id="all">0</value>
+				<value id="0">0</value>
+			</line>	
+		 	<line id="16">
+				<value id="all">100</value>
+				<value id="0">0</value>
+			</line>	
+		 	<line id="17">
+				<value id="all">1023</value>
+				<value id="0">0</value>
+			</line>	
+		 	<line id="18">
+				<value id="all">0</value>
+				<value id="0">0</value>
+			</line>	
+		 	<line id="19">
+				<value id="all">0</value>
+				<value id="0">0</value>
+			</line>	
+		 	<line id="20">
+				<value id="all">0</value>
+				<value id="0">0</value>
+			</line>	
+		 	<line id="21">
+				<value id="all">100</value>
+				<value id="0">0</value>
+			</line>	
+		 	<line id="22">
+				<value id="all">0</value>
+				<value id="0">0</value>
+			</line>	
+		 	<line id="23">
+				<value id="all">0</value>
+			</line>	
+		</fg>
+		<fg id="2">
+			<maxcycle>255</maxcycle>
+			<currentwritetime>2</currentwritetime>
+			<voltagewritetime>16</voltagewritetime>
+			<readtime>63</readtime>
+			<acceleratorstep>4</acceleratorstep>
+			<fg_pulselength>8</fg_pulselength>
+			<fg_bias>15</fg_bias>
+			<fg_biasn>0</fg_biasn>
+		 	<line id="0">
+				<value id="all">0</value>
+				<value id="0">400</value>
+			</line>	
+		 	<line id="1">
+				<value id="all">1023</value>
+				<value id="0">1023</value>
+			</line>	
+		 	<line id="2">
+				<value id="all">0</value>
+				<value id="0">0</value>
+			</line>	
+		 	<line id="3">
+				<value id="all">0</value>
+				<value id="0">1023</value>
+			</line>	
+		 	<line id="4">
+				<value id="all">0</value>
+				<value id="0">0</value>
+			</line>	
+		 	<line id="5">
+				<value id="all">1023</value>
+				<value id="0">1023</value>
+			</line>	
+		 	<line id="6">
+				<value id="all">500</value>
+				<value id="0">0</value>
+			</line>	
+		 	<line id="7">
+				<value id="all">100</value>
+				<value id="0">1023</value>
+			</line>	
+		 	<line id="8">
+				<value id="all">0</value>
+				<value id="0">0</value>
+			</line>	
+		 	<line id="9">
+				<value id="all">350</value>
+				<value id="0">0</value>
+			</line>	
+		 	<line id="10">
+				<value id="all">0</value>
+				<value id="0">0</value>
+			</line>	
+		 	<line id="11">
+				<value id="all">200</value>
+				<value id="0">0</value>
+			</line>	
+		 	<line id="12">
+				<value id="all">610</value>
+				<value id="0">0</value>
+			</line>	
+		 	<line id="13">
+				<value id="all">100</value>
+				<value id="0">0</value>
+			</line>	
+		 	<line id="14">
+				<value id="all">0</value>
+				<value id="0">1023</value>
+			</line>	
+		 	<line id="15">
+				<value id="all">400</value>
+				<value id="0">0</value>
+			</line>	
+		 	<line id="16">
+				<value id="all">0</value>
+				<value id="0">0</value>
+			</line>	
+		 	<line id="17">
+				<value id="all">0</value>
+				<value id="0">0</value>
+			</line>	
+		 	<line id="18">
+				<value id="all">0</value>
+				<value id="0">0</value>
+			</line>	
+		 	<line id="19">
+				<value id="all">0</value>
+				<value id="0">0</value>
+			</line>	
+		 	<line id="20">
+				<value id="all">500</value>
+				<value id="0">0</value>
+			</line>	
+		 	<line id="21">
+				<value id="all">0</value>
+				<value id="0">0</value>
+			</line>	
+		 	<line id="22">
+				<value id="all">0</value>
+				<value id="0">0</value>
+			</line>	
+		 	<line id="23">
+				<value id="all">100</value>
+				<value id="0">0</value>
+			</line>	
+			<line id="all">
+				<value id="all">0</value>
+			</line>	
+	
+		
+		</fg>
+	<fg id="all">
+			<maxcycle>255</maxcycle>
+			<currentwritetime>2</currentwritetime>
+			<voltagewritetime>16</voltagewritetime>
+			<readtime>63</readtime>
+			<acceleratorstep>4</acceleratorstep>
+			<fg_pulselength>8</fg_pulselength>
+			<fg_bias>15</fg_bias>
+			<fg_biasn>0</fg_biasn>
+			<!--<line id="0">
+				<value id="all">0</value>
+				<value id="0">400</value>
+			</line>	
+		 	<line id="1">
+				<value id="all">0</value>
+				<value id="0">1023</value>
+			</line>	
+		 	<line id="2">
+				<value id="all">0</value>
+				<value id="0">0</value>
+			</line>	-->
+		 	<line id="3">
+				<value id="all">0</value>
+				<value id="0">100</value>
+			</line><!--	
+		 	<line id="4">
+				<value id="all">0</value>
+				<value id="0">0</value>
+			</line>	
+		 	<line id="5">
+				<value id="all">0</value>
+				<value id="0">1023</value>
+			</line>	
+		 	<line id="6">
+				<value id="all">0</value>
+				<value id="0">0</value>
+			</line>	
+		 	<line id="7">
+				<value id="all">0</value>
+				<value id="0">1023</value>
+			</line>	
+		 	<line id="8">
+				<value id="all">0</value>
+				<value id="0">0</value>
+			</line>	
+			<line id="9">
+				<value id="all">100</value>
+				<value id="0">0</value>
+			</line>	
+		 	<line id="10">
+				<value id="all">0</value>
+				<value id="0">0</value>
+			</line>	
+		 	<line id="11">
+				<value id="all">0</value>
+				<value id="0">0</value>
+			</line>	
+		 	<line id="12">
+				<value id="all">0</value>
+				<value id="0">0</value>
+			</line>	
+		 	<line id="13">
+				<value id="all">0</value>
+				<value id="0">0</value>
+			</line>	
+		 	<line id="14">
+				<value id="all">600</value>
+				<value id="0">1023</value>
+			</line>	
+		 	<line id="15">
+				<value id="all">0</value>
+				<value id="0">0</value>
+			</line>	
+		 	<line id="16">
+				<value id="all">500</value>
+				<value id="0">0</value>
+			</line>	
+		 	<line id="17">
+				<value id="all">1023</value>
+				<value id="0">0</value>
+			</line>	
+		 	<line id="18">
+				<value id="all">0</value>
+				<value id="0">0</value>
+			</line>	
+		 	<line id="19">
+				<value id="all">0</value>
+				<value id="0">0</value>
+			</line>	
+		 	<line id="20">
+				<value id="all">0</value>
+				<value id="0">0</value>
+			</line>		
+		 	<line id="21">
+				<value id="all">200</value>
+				<value id="0">0</value>
+			</line>	
+		 	<line id="22">
+				<value id="all">0</value>
+				<value id="0">0</value>
+			</line>	
+		 	<line id="23">
+				<value id="all">0</value>
+			</line>	-->
+
+			<line id="all">
+				<value id="all">0</value>
+			</line>	
+	
+		
+		</fg>
+		<stimulus id="all"></stimulus>
+	</hicann>
+</reticle>
+

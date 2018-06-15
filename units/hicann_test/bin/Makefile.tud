@@ -1,0 +1,99 @@
+TB = s2_transfers.dat
+RC = s2_received.dat
+
+# root directory of System Simulation workspace
+#SSR = /scratch/agruebl/facets/s_systemsim_facets
+SSR = /proj/p_facets/s_systemsim/workspaces/ehrlich
+
+# set systemc installation directory (depends on installation)
+#SYSTEMC_INST = /cad/libs/systemc-2.2
+#mehrlich 080709 should work w/o SystemC
+#SYSTEMC_INST = /cad/libraries/systemc_2.2
+
+
+#remote sources
+TYPES	 	= $(SSR)/global_src/systemc/types.cpp
+
+PROG		= tests2
+
+#basic sources necessary to build testenvironment for spikey chip, requires only ANSI C++ libs
+BASICSRCS	= $(PROG).cpp $(SSR)/global_src/systemc/types.cpp s2c_tcpip.cpp \
+		  linklayer.cpp synapse_control.cpp \
+		  hicann_ctrl.cpp 
+
+#testmodes requiring only ANSI C++ (No Qt)
+BASICTM 	= tm_example.cpp
+
+#extended functionality to create spikey control framework (spikey class, spiketrain etc.) and API for HANNEE based software
+MORESRCS = 
+
+#testmodes for spikey API
+MORETM = 
+
+# Check if Qt can be found or not. If yes, all sources will be processed, otherwise only BASICSRCS and BASICTM.
+SRCS = $(BASICSRCS) $(MORESRCS) $(BASICTM) $(MORETM)
+
+#LINKFLAGS = -lm -lstdc++ -pthread -lrt
+# mehrlich 080709 for OpenMP support
+LINKFLAGS = -lm -lstdc++ -pthread -lrt -lgomp
+
+#mehrlich 080709 should work w/o SystemC
+#LIBS=$(SYSTEMC_INST)/lib-linux64/libsystemc.a
+
+OBJS = $(SRCS:.cpp=.o)
+
+#VINC1 = ../spikenet_base.vh
+#VINC2 = ../testbench_base.vh
+
+#!!!no changes below this point!!!
+CCACHE   = $(shell test -x /usr/bin/ccache && echo "ccache")
+CXX	 = g++
+
+MAKE = make -C
+
+#CFLAGS  = -Wall -DLINUX  -g
+# mehrlich 080709 with SystemC types
+# CFLAGS  = -Wall -DLINUX  -DUSE_SCTYPES -g
+# mehrlich 080709 for OpenMP support
+CFLAGS  = -Wall -DLINUX  -g -fopenmp
+
+INCPATH = -I. -I/usr/include -I$(SSR)/global_src/systemc -I$(SYSTEMC_INST)/include
+
+
+#CCONST = ./cconst.pl	#converts verilog->C
+#CCONSTVHD = ./cconstvhd.pl #converter vhdl->C
+#GENTIMELUT = ./genTimeLut.py #converter py->C
+
+
+all: $(PROG) 	
+
+
+# linking
+$(PROG): $(OBJS)
+	$(CXX) $(INCPATH) $(CFLAGS) $(OBJS) -o $@ $(LIBS) $(LINKFLAGS)
+
+# create synapse_base.h
+#spikenet_base.h: $(VINC1)
+#	$(CCONST) $(VINC1)
+# create testbench_base.h
+#testbench_base.h: $(VINC2)
+#	$(CCONST) $(VINC2)
+
+#make getch.o
+#getch.o:%.o:getch.c
+#	$(CCACHE) $(CXX) $(CFLAGS) $(INCPATH) $(OBJDIR) -c $< -o $@
+
+# object compilation
+$(OBJS):%.o:%.cpp
+	$(CCACHE) $(CXX) $(CFLAGS) $(INCPATH) $(OBJDIR) -c $< -o $@
+
+clean:
+	rm -f *.o
+	rm -f Makefile.deps
+	rm -f $(PROG)
+
+#Makefile.deps: $(SRCS) spikenet_base.h testbench_base.h spikey_global.h genTimeLut.h
+Makefile.deps: $(SRCS)
+	$(CXX) $(CFLAGS) $(INCPATH) -M $(SRCS) > Makefile.deps
+
+-include Makefile.deps

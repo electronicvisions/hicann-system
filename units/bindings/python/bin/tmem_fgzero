@@ -1,0 +1,56 @@
+# FGControl.REG_OP etc...
+
+hicannnr = 0
+hc = chips[FPGA_COUNT+DNC_COUNT+hicannnr]
+
+if  hc.GetCommObj().Init() != Stage2Comm.Commstate.ok:
+    raise Exception("ERROR: Init failed, abort")
+else:
+	 print "Init() ok"
+
+
+ll  = hc.tags[FGControl.TAG]
+ll.SetDebugLevel(2)
+nbc = hc.getNBC()
+fc = []
+fc.append( hc.getFC_tr() )
+fc.append( hc.getFC_tl() )
+fc.append( hc.getFC_br() )
+fc.append( hc.getFC_bl() )
+
+print "starting...."
+
+comm.Clear()
+
+nbc.setOutputEn(True,True)
+nbc.setOutputMux(9,9)
+for cntlr in range(4):
+    print "Writing controller", cntlr, "."
+
+    # fill ram with zeros
+    fc[cntlr].initzeros(0)
+
+    # program controller
+    fc[cntlr].set_maxcycle(255)
+    fc[cntlr].set_currentwritetime(63)
+    fc[cntlr].set_voltagewritetime(63)
+    fc[cntlr].set_readtime(65)
+    fc[cntlr].set_acceleratorstep(1)
+    fc[cntlr].set_pulselength(15)
+    fc[cntlr].set_fg_biasn(15)
+    fc[cntlr].set_fg_bias(15)
+    fc[cntlr].write_biasingreg()
+    fc[cntlr].write_operationreg()
+
+print "Init done, programming now"
+for i in range(24):
+    for cntlr in range (4):
+        while( fc[cntlr].isBusy() ):
+            pass
+        print "programming row", i
+        # start state machine
+        fc[cntlr].program_cells(i,0,0);
+for cntlr in range (4):
+    fc[cntlr].readout_cell(1,0)
+print "ok"
+

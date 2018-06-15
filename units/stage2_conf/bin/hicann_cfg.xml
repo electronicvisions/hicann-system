@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<!DOCTYPE stage2conf>
+<reticle>
+	<type>llexperiment</type>
+	<hicann id="0">
+		<output>
+			<op id="0" state="1">0</op>
+								
+			<op id="1" state="1">0</op>
+		</output>
+		<neurons>
+			<denmem id="0">
+				<El>500</El>
+				<Vt>500</Vt>
+				<Vsyni>0</Vsyni>
+				<Vsynx>0</Vsynx>
+				<Vsyntci>0</Vsyntci>
+				<Vsyntcx>0</Vsyntcx>
+				<Esyni>0</Esyni>
+				<Esynx>0</Esynx>
+				
+
+			</denmem>
+		</neurons>
+		<fg id="all">
+			<maxcycle>500</maxcycle>
+			<currentwritetime>2</currentwritetime>
+			<voltagewritetime>16</voltagewritetime>
+			<readtime>63</readtime>
+			<acceleratorstep>4</acceleratorstep>
+			<fg_pulselength>8</fg_pulselength>
+			<fg_bias>15</fg_bias>
+			<fg_biasn>0</fg_biasn>
+			<fg_calib>0</fg_calib>
+		 	<line id="0">
+				<value id="all">5</value>
+				<value id="6">333</value>
+			</line>	
+	
+		
+		</fg>
+		<stimulus id="all"></stimulus>
+	</hicann>
+</reticle>
+

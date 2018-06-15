@@ -1,0 +1,8 @@
+#!/bin/bash
+
+cat <<EOF
+This project has been converted to a top-level build :).
+Please enter:
+cd ../../../
+./waf configure --help  # check all options
+EOF

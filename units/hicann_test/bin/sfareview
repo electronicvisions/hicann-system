@@ -1,0 +1,54 @@
+
+#reset hicann, set vol and voh and both plls to 100MHz
+cat <<EOF >key
+1
+2
+3
+8
+4ff
+b
+6
+5
+b
+5
+5
+b
+4
+2.5
+b
+6
+10.5
+b
+2
+0.8
+b
+1
+0.7
+b
+3
+1.2
+g
+0
+4
+g
+1
+8
+x
+EOF
+./bin/tests2 -bjf20 -m tm_iboardv2 < key
+
+./bin/tests2 -bjf20 -m tm_fgzero
+./bin/tests2 -bjf21 -m tm_fgzero
+
+./bin/tests2 -bjf20 -m tm_singleneuron -c ../conf/smillner/review_sfa.xml
+./bin/tests2 -bjf21 -m tm_singleneuron -c ../conf/smillner/review_sfa.xml
+
+cat <<EOF >key
+8
+4ff
+b
+6
+5
+x
+EOF
+./tests2 -bjf20 -js 3000 -m tm_iboardv2 < key

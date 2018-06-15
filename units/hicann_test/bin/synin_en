@@ -1,0 +1,25 @@
+
+#reset hicann, set vol and voh and both plls to 100MHz
+cat <<EOF >key
+1 56 8
+3 2 1 
+n
+i
+EOF
+./bin/tests2 -bja 1 0 -m tmjs repeater < key
+
+#./bin/tests2 -bjf20 -m tm_fgzero
+#./bin/tests2 -bjf21 -m tm_fgzero
+
+#./bin/tests2 -bjf20 -m tm_singleneuron -c ../conf/smillner/review_sfa.xml
+#./bin/tests2 -bjf21 -m tm_singleneuron -c ../conf/smillner/review_sfa.xml
+
+#cat <<EOF >key
+#8
+#4ff
+#b
+#6
+#5
+#x
+#EOF
+#./tests2 -bjf20 -js 3000 -m tm_iboardv2 < key

@@ -1,0 +1,38 @@
+-- global project cds.lib
+-- this file is generated during project setup automatically
+-- * manual changes in SECTION MANUAL will be preserved
+-- * SECTION UNITS entries will be added by command
+--     icunit -cdb
+--   (create cdb unit) and may be edited manually (preserved)
+-- * SECTION RESOURCES, PDK, TOOLS will be generated
+--   automatically (not preserved) running
+--     icpro setup_project  (commit project)
+
+-- SECTION PDK
+
+-- from PDKs cdslibs section:
+-- PDKs technology library
+DEFINE UMC_18_CMOS      $ICPRO_DIR/resources/u18/artist/MM_FDK/UMC_18_CMOS
+DEFINE UMC_18G2_CMOS    $ICPRO_DIR/resources/u18/artist/MM_FDK/UMC_18G2_CMOS
+-- from PDKs tools section: ius
+DEFINE connectLib       $IUS_DIR/tools/affirma_ams/etc/connect_lib/connectLib
+DEFINE ieee             $IUS_DIR/tools/inca/files/IEEE
+DEFINE std              $IUS_DIR/tools/inca/files/STD
+DEFINE synopsys         $IUS_DIR/tools/inca/files/SYNOPSYS
+
+-- END SECTION
+
+-- SECTION TOOLS
+DEFINE worklib          $ICPRO_DIR/tmp/cds/worklib
+-- END SECTION
+
+-- SECTION RESOURCES
+
+-- END SECTION
+
+-- SECTION UNITS
+-- END SECTION
+
+-- SECTION MANUAL
+-- END SECTION
+

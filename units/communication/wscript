@@ -1,0 +1,27 @@
+#!/usr/bin/env python
+import sys, os
+
+from waflib.extras.symwaf2ic import SYMWAF2IC_VERSION
+hicann_test_dir = '/tmp/test' # Some bogus path
+
+def depends(ctx):
+    ctx('sctrltp')
+
+
+def options(ctx):
+    ctx.load('compiler_cxx')
+
+
+def configure(ctx):
+    ctx.load('compiler_cxx')
+
+    ctx.check_cxx(lib='rt', uselib_store='RT')
+
+
+def build(ctx):
+    # deprecated ;)...
+    ctx(target          = 'realtime_inc',
+        export_includes = 'source')
+
+    ctx(target          = 'communication_inc',
+        export_includes = 'source')

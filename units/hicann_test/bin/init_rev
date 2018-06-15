@@ -1,0 +1,37 @@
+#reset hicann, set vol and voh and both plls to 100MHz
+cat <<EOF >key
+1
+2
+3
+8
+4ff
+b
+6
+5
+b
+5
+5
+b
+4
+2.5
+b
+6
+10.5
+b
+2
+0.8
+b
+1
+0.6
+b
+3
+1.2
+g
+0
+80
+g
+1
+80
+x
+EOF
+./tests2 -bja 1 0 -m tm_iboardv2 < key

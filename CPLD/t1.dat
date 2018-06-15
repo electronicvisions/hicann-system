@@ -1,0 +1,603 @@
+assert111.........
+name = ddddddd..
+assert333.........
+NDEBUG is defined
+__STDC__ is defined
+__MSVC__ is NOT defined
+XPLA_BORLANDC is NOT defined
+
+---------------------
+|  D E F A U L T S  |
+---------------------
+max_pt=28, min_pt=3
+max_fi=32, min_fi=4
+
+-----------------
+|  H E A D E R  |
+-----------------
+#$ MODULE IboardCPLD
+#$ PINS 5 "LED1":43 "CLK":44 "ARESET_L33":1 "SYSSTART33":5 "TMS_SYSSTART":31 
+#$ PINS 6 "TMS33":6 "TCK":29 "TCK33":2 "FREE1":13 "FREE2":14 "LED2":42 
+#$ PINS 6 "LED3":41 "TDI":33 "TDI33":3 "TDO33":8 "TDO":30 "ARESET_L":32 
+#$ NODES 6 "count<0>" "count<1>" "count<2>" "count<3>" "count<4>" "count<5>" 
+#$ NODES 5 "count<6>" "count<7>" "running" "running1" "N_PZ_104"'co' 
+#$ NODES 4 "N_PZ_105"'co' "N_PZ_106"'co' "N_PZ_107"'co' "N_PZ_108"'co' 
+#$ NODES 1 "N_PZ_109"'co' 
+
+--------------------------------------
+|  P I N    T a b l e    [count=33]  |
+--------------------------------------
+ TDI count<5> TDI33 FREE1 running1 count<2> FREE2 count<7> ARESET_L33 N_PZ_109 TDO33 
+ LED3 TCK33 running count<4> N_PZ_108 LED2 SYSSTART33 count<1> N_PZ_107 ARESET_L TDO 
+ TCK CLK LED1 N_PZ_106 TMS33 TMS_SYSSTART count<6> N_PZ_105 count<3> N_PZ_104 count<0>
+
+------------------------------------------
+|  P I N    E q n l i s t    [count=17]  |
+------------------------------------------
+LED1 (fi=11): (LED1.CLK/N_PZ_2, net=IboardCPLD) (LED1.AR/N_PZ_3, net=IboardCPLD) (LED1.T/N_PZ_75, net=IboardCPLD) 
+CLK (fi=0): 
+ARESET_L33 (fi=0): 
+SYSSTART33 (fi=0): 
+TMS_SYSSTART (fi=3): (TMS_SYSSTART/N_PZ_50, net=IboardCPLD) 
+TMS33 (fi=0): 
+TCK (fi=1): (TCK/N_PZ_51, net=IboardCPLD) 
+TCK33 (fi=0): 
+FREE1 (fi=1): (FREE1/N_PZ_52, net=IboardCPLD) 
+FREE2 (fi=2): (FREE2/N_PZ_53, net=IboardCPLD) 
+LED2 (fi=1): (LED2/N_PZ_54, net=IboardCPLD) 
+LED3 (fi=1): (LED3/N_PZ_55, net=IboardCPLD) 
+TDI (fi=1): (TDI/N_PZ_56, net=IboardCPLD) 
+TDI33 (fi=0): 
+TDO33 (fi=1): (TDO33/N_PZ_57, net=IboardCPLD) 
+TDO (fi=0): 
+ARESET_L (fi=12): (ARESET_L.CLK/N_PZ_60, net=IboardCPLD) (ARESET_L.AR/N_PZ_61, net=IboardCPLD) (ARESET_L.D/N_PZ_95, net=IboardCPLD) 
+
+--------------------------------------------
+|  N O D E    E q n l i s t    [count=16]  |
+--------------------------------------------
+count<0> (fi=3): count<0>.CLK/N_PZ_6 count<0>.AR/N_PZ_7 count<0>.T/N_PZ_74 
+count<1> (fi=3): count<1>.CLK/N_PZ_11 count<1>.AR/N_PZ_12 count<1>.T/N_PZ_76 
+count<2> (fi=3): count<2>.CLK/N_PZ_16 count<2>.AR/N_PZ_17 count<2>.T/N_PZ_77 
+count<3> (fi=3): count<3>.CLK/N_PZ_21 count<3>.AR/N_PZ_22 count<3>.T/N_PZ_78 
+count<4> (fi=3): count<4>.CLK/N_PZ_26 count<4>.AR/N_PZ_27 count<4>.T/N_PZ_79 
+count<5> (fi=3): count<5>.CLK/N_PZ_31 count<5>.AR/N_PZ_32 count<5>.T/N_PZ_80 
+count<6> (fi=9): count<6>.CLK/N_PZ_36 count<6>.AR/N_PZ_37 count<6>.T/N_PZ_81 
+count<7> (fi=10): count<7>.CLK/N_PZ_41 count<7>.AR/N_PZ_42 count<7>.T/N_PZ_82 
+running (fi=3): running.D/N_PZ_44 running.CLK/N_PZ_45 running.AR/N_PZ_46 
+running1 (fi=3): running1.D/N_PZ_47 running1.CLK/N_PZ_48 running1.AR/N_PZ_49 
+N_PZ_104 (fi=2): N_PZ_104 
+N_PZ_105 (fi=2): N_PZ_105 
+N_PZ_106 (fi=2): N_PZ_106 
+N_PZ_107 (fi=2): N_PZ_107 
+N_PZ_108 (fi=2): N_PZ_108 
+N_PZ_109 (fi=2): N_PZ_109 
+
+---------------------------------
+|  D a t a   S t r u c t u r e  |
+---------------------------------
+PI ( 19) =  LED1.Q CLK ARESET_L33 SYSSTART33 TMS33 TCK33 TDI33 TDO count<0>.Q running.Q 
+            running1.Q count<1>.Q count<2>.Q count<3>.Q count<4>.Q count<5>.Q 
+            count<6>.Q count<7>.Q ARESET_L.Q
+
+PO ( 44) =  LED1.CLK LED1.AR count<0>.CLK count<0>.AR count<1>.CLK count<1>.AR 
+            count<2>.CLK count<2>.AR count<3>.CLK count<3>.AR count<4>.CLK count<4>.AR 
+            count<5>.CLK count<5>.AR count<6>.CLK count<6>.AR count<7>.CLK count<7>.AR 
+            running.D running.CLK running.AR running1.D running1.CLK running1.AR 
+            TMS_SYSSTART TCK FREE1 FREE2 LED2 LED3 TDI TDO33 ARESET_L.CLK ARESET_L.AR 
+            count<0>.T LED1.T count<1>.T count<2>.T count<3>.T count<4>.T count<5>.T 
+            count<6>.T count<7>.T ARESET_L.D
+
+INT = ( 50) N_PZ_2 N_PZ_3 N_PZ_6 N_PZ_7 N_PZ_11 N_PZ_12 N_PZ_16 N_PZ_17 N_PZ_21 N_PZ_22 
+            N_PZ_26 N_PZ_27 N_PZ_31 N_PZ_32 N_PZ_36 N_PZ_37 N_PZ_41 N_PZ_42 N_PZ_44 
+            N_PZ_45 N_PZ_46 N_PZ_47 N_PZ_48 N_PZ_49 N_PZ_50 N_PZ_51 N_PZ_52 N_PZ_53 
+            N_PZ_54 N_PZ_55 N_PZ_56 N_PZ_57 N_PZ_60 N_PZ_61 N_PZ_74 N_PZ_75 N_PZ_76 
+            N_PZ_77 N_PZ_78 N_PZ_79 N_PZ_80 N_PZ_81 N_PZ_82 N_PZ_95 N_PZ_104 N_PZ_105 
+            N_PZ_106 N_PZ_107 N_PZ_108 N_PZ_109
+
+PINT= (  6) N_PZ_104 N_PZ_105 N_PZ_106 N_PZ_107 N_PZ_108 N_PZ_109
+
+AINT= ( 44) N_PZ_2 N_PZ_3 N_PZ_6 N_PZ_7 N_PZ_11 N_PZ_12 N_PZ_16 N_PZ_17 N_PZ_21 N_PZ_22 
+            N_PZ_26 N_PZ_27 N_PZ_31 N_PZ_32 N_PZ_36 N_PZ_37 N_PZ_41 N_PZ_42 N_PZ_44 
+            N_PZ_45 N_PZ_46 N_PZ_47 N_PZ_48 N_PZ_49 N_PZ_50 N_PZ_51 N_PZ_52 N_PZ_53 
+            N_PZ_54 N_PZ_55 N_PZ_56 N_PZ_57 N_PZ_60 N_PZ_61 N_PZ_74 N_PZ_75 N_PZ_76 
+            N_PZ_77 N_PZ_78 N_PZ_79 N_PZ_80 N_PZ_81 N_PZ_82 N_PZ_95
+
+
+----------------------------
+|  D F S    N e t w o r k  |
+----------------------------
+CLK N_PZ_2 LED1.CLK ARESET_L33 N_PZ_3 LED1.AR N_PZ_6 count<0>.CLK N_PZ_7 count<0>.AR  
+N_PZ_11 count<1>.CLK N_PZ_12 count<1>.AR N_PZ_16 count<2>.CLK N_PZ_17 count<2>.AR  
+N_PZ_21 count<3>.CLK N_PZ_22 count<3>.AR N_PZ_26 count<4>.CLK N_PZ_27 count<4>.AR  
+N_PZ_31 count<5>.CLK N_PZ_32 count<5>.AR N_PZ_36 count<6>.CLK N_PZ_37 count<6>.AR  
+N_PZ_41 count<7>.CLK N_PZ_42 count<7>.AR SYSSTART33 N_PZ_44 running.D N_PZ_45  
+running.CLK N_PZ_46 running.AR running.Q N_PZ_47 running1.D N_PZ_48 running1.CLK  
+N_PZ_49 running1.AR TMS33 running1.Q N_PZ_50 TMS_SYSSTART TCK33 N_PZ_51 TCK N_PZ_52  
+FREE1 N_PZ_109 N_PZ_53 FREE2 N_PZ_54 LED2 N_PZ_55 LED3 TDI33 N_PZ_56 TDI TDO N_PZ_57  
+TDO33 N_PZ_60 ARESET_L.CLK N_PZ_61 ARESET_L.AR LED1.Q N_PZ_74 count<0>.T count<0>.Q  
+count<1>.Q count<2>.Q count<3>.Q count<4>.Q count<5>.Q count<6>.Q count<7>.Q N_PZ_75  
+LED1.T N_PZ_104 N_PZ_76 count<1>.T N_PZ_105 N_PZ_77 count<2>.T N_PZ_106 N_PZ_78  
+count<3>.T N_PZ_107 N_PZ_79 count<4>.T N_PZ_108 N_PZ_80 count<5>.T N_PZ_81 count<6>.T  
+N_PZ_82 count<7>.T ARESET_L.Q N_PZ_95 ARESET_L.D 
+
+                                  Short Name                 Collapsible
+          Name       Base   Ext   | TypePolOld pt/th fi/FI fo | min          Pair        pxapin
+        LED1.Q       LED1    .Q   a   PI  -  -  -| -  -| -  6 -   -             -             -
+           CLK        CLK         c   PI  -  -  -| -  -| - 12 -   -             -             -
+    ARESET_L33 ARESET_L33         d   PI  -  -  -| -  -| - 12 -   -             -             -
+    SYSSTART33 SYSSTART33         s   PI  -  -  -| -  -| -  4 -   -             -             -
+         TMS33      TMS33         u   PI  -  -  -| -  -| -  3 -   -             -             -
+         TCK33      TCK33         x   PI  -  -  -| -  -| -  2 -   -             -             -
+         TDI33      TDI33         y   PI  -  -  -| -  -| -  1 -   -             -             -
+           TDO        TDO         z   PI  -  -  -| -  -| -  1 -   -             -             -
+        N_PZ_2     N_PZ_2     -  n2 AINT  -  -  1|28  1|32  1 -   -      LED1.CLK             -
+        N_PZ_3     N_PZ_3     -  o2 AINT  -  -  1|28  1|32  1 -   -       LED1.AR             -
+        N_PZ_6     N_PZ_6     -  r2 AINT  -  -  1|28  1|32  1 -   -  count<0>.CLK             -
+        N_PZ_7     N_PZ_7     -  s2 AINT  -  -  1|28  1|32  1 -   -   count<0>.AR             -
+       N_PZ_11    N_PZ_11     -  w2 AINT  -  -  1|28  1|32  1 -   -  count<1>.CLK             -
+       N_PZ_12    N_PZ_12     -  x2 AINT  -  -  1|28  1|32  1 -   -   count<1>.AR             -
+       N_PZ_16    N_PZ_16     -  b3 AINT  -  -  1|28  1|32  1 -   -  count<2>.CLK             -
+       N_PZ_17    N_PZ_17     -  c3 AINT  -  -  1|28  1|32  1 -   -   count<2>.AR             -
+       N_PZ_21    N_PZ_21     -  g3 AINT  -  -  1|28  1|32  1 -   -  count<3>.CLK             -
+       N_PZ_22    N_PZ_22     -  h3 AINT  -  -  1|28  1|32  1 -   -   count<3>.AR             -
+       N_PZ_26    N_PZ_26     -  l3 AINT  -  -  1|28  1|32  1 -   -  count<4>.CLK             -
+       N_PZ_27    N_PZ_27     -  m3 AINT  -  -  1|28  1|32  1 -   -   count<4>.AR             -
+       N_PZ_31    N_PZ_31     -  q3 AINT  -  -  1|28  1|32  1 -   -  count<5>.CLK             -
+       N_PZ_32    N_PZ_32     -  r3 AINT  -  -  1|28  1|32  1 -   -   count<5>.AR             -
+       N_PZ_36    N_PZ_36     -  v3 AINT  -  -  1|28  1|32  1 -   -  count<6>.CLK             -
+       N_PZ_37    N_PZ_37     -  w3 AINT  -  -  1|28  1|32  1 -   -   count<6>.AR             -
+       N_PZ_41    N_PZ_41     -  a4 AINT  -  -  1|28  1|32  1 -   -  count<7>.CLK             -
+       N_PZ_42    N_PZ_42     -  b4 AINT  -  -  1|28  1|32  1 -   -   count<7>.AR             -
+       N_PZ_44    N_PZ_44     -  d4 AINT  -  -  1|28  1|32  1 -   -     running.D             -
+       N_PZ_45    N_PZ_45     -  e4 AINT  -  -  1|28  1|32  1 -   -   running.CLK             -
+       N_PZ_46    N_PZ_46     -  f4 AINT  -  -  1|28  1|32  1 -   -    running.AR             -
+       N_PZ_47    N_PZ_47     -  g4 AINT  -  -  1|28  1|32  1 -   -    running1.D             -
+       N_PZ_48    N_PZ_48     -  h4 AINT  -  -  1|28  1|32  1 -   -  running1.CLK             -
+       N_PZ_49    N_PZ_49     -  i4 AINT  -  -  1|28  1|32  1 -   -   running1.AR             -
+       N_PZ_50    N_PZ_50     -  j4 AINT  L  -  2|28  3|32  1 -   -  TMS_SYSSTART             -
+       N_PZ_51    N_PZ_51     -  k4 AINT  -  -  1|28  1|32  1 -   -           TCK             -
+       N_PZ_52    N_PZ_52     -  l4 AINT  -  -  1|28  1|32  1 -   -         FREE1             -
+       N_PZ_53    N_PZ_53     -  m4 AINT  L  -  1|28  2|32  1 -   -         FREE2             -
+       N_PZ_54    N_PZ_54     -  n4 AINT  -  -  1|28  1|32  1 -   -          LED2             -
+       N_PZ_55    N_PZ_55     -  o4 AINT  -  -  1|28  1|32  1 -   -          LED3             -
+       N_PZ_56    N_PZ_56     -  p4 AINT  -  -  1|28  1|32  1 -   -           TDI             -
+       N_PZ_57    N_PZ_57     -  q4 AINT  -  -  1|28  1|32  1 -   -         TDO33             -
+       N_PZ_60    N_PZ_60     -  t4 AINT  -  -  1|28  1|32  1 -   -  ARESET_L.CLK             -
+       N_PZ_61    N_PZ_61     -  u4 AINT  -  -  1|28  1|32  1 -   -   ARESET_L.AR             -
+      LED1.CLK       LED1  .CLK  c0   PO  -  -  -| -  -| -  0 -   -        N_PZ_2          LED1
+       LED1.AR       LED1   .AR  d0   PO  -  -  -| -  -| -  0 -   -        N_PZ_3          LED1
+  count<0>.CLK   count<0>  .CLK  g0   PO  -  -  -| -  -| -  0 -   -        N_PZ_6      count<0>
+   count<0>.AR   count<0>   .AR  h0   PO  -  -  -| -  -| -  0 -   -        N_PZ_7      count<0>
+  count<1>.CLK   count<1>  .CLK  l0   PO  -  -  -| -  -| -  0 -   -       N_PZ_11      count<1>
+   count<1>.AR   count<1>   .AR  m0   PO  -  -  -| -  -| -  0 -   -       N_PZ_12      count<1>
+  count<2>.CLK   count<2>  .CLK  q0   PO  -  -  -| -  -| -  0 -   -       N_PZ_16      count<2>
+   count<2>.AR   count<2>   .AR  r0   PO  -  -  -| -  -| -  0 -   -       N_PZ_17      count<2>
+  count<3>.CLK   count<3>  .CLK  v0   PO  -  -  -| -  -| -  0 -   -       N_PZ_21      count<3>
+   count<3>.AR   count<3>   .AR  w0   PO  -  -  -| -  -| -  0 -   -       N_PZ_22      count<3>
+  count<4>.CLK   count<4>  .CLK  a1   PO  -  -  -| -  -| -  0 -   -       N_PZ_26      count<4>
+   count<4>.AR   count<4>   .AR  b1   PO  -  -  -| -  -| -  0 -   -       N_PZ_27      count<4>
+  count<5>.CLK   count<5>  .CLK  f1   PO  -  -  -| -  -| -  0 -   -       N_PZ_31      count<5>
+   count<5>.AR   count<5>   .AR  g1   PO  -  -  -| -  -| -  0 -   -       N_PZ_32      count<5>
+  count<6>.CLK   count<6>  .CLK  k1   PO  -  -  -| -  -| -  0 -   -       N_PZ_36      count<6>
+   count<6>.AR   count<6>   .AR  l1   PO  -  -  -| -  -| -  0 -   -       N_PZ_37      count<6>
+  count<7>.CLK   count<7>  .CLK  p1   PO  -  -  -| -  -| -  0 -   -       N_PZ_41      count<7>
+   count<7>.AR   count<7>   .AR  q1   PO  -  -  -| -  -| -  0 -   -       N_PZ_42      count<7>
+     running.D    running    .D  s1   PO  -  -  -| -  -| -  0 -   -       N_PZ_44       running
+   running.CLK    running  .CLK  t1   PO  -  -  -| -  -| -  0 -   -       N_PZ_45       running
+    running.AR    running   .AR  u1   PO  -  -  -| -  -| -  0 -   -       N_PZ_46       running
+    running1.D   running1    .D  v1   PO  -  -  -| -  -| -  0 -   -       N_PZ_47      running1
+  running1.CLK   running1  .CLK  w1   PO  -  -  -| -  -| -  0 -   -       N_PZ_48      running1
+   running1.AR   running1   .AR  x1   PO  -  -  -| -  -| -  0 -   -       N_PZ_49      running1
+  TMS_SYSSTARTTMS_SYSSTART        y1   PO  -  -  -| -  -| -  0 -   -       N_PZ_50  TMS_SYSSTART
+           TCK        TCK        z1   PO  -  -  -| -  -| -  0 -   -       N_PZ_51           TCK
+         FREE1      FREE1        a2   PO  -  -  -| -  -| -  0 -   -       N_PZ_52         FREE1
+         FREE2      FREE2        b2   PO  -  -  -| -  -| -  0 -   -       N_PZ_53         FREE2
+          LED2       LED2        c2   PO  -  -  -| -  -| -  0 -   -       N_PZ_54          LED2
+          LED3       LED3        d2   PO  -  -  -| -  -| -  0 -   -       N_PZ_55          LED3
+           TDI        TDI        e2   PO  -  -  -| -  -| -  0 -   -       N_PZ_56           TDI
+         TDO33      TDO33        f2   PO  -  -  -| -  -| -  0 -   -       N_PZ_57         TDO33
+  ARESET_L.CLK   ARESET_L  .CLK  i2   PO  -  -  -| -  -| -  0 -   -       N_PZ_60      ARESET_L
+   ARESET_L.AR   ARESET_L   .AR  j2   PO  -  -  -| -  -| -  0 -   -       N_PZ_61      ARESET_L
+    count<0>.Q   count<0>    .Q  o5   PI  -  -  -| -  -| -  5 -   -             -             -
+     running.Q    running    .Q  p5   PI  -  -  -| -  -| -  1 -   -             -             -
+    running1.Q   running1    .Q  q5   PI  -  -  -| -  -| -  2 -   -             -             -
+    count<1>.Q   count<1>    .Q  r5   PI  -  -  -| -  -| -  5 -   -             -             -
+    count<2>.Q   count<2>    .Q  s5   PI  -  -  -| -  -| -  5 -   -             -             -
+    count<3>.Q   count<3>    .Q  t5   PI  -  -  -| -  -| -  5 -   -             -             -
+    count<4>.Q   count<4>    .Q  u5   PI  -  -  -| -  -| -  5 -   -             -             -
+    count<5>.Q   count<5>    .Q  v5   PI  -  -  -| -  -| -  4 -   -             -             -
+    count<6>.Q   count<6>    .Q  w5   PI  -  -  -| -  -| -  3 -   -             -             -
+    count<7>.Q   count<7>    .Q  x5   PI  -  -  -| -  -| -  2 -   -             -             -
+       N_PZ_74    N_PZ_74     -  d6 AINT  -  -  1|28  1|32  1 -   -    count<0>.T             -
+    count<0>.T   count<0>    .T  c6   PO  -  -  -| -  -| -  0 -   -       N_PZ_74      count<0>
+       N_PZ_75    N_PZ_75     -  f6 AINT  -  -  1|28  9|32  1 -   -        LED1.T             -
+        LED1.T       LED1    .T  e6   PO  -  -  -| -  -| -  0 -   -       N_PZ_75          LED1
+       N_PZ_76    N_PZ_76     -  h6 AINT  -  -  1|28  1|32  1 -   -    count<1>.T             -
+    count<1>.T   count<1>    .T  g6   PO  -  -  -| -  -| -  0 -   -       N_PZ_76      count<1>
+       N_PZ_77    N_PZ_77     -  j6 AINT  -  -  1|28  1|32  1 -   -    count<2>.T             -
+    count<2>.T   count<2>    .T  i6   PO  -  -  -| -  -| -  0 -   -       N_PZ_77      count<2>
+       N_PZ_78    N_PZ_78     -  l6 AINT  -  -  1|28  1|32  1 -   -    count<3>.T             -
+    count<3>.T   count<3>    .T  k6   PO  -  -  -| -  -| -  0 -   -       N_PZ_78      count<3>
+       N_PZ_79    N_PZ_79     -  n6 AINT  -  -  1|28  1|32  1 -   -    count<4>.T             -
+    count<4>.T   count<4>    .T  m6   PO  -  -  -| -  -| -  0 -   -       N_PZ_79      count<4>
+       N_PZ_80    N_PZ_80     -  p6 AINT  -  -  1|28  1|32  1 -   -    count<5>.T             -
+    count<5>.T   count<5>    .T  o6   PO  -  -  -| -  -| -  0 -   -       N_PZ_80      count<5>
+       N_PZ_81    N_PZ_81     -  r6 AINT  -  -  1|28  7|32  1 -   -    count<6>.T             -
+    count<6>.T   count<6>    .T  q6   PO  -  -  -| -  -| -  0 -   -       N_PZ_81      count<6>
+       N_PZ_82    N_PZ_82     -  t6 AINT  -  -  1|28  8|32  1 -   -    count<7>.T             -
+    count<7>.T   count<7>    .T  s6   PO  -  -  -| -  -| -  0 -   -       N_PZ_82      count<7>
+    ARESET_L.Q   ARESET_L    .Q  u6   PI  -  -  -| -  -| -  1 -   -             -             -
+       N_PZ_95    N_PZ_95     -  u7 AINT  -  -  2|28 10|32  1 -   -    ARESET_L.D             -
+    ARESET_L.D   ARESET_L    .D  i7   PO  -  -  -| -  -| -  0 -   -       N_PZ_95      ARESET_L
+      N_PZ_104   N_PZ_104     -  d8 PINT  -  -  1|28  2|32  2 Y   -             -      N_PZ_104
+      N_PZ_105   N_PZ_105     -  e8 PINT  -  -  1|28  2|32  2 Y   -             -      N_PZ_105
+      N_PZ_106   N_PZ_106     -  f8 PINT  -  -  1|28  2|32  2 Y   -             -      N_PZ_106
+      N_PZ_107   N_PZ_107     -  g8 PINT  -  -  1|28  2|32  2 Y   -             -      N_PZ_107
+      N_PZ_108   N_PZ_108     -  h8 PINT  -  -  1|28  2|32  1 Y   -             -      N_PZ_108
+      N_PZ_109   N_PZ_109     -  i8 PINT  -  -  2|28  2|32  1 Y   -             -      N_PZ_109
+
+--------------------------------------------------------
+|  PinCnt = 17, NodeCnt = 16, Total = 33, TotalPt = 53 |
+--------------------------------------------------------
+LED1.Q,net=IboardCPLD: PI
+  <--0-- 
+  --6--> (N_PZ_74, IboardCPLD) (N_PZ_104, IboardCPLD) (N_PZ_75, IboardCPLD)  
+         (N_PZ_82, IboardCPLD) (N_PZ_95, IboardCPLD) (N_PZ_81, IboardCPLD) 
+CLK,net=IboardCPLD: PI
+  <--0-- 
+  --12--> (N_PZ_2, IboardCPLD) (N_PZ_6, IboardCPLD) (N_PZ_11, IboardCPLD)  
+          (N_PZ_16, IboardCPLD) (N_PZ_21, IboardCPLD) (N_PZ_26, IboardCPLD)  
+          (N_PZ_31, IboardCPLD) (N_PZ_36, IboardCPLD) (N_PZ_41, IboardCPLD)  
+          (N_PZ_45, IboardCPLD) (N_PZ_48, IboardCPLD) (N_PZ_60, IboardCPLD) 
+ARESET_L33,net=IboardCPLD: PI
+  <--0-- 
+  --12--> (N_PZ_3, IboardCPLD) (N_PZ_7, IboardCPLD) (N_PZ_12, IboardCPLD)  
+          (N_PZ_17, IboardCPLD) (N_PZ_22, IboardCPLD) (N_PZ_27, IboardCPLD)  
+          (N_PZ_32, IboardCPLD) (N_PZ_37, IboardCPLD) (N_PZ_42, IboardCPLD)  
+          (N_PZ_46, IboardCPLD) (N_PZ_49, IboardCPLD) (N_PZ_61, IboardCPLD) 
+SYSSTART33,net=IboardCPLD: PI
+  <--0-- 
+  --4--> (N_PZ_44, IboardCPLD) (N_PZ_54, IboardCPLD) (N_PZ_109, IboardCPLD)  
+         (N_PZ_50, IboardCPLD) 
+TMS33,net=IboardCPLD: PI
+  <--0-- 
+  --3--> (N_PZ_55, IboardCPLD) (N_PZ_53, IboardCPLD) (N_PZ_50, IboardCPLD) 
+TCK33,net=IboardCPLD: PI
+  <--0-- 
+  --2--> (N_PZ_51, IboardCPLD) (N_PZ_52, IboardCPLD) 
+TDI33,net=IboardCPLD: PI
+  <--0-- 
+  --1--> (N_PZ_56, IboardCPLD) 
+TDO,net=IboardCPLD: PI
+  <--0-- 
+  --1--> (N_PZ_57, IboardCPLD) 
+N_PZ_2,net=IboardCPLD: PINT ( LED1.CLK )
+  <--1--  (CLK, IboardCPLD)
+  --1--> (LED1.CLK, IboardCPLD) 
+N_PZ_3,net=IboardCPLD: PINT ( LED1.AR )
+  <--1--  (ARESET_L33, IboardCPLD)
+  --1--> (LED1.AR, IboardCPLD) 
+N_PZ_6,net=IboardCPLD: PINT ( count<0>.CLK )
+  <--1--  (CLK, IboardCPLD)
+  --1--> (count<0>.CLK, IboardCPLD) 
+N_PZ_7,net=IboardCPLD: PINT ( count<0>.AR )
+  <--1--  (ARESET_L33, IboardCPLD)
+  --1--> (count<0>.AR, IboardCPLD) 
+N_PZ_11,net=IboardCPLD: PINT ( count<1>.CLK )
+  <--1--  (CLK, IboardCPLD)
+  --1--> (count<1>.CLK, IboardCPLD) 
+N_PZ_12,net=IboardCPLD: PINT ( count<1>.AR )
+  <--1--  (ARESET_L33, IboardCPLD)
+  --1--> (count<1>.AR, IboardCPLD) 
+N_PZ_16,net=IboardCPLD: PINT ( count<2>.CLK )
+  <--1--  (CLK, IboardCPLD)
+  --1--> (count<2>.CLK, IboardCPLD) 
+N_PZ_17,net=IboardCPLD: PINT ( count<2>.AR )
+  <--1--  (ARESET_L33, IboardCPLD)
+  --1--> (count<2>.AR, IboardCPLD) 
+N_PZ_21,net=IboardCPLD: PINT ( count<3>.CLK )
+  <--1--  (CLK, IboardCPLD)
+  --1--> (count<3>.CLK, IboardCPLD) 
+N_PZ_22,net=IboardCPLD: PINT ( count<3>.AR )
+  <--1--  (ARESET_L33, IboardCPLD)
+  --1--> (count<3>.AR, IboardCPLD) 
+N_PZ_26,net=IboardCPLD: PINT ( count<4>.CLK )
+  <--1--  (CLK, IboardCPLD)
+  --1--> (count<4>.CLK, IboardCPLD) 
+N_PZ_27,net=IboardCPLD: PINT ( count<4>.AR )
+  <--1--  (ARESET_L33, IboardCPLD)
+  --1--> (count<4>.AR, IboardCPLD) 
+N_PZ_31,net=IboardCPLD: PINT ( count<5>.CLK )
+  <--1--  (CLK, IboardCPLD)
+  --1--> (count<5>.CLK, IboardCPLD) 
+N_PZ_32,net=IboardCPLD: PINT ( count<5>.AR )
+  <--1--  (ARESET_L33, IboardCPLD)
+  --1--> (count<5>.AR, IboardCPLD) 
+N_PZ_36,net=IboardCPLD: PINT ( count<6>.CLK )
+  <--1--  (CLK, IboardCPLD)
+  --1--> (count<6>.CLK, IboardCPLD) 
+N_PZ_37,net=IboardCPLD: PINT ( count<6>.AR )
+  <--1--  (ARESET_L33, IboardCPLD)
+  --1--> (count<6>.AR, IboardCPLD) 
+N_PZ_41,net=IboardCPLD: PINT ( count<7>.CLK )
+  <--1--  (CLK, IboardCPLD)
+  --1--> (count<7>.CLK, IboardCPLD) 
+N_PZ_42,net=IboardCPLD: PINT ( count<7>.AR )
+  <--1--  (ARESET_L33, IboardCPLD)
+  --1--> (count<7>.AR, IboardCPLD) 
+N_PZ_44,net=IboardCPLD: PINT ( running.D )
+  <--1--  (SYSSTART33, IboardCPLD)
+  --1--> (running.D, IboardCPLD) 
+N_PZ_45,net=IboardCPLD: PINT ( running.CLK )
+  <--1--  (CLK, IboardCPLD)
+  --1--> (running.CLK, IboardCPLD) 
+N_PZ_46,net=IboardCPLD: PINT ( running.AR )
+  <--1--  (ARESET_L33, IboardCPLD)
+  --1--> (running.AR, IboardCPLD) 
+N_PZ_47,net=IboardCPLD: PINT ( running1.D )
+  <--1--  (running.Q, IboardCPLD)
+  --1--> (running1.D, IboardCPLD) 
+N_PZ_48,net=IboardCPLD: PINT ( running1.CLK )
+  <--1--  (CLK, IboardCPLD)
+  --1--> (running1.CLK, IboardCPLD) 
+N_PZ_49,net=IboardCPLD: PINT ( running1.AR )
+  <--1--  (ARESET_L33, IboardCPLD)
+  --1--> (running1.AR, IboardCPLD) 
+N_PZ_50,net=IboardCPLD: PINT ( TMS_SYSSTART )
+  <--3--  (SYSSTART33, IboardCPLD) (TMS33, IboardCPLD) (running1.Q, IboardCPLD)
+  --1--> (TMS_SYSSTART, IboardCPLD) 
+N_PZ_51,net=IboardCPLD: PINT ( TCK )
+  <--1--  (TCK33, IboardCPLD)
+  --1--> (TCK, IboardCPLD) 
+N_PZ_52,net=IboardCPLD: PINT ( FREE1 )
+  <--1--  (TCK33, IboardCPLD)
+  --1--> (FREE1, IboardCPLD) 
+N_PZ_53,net=IboardCPLD: PINT ( FREE2 )
+  <--2--  (TMS33, IboardCPLD) (N_PZ_109, IboardCPLD)
+  --1--> (FREE2, IboardCPLD) 
+N_PZ_54,net=IboardCPLD: PINT ( LED2 )
+  <--1--  (SYSSTART33, IboardCPLD)
+  --1--> (LED2, IboardCPLD) 
+N_PZ_55,net=IboardCPLD: PINT ( LED3 )
+  <--1--  (TMS33, IboardCPLD)
+  --1--> (LED3, IboardCPLD) 
+N_PZ_56,net=IboardCPLD: PINT ( TDI )
+  <--1--  (TDI33, IboardCPLD)
+  --1--> (TDI, IboardCPLD) 
+N_PZ_57,net=IboardCPLD: PINT ( TDO33 )
+  <--1--  (TDO, IboardCPLD)
+  --1--> (TDO33, IboardCPLD) 
+N_PZ_60,net=IboardCPLD: PINT ( ARESET_L.CLK )
+  <--1--  (CLK, IboardCPLD)
+  --1--> (ARESET_L.CLK, IboardCPLD) 
+N_PZ_61,net=IboardCPLD: PINT ( ARESET_L.AR )
+  <--1--  (ARESET_L33, IboardCPLD)
+  --1--> (ARESET_L.AR, IboardCPLD) 
+LED1.CLK,net=IboardCPLD: PO
+  <--1--  (N_PZ_2, IboardCPLD)
+  --0--> 
+LED1.AR,net=IboardCPLD: PO
+  <--1--  (N_PZ_3, IboardCPLD)
+  --0--> 
+count<0>.CLK,net=IboardCPLD: PO
+  <--1--  (N_PZ_6, IboardCPLD)
+  --0--> 
+count<0>.AR,net=IboardCPLD: PO
+  <--1--  (N_PZ_7, IboardCPLD)
+  --0--> 
+count<1>.CLK,net=IboardCPLD: PO
+  <--1--  (N_PZ_11, IboardCPLD)
+  --0--> 
+count<1>.AR,net=IboardCPLD: PO
+  <--1--  (N_PZ_12, IboardCPLD)
+  --0--> 
+count<2>.CLK,net=IboardCPLD: PO
+  <--1--  (N_PZ_16, IboardCPLD)
+  --0--> 
+count<2>.AR,net=IboardCPLD: PO
+  <--1--  (N_PZ_17, IboardCPLD)
+  --0--> 
+count<3>.CLK,net=IboardCPLD: PO
+  <--1--  (N_PZ_21, IboardCPLD)
+  --0--> 
+count<3>.AR,net=IboardCPLD: PO
+  <--1--  (N_PZ_22, IboardCPLD)
+  --0--> 
+count<4>.CLK,net=IboardCPLD: PO
+  <--1--  (N_PZ_26, IboardCPLD)
+  --0--> 
+count<4>.AR,net=IboardCPLD: PO
+  <--1--  (N_PZ_27, IboardCPLD)
+  --0--> 
+count<5>.CLK,net=IboardCPLD: PO
+  <--1--  (N_PZ_31, IboardCPLD)
+  --0--> 
+count<5>.AR,net=IboardCPLD: PO
+  <--1--  (N_PZ_32, IboardCPLD)
+  --0--> 
+count<6>.CLK,net=IboardCPLD: PO
+  <--1--  (N_PZ_36, IboardCPLD)
+  --0--> 
+count<6>.AR,net=IboardCPLD: PO
+  <--1--  (N_PZ_37, IboardCPLD)
+  --0--> 
+count<7>.CLK,net=IboardCPLD: PO
+  <--1--  (N_PZ_41, IboardCPLD)
+  --0--> 
+count<7>.AR,net=IboardCPLD: PO
+  <--1--  (N_PZ_42, IboardCPLD)
+  --0--> 
+running.D,net=IboardCPLD: PO
+  <--1--  (N_PZ_44, IboardCPLD)
+  --0--> 
+running.CLK,net=IboardCPLD: PO
+  <--1--  (N_PZ_45, IboardCPLD)
+  --0--> 
+running.AR,net=IboardCPLD: PO
+  <--1--  (N_PZ_46, IboardCPLD)
+  --0--> 
+running1.D,net=IboardCPLD: PO
+  <--1--  (N_PZ_47, IboardCPLD)
+  --0--> 
+running1.CLK,net=IboardCPLD: PO
+  <--1--  (N_PZ_48, IboardCPLD)
+  --0--> 
+running1.AR,net=IboardCPLD: PO
+  <--1--  (N_PZ_49, IboardCPLD)
+  --0--> 
+TMS_SYSSTART,net=IboardCPLD: PO
+  <--1--  (N_PZ_50, IboardCPLD)
+  --0--> 
+TCK,net=IboardCPLD: PO
+  <--1--  (N_PZ_51, IboardCPLD)
+  --0--> 
+FREE1,net=IboardCPLD: PO
+  <--1--  (N_PZ_52, IboardCPLD)
+  --0--> 
+FREE2,net=IboardCPLD: PO
+  <--1--  (N_PZ_53, IboardCPLD)
+  --0--> 
+LED2,net=IboardCPLD: PO
+  <--1--  (N_PZ_54, IboardCPLD)
+  --0--> 
+LED3,net=IboardCPLD: PO
+  <--1--  (N_PZ_55, IboardCPLD)
+  --0--> 
+TDI,net=IboardCPLD: PO
+  <--1--  (N_PZ_56, IboardCPLD)
+  --0--> 
+TDO33,net=IboardCPLD: PO
+  <--1--  (N_PZ_57, IboardCPLD)
+  --0--> 
+ARESET_L.CLK,net=IboardCPLD: PO
+  <--1--  (N_PZ_60, IboardCPLD)
+  --0--> 
+ARESET_L.AR,net=IboardCPLD: PO
+  <--1--  (N_PZ_61, IboardCPLD)
+  --0--> 
+count<0>.Q,net=IboardCPLD: PI
+  <--0-- 
+  --5--> (N_PZ_104, IboardCPLD) (N_PZ_75, IboardCPLD) (N_PZ_82, IboardCPLD)  
+         (N_PZ_95, IboardCPLD) (N_PZ_81, IboardCPLD) 
+running.Q,net=IboardCPLD: PI
+  <--0-- 
+  --1--> (N_PZ_47, IboardCPLD) 
+running1.Q,net=IboardCPLD: PI
+  <--0-- 
+  --2--> (N_PZ_109, IboardCPLD) (N_PZ_50, IboardCPLD) 
+count<1>.Q,net=IboardCPLD: PI
+  <--0-- 
+  --5--> (N_PZ_105, IboardCPLD) (N_PZ_75, IboardCPLD) (N_PZ_82, IboardCPLD)  
+         (N_PZ_95, IboardCPLD) (N_PZ_81, IboardCPLD) 
+count<2>.Q,net=IboardCPLD: PI
+  <--0-- 
+  --5--> (N_PZ_106, IboardCPLD) (N_PZ_75, IboardCPLD) (N_PZ_82, IboardCPLD)  
+         (N_PZ_95, IboardCPLD) (N_PZ_81, IboardCPLD) 
+count<3>.Q,net=IboardCPLD: PI
+  <--0-- 
+  --5--> (N_PZ_107, IboardCPLD) (N_PZ_75, IboardCPLD) (N_PZ_82, IboardCPLD)  
+         (N_PZ_95, IboardCPLD) (N_PZ_81, IboardCPLD) 
+count<4>.Q,net=IboardCPLD: PI
+  <--0-- 
+  --5--> (N_PZ_108, IboardCPLD) (N_PZ_75, IboardCPLD) (N_PZ_82, IboardCPLD)  
+         (N_PZ_95, IboardCPLD) (N_PZ_81, IboardCPLD) 
+count<5>.Q,net=IboardCPLD: PI
+  <--0-- 
+  --4--> (N_PZ_75, IboardCPLD) (N_PZ_82, IboardCPLD) (N_PZ_95, IboardCPLD)  
+         (N_PZ_81, IboardCPLD) 
+count<6>.Q,net=IboardCPLD: PI
+  <--0-- 
+  --3--> (N_PZ_75, IboardCPLD) (N_PZ_82, IboardCPLD) (N_PZ_95, IboardCPLD) 
+count<7>.Q,net=IboardCPLD: PI
+  <--0-- 
+  --2--> (N_PZ_75, IboardCPLD) (N_PZ_95, IboardCPLD) 
+N_PZ_74,net=IboardCPLD: PINT ( count<0>.T )
+  <--1--  (LED1.Q, IboardCPLD)
+  --1--> (count<0>.T, IboardCPLD) 
+count<0>.T,net=IboardCPLD: PO
+  <--1--  (N_PZ_74, IboardCPLD)
+  --0--> 
+N_PZ_75,net=IboardCPLD: PINT ( LED1.T )
+  <--9--  (LED1.Q, IboardCPLD) (count<0>.Q, IboardCPLD) (count<1>.Q, IboardCPLD) 
+          (count<2>.Q, IboardCPLD) (count<3>.Q, IboardCPLD) (count<4>.Q, IboardCPLD) 
+          (count<5>.Q, IboardCPLD) (count<6>.Q, IboardCPLD) (count<7>.Q, IboardCPLD)
+  --1--> (LED1.T, IboardCPLD) 
+LED1.T,net=IboardCPLD: PO
+  <--1--  (N_PZ_75, IboardCPLD)
+  --0--> 
+N_PZ_76,net=IboardCPLD: PINT ( count<1>.T )
+  <--1--  (N_PZ_104, IboardCPLD)
+  --1--> (count<1>.T, IboardCPLD) 
+count<1>.T,net=IboardCPLD: PO
+  <--1--  (N_PZ_76, IboardCPLD)
+  --0--> 
+N_PZ_77,net=IboardCPLD: PINT ( count<2>.T )
+  <--1--  (N_PZ_105, IboardCPLD)
+  --1--> (count<2>.T, IboardCPLD) 
+count<2>.T,net=IboardCPLD: PO
+  <--1--  (N_PZ_77, IboardCPLD)
+  --0--> 
+N_PZ_78,net=IboardCPLD: PINT ( count<3>.T )
+  <--1--  (N_PZ_106, IboardCPLD)
+  --1--> (count<3>.T, IboardCPLD) 
+count<3>.T,net=IboardCPLD: PO
+  <--1--  (N_PZ_78, IboardCPLD)
+  --0--> 
+N_PZ_79,net=IboardCPLD: PINT ( count<4>.T )
+  <--1--  (N_PZ_107, IboardCPLD)
+  --1--> (count<4>.T, IboardCPLD) 
+count<4>.T,net=IboardCPLD: PO
+  <--1--  (N_PZ_79, IboardCPLD)
+  --0--> 
+N_PZ_80,net=IboardCPLD: PINT ( count<5>.T )
+  <--1--  (N_PZ_108, IboardCPLD)
+  --1--> (count<5>.T, IboardCPLD) 
+count<5>.T,net=IboardCPLD: PO
+  <--1--  (N_PZ_80, IboardCPLD)
+  --0--> 
+N_PZ_81,net=IboardCPLD: PINT ( count<6>.T )
+  <--7--  (LED1.Q, IboardCPLD) (count<0>.Q, IboardCPLD) (count<1>.Q, IboardCPLD) 
+          (count<2>.Q, IboardCPLD) (count<3>.Q, IboardCPLD) (count<4>.Q, IboardCPLD) 
+          (count<5>.Q, IboardCPLD)
+  --1--> (count<6>.T, IboardCPLD) 
+count<6>.T,net=IboardCPLD: PO
+  <--1--  (N_PZ_81, IboardCPLD)
+  --0--> 
+N_PZ_82,net=IboardCPLD: PINT ( count<7>.T )
+  <--8--  (LED1.Q, IboardCPLD) (count<0>.Q, IboardCPLD) (count<1>.Q, IboardCPLD) 
+          (count<2>.Q, IboardCPLD) (count<3>.Q, IboardCPLD) (count<4>.Q, IboardCPLD) 
+          (count<5>.Q, IboardCPLD) (count<6>.Q, IboardCPLD)
+  --1--> (count<7>.T, IboardCPLD) 
+count<7>.T,net=IboardCPLD: PO
+  <--1--  (N_PZ_82, IboardCPLD)
+  --0--> 
+ARESET_L.Q,net=IboardCPLD: PI
+  <--0-- 
+  --1--> (N_PZ_95, IboardCPLD) 
+N_PZ_95,net=IboardCPLD: PINT ( ARESET_L.D )
+  <--10--  (LED1.Q, IboardCPLD) (count<0>.Q, IboardCPLD) (count<1>.Q, IboardCPLD) 
+           (count<2>.Q, IboardCPLD) (count<3>.Q, IboardCPLD) (count<4>.Q, IboardCPLD) 
+           (count<5>.Q, IboardCPLD) (count<6>.Q, IboardCPLD) (count<7>.Q, IboardCPLD) 
+           (ARESET_L.Q, IboardCPLD)
+  --1--> (ARESET_L.D, IboardCPLD) 
+ARESET_L.D,net=IboardCPLD: PO
+  <--1--  (N_PZ_95, IboardCPLD)
+  --0--> 
+N_PZ_104,net=IboardCPLD: INT
+  <--2--  (LED1.Q, IboardCPLD) (count<0>.Q, IboardCPLD)
+  --2--> (N_PZ_76, IboardCPLD) (N_PZ_105, IboardCPLD) 
+N_PZ_105,net=IboardCPLD: INT
+  <--2--  (count<1>.Q, IboardCPLD) (N_PZ_104, IboardCPLD)
+  --2--> (N_PZ_77, IboardCPLD) (N_PZ_106, IboardCPLD) 
+N_PZ_106,net=IboardCPLD: INT
+  <--2--  (count<2>.Q, IboardCPLD) (N_PZ_105, IboardCPLD)
+  --2--> (N_PZ_78, IboardCPLD) (N_PZ_107, IboardCPLD) 
+N_PZ_107,net=IboardCPLD: INT
+  <--2--  (count<3>.Q, IboardCPLD) (N_PZ_106, IboardCPLD)
+  --2--> (N_PZ_79, IboardCPLD) (N_PZ_108, IboardCPLD) 
+N_PZ_108,net=IboardCPLD: INT
+  <--2--  (count<4>.Q, IboardCPLD) (N_PZ_107, IboardCPLD)
+  --1--> (N_PZ_80, IboardCPLD) 
+N_PZ_109,net=IboardCPLD: INT
+  <--2--  (SYSSTART33, IboardCPLD) (running1.Q, IboardCPLD)
+  --1--> (N_PZ_53, IboardCPLD) 

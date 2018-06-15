@@ -1,0 +1,44 @@
+#!/usr/bin/env python
+import platform, os, sys
+
+
+def options(ctx):
+    ctx.load('compiler_cxx')
+
+def configure(ctx):
+    ctx.load('compiler_cxx')
+
+    # select jtag library (object files, no source available)
+    arch = platform.machine()
+    if arch == 'i686':
+        JTAG_BITS = '32'
+    elif arch == 'x86_64':
+        JTAG_BITS = '64'
+    else:
+        fatal( "Your machine architecture isn't supported." )
+
+    ctx.check_cxx(
+        msg          = "Checking for tud_jtag binary stuff",
+        includes     = ctx.path.find_dir('source').abspath(),
+        stlibpath    = ctx.path.find_dir('bin/%s' % JTAG_BITS).abspath(),
+        stlib        = 'tud_jtag',
+        lib          = 'dl',
+        cxxflags     = ['-fPIC'],
+        header_name  = 'jtag_lib.h',
+        uselib_store = 'tud_jtag',
+    )
+
+def build(ctx):
+    ctx(
+        target          = 'jtag_lib_inc',
+        export_includes = 'source',
+        )
+
+    ctx.objects (
+        target    = 'jtag_lib_obj',
+        source    = [ 'source/jtag_cmdbase.cpp' ],
+        use       = [
+                      'jtag_lib_inc',
+                    ],
+        cxxflags  = [ '-fPIC', ]
+    )

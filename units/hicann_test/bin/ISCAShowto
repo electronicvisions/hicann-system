@@ -1,0 +1,31 @@
+0. use script Iinit to initialize system. - sets board voltages, resets all rams and programs floating gates.
+
+1. Experiment: Stimulation via fpga:
+	1. use Istart to start tm_capo 
+	2. press f to start fpga background
+	3. use n to switch between different even neuron numbers, use F to change stimulus
+	4. use A to enable playback from spike train file
+	5. use s to stop playback
+	6. use x to quit testmode
+
+2. Experiment: Feedforward network
+	1. use Istart to start tm_capo
+	2. use a create network and stimulate first group using background generators on Hicann
+	3. use n to switch between different even neuron numbers, use H to change stimulus
+	4. use P collect spikes in fpga and print them into a file. Testmode restart needed for a second pring!!!!
+	5. change to python console and print spikes usin execfile("plot.py") (start ipython using script Ipy in bin folder)
+		Neuron -2 is background for dll locking
+		Neuron -1 is stimulus for group 1 and background for dll locking
+		Groups: 1: Neuron 0:7
+			2: Neuron 8:15
+			3: Neuron 16:24
+			4: Neuron 25:32
+		Each neuron from group 1 fires on each neuron in group 2 and so on.
+		No all firig: Not completely calibrated/ hand calibrated
+	6. Maybe repeat experiment to show results to differen stimulus
+
+3. Experiment: Single neuron demo using gui
+	1. use Igui to start interface	
+	2. use presed stuff and apply to programm neurons
+	3. use Change current stimulus button to switch current on
+	4. do not use synaptic stimulus!

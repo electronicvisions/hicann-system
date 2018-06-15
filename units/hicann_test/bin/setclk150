@@ -1,0 +1,9 @@
+#set both plls to 150M
+cat <<EOF >key
+3
+3
+1
+x
+EOF
+./tests2 $BUSMODE -m tmag_p_plltest_multi < key
+./tests2 $BUSMODE1 -m tmag_p_plltest_multi < key

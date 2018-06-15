@@ -1,0 +1,13 @@
+  
+cat <<EOF >key
+p
+r
+1
+1
+d
+0
+EOF
+ # ./tests2 -bja 1 0 -m tm_fgzero
+  #./tests2 -bja 1 0 -js 3000 -m tm_fgzero
+  ./tests2 $BUSMODE -m tm_neuron -c ../conf/smillner/review_burst.xml 
+  #./tests2 -bja 1 0 -js 3000 -m tm_singleneuron -c ../conf/smillner/review_tonic.xml

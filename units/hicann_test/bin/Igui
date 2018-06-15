@@ -1,0 +1,3 @@
+cd  ~/work/symap2ic/components/calibration/Scripts/
+python neuronGUI.py
+cd -

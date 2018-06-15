@@ -1,0 +1,39 @@
+Fehler beim Schreiben im mittleren Zeilenbereich, obere Hälfte ca. 5 Fehler pro Zeile (in der Mitte), untere Hälfte 15.
+Access delay scheint keine Wirkung zu haben. 
+
+synapse config test verhält sich ähnlich, rdelay hat keine Auswirkung, jeweils 1 Fehler im oberen Block in Zeile 0x94 und
+0x96 
+bei den Repeatern funktioniert rdelay, Vermutung: Synthesefehler bezgl. rdel register in sramctrl.sv
+
+chipwechsel:
+all memories ok
+
+neuronmem: bottom half (?) upper 3 neuron bits written to 101 when 000 was desired
+
+andreas: chip to chip permutation omits even lines (vertical and horizontal)
+
+repeater control in hicann.sv: all repeaters are connected to rtl_drvresetb!!! 
+in hicann.sv, line 90++: permutation of repeater addresses!!! ra:ra+adr_w-1=rxx.a 
+ 
+voh/vol software werte:0.25/0.1
+
+repeater control: hold time of td0 seems to be to short -> increase one clock
+effect: transfer of two msb bits from higher tdo reg to lower, i.e. out[0] outputs upper two bits from out[1], out[1]
+form out[2], but out[3] is correct since the jump to idle already inserts a hold state
+
+with 7G/1K differential probe the repeater do not work (looks like vol and voh are swapped)
+
+anncore layout pin order for valid should be changed
+resources/fc_verilog/fc_anncore  valid bit ordering wrong! -> timing lib also wrong
+-> result: valid7 is bound to nn6-0 instead of 47-42
+
+syndriver data is also swapped: d[0:15] is mapped to ocp_data [15:0], i.e. left and right is swapped and bits are reversed
+
+in schematic synapse_decmem the comment is wrong: if d=0 line ab is selected
+
+in wsl1_repeater: tinen and recen are mutually exclusive, but recen enables driver, therefore tinen is not working reliably! solution:
+use sending repeater only 
+
+in stdpctrl: left/right is selected by lsb, this is not correct, since synapse-rows come in pairs, so lsb+1 should be used to select
+between left/right syndriver blocks
+

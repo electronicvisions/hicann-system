@@ -1,0 +1,221 @@
+xst -ise "C:/Users/smillner/Documents/facets/design/fpga/CPLD/CPLD.ise" -intstyle ise -ifn "C:/Users/smillner/Documents/facets/design/fpga/CPLD/IboardCPLD.xst" -ofn "C:/Users/smillner/Documents/facets/design/fpga/CPLD/IboardCPLD.syr" 
+xst -ise "C:/Users/smillner/Documents/facets/design/fpga/CPLD/CPLD.ise" -intstyle ise -ifn "C:/Users/smillner/Documents/facets/design/fpga/CPLD/IboardCPLD.xst" -ofn "C:/Users/smillner/Documents/facets/design/fpga/CPLD/IboardCPLD.syr" 
+xst -ise "C:/Users/smillner/Documents/facets/design/fpga/CPLD/CPLD.ise" -intstyle ise -ifn "C:/Users/smillner/Documents/facets/design/fpga/CPLD/IboardCPLD.xst" -ofn "C:/Users/smillner/Documents/facets/design/fpga/CPLD/IboardCPLD.syr" 
+ngdbuild -ise "CPLD.ise" -intstyle ise -dd _ngo -i -p xc2c32a-VQ44-6 IboardCPLD.ngc IboardCPLD.ngd  
+xst -ise "C:/Users/smillner/Documents/facets/design/fpga/CPLD/CPLD.ise" -intstyle ise -ifn "C:/Users/smillner/Documents/facets/design/fpga/CPLD/IboardCPLD.xst" -ofn "C:/Users/smillner/Documents/facets/design/fpga/CPLD/IboardCPLD.syr" 
+xst -ise "C:/Users/smillner/Documents/facets/design/fpga/CPLD/CPLD.ise" -intstyle ise -ifn "C:/Users/smillner/Documents/facets/design/fpga/CPLD/IboardCPLD.xst" -ofn "C:/Users/smillner/Documents/facets/design/fpga/CPLD/IboardCPLD.syr" 
+xst -ise "C:/Users/smillner/Documents/facets/design/fpga/CPLD/CPLD.ise" -intstyle ise -ifn "C:/Users/smillner/Documents/facets/design/fpga/CPLD/IboardCPLD.xst" -ofn "C:/Users/smillner/Documents/facets/design/fpga/CPLD/IboardCPLD.syr" 
+xst -ise "C:/Users/smillner/Documents/facets/design/fpga/CPLD/CPLD.ise" -intstyle ise -ifn "C:/Users/smillner/Documents/facets/design/fpga/CPLD/IboardCPLD.xst" -ofn "C:/Users/smillner/Documents/facets/design/fpga/CPLD/IboardCPLD.syr" 
+xst -ise "C:/Users/smillner/Documents/facets/design/fpga/CPLD/CPLD.ise" -intstyle ise -ifn "C:/Users/smillner/Documents/facets/design/fpga/CPLD/IboardCPLD.xst" -ofn "C:/Users/smillner/Documents/facets/design/fpga/CPLD/IboardCPLD.syr" 
+xst -ise "C:/Users/smillner/Documents/facets/design/fpga/CPLD/CPLD.ise" -intstyle ise -ifn "C:/Users/smillner/Documents/facets/design/fpga/CPLD/IboardCPLD.xst" -ofn "C:/Users/smillner/Documents/facets/design/fpga/CPLD/IboardCPLD.syr" 
+xst -ise "C:/Users/smillner/Documents/facets/design/fpga/CPLD/CPLD.ise" -intstyle ise -ifn "C:/Users/smillner/Documents/facets/design/fpga/CPLD/IboardCPLD.xst" -ofn "C:/Users/smillner/Documents/facets/design/fpga/CPLD/IboardCPLD.syr" 
+xst -ise "C:/Users/smillner/Documents/facets/design/fpga/CPLD/CPLD.ise" -intstyle ise -ifn "C:/Users/smillner/Documents/facets/design/fpga/CPLD/IboardCPLD.xst" -ofn "C:/Users/smillner/Documents/facets/design/fpga/CPLD/IboardCPLD.syr" 
+xst -ise "C:/Users/smillner/Documents/facets/design/fpga/CPLD/CPLD.ise" -intstyle ise -ifn "C:/Users/smillner/Documents/facets/design/fpga/CPLD/IboardCPLD.xst" -ofn "C:/Users/smillner/Documents/facets/design/fpga/CPLD/IboardCPLD.syr" 
+ngdbuild -ise "CPLD.ise" -intstyle ise -dd _ngo -i -p xc2c32a-VQ44-6 IboardCPLD.ngc IboardCPLD.ngd  
+cpldfit -ise "C:/Users/smillner/Documents/facets/design/fpga/CPLD/CPLD.ise" -intstyle ise -p xc2c32a-6-VQ44 -ofmt vhdl -optimize density -htmlrpt -loc on -slew fast -init low -inputs 32 -pterms 28 -unused keeper -terminate keeper -iostd LVCMOS18 IboardCPLD.ngd 
+XSLTProcess -ise "C:/Users/smillner/Documents/facets/design/fpga/CPLD/CPLD.ise" IboardCPLD_build.xml 
+tsim -ise "C:/Users/smillner/Documents/facets/design/fpga/CPLD/CPLD.ise" -intstyle ise IboardCPLD IboardCPLD.nga 
+taengine -ise "C:/Users/smillner/Documents/facets/design/fpga/CPLD/CPLD.ise" -intstyle ise -f IboardCPLD -w --format html1 -l IboardCPLD_html/tim/timing_report.htm 
+hprep6 -ise "C:/Users/smillner/Documents/facets/design/fpga/CPLD/CPLD.ise" -s IEEE1149 -i IboardCPLD 
+xst -ise "C:/Users/smillner/Documents/facets/design/fpga/CPLD/CPLD.ise" -intstyle ise -ifn "C:/Users/smillner/Documents/facets/design/fpga/CPLD/IboardCPLD.xst" -ofn "C:/Users/smillner/Documents/facets/design/fpga/CPLD/IboardCPLD.syr" 
+xst -ise "C:/Users/smillner/Documents/facets/design/fpga/CPLD/CPLD.ise" -intstyle ise -ifn "C:/Users/smillner/Documents/facets/design/fpga/CPLD/IboardCPLD.xst" -ofn "C:/Users/smillner/Documents/facets/design/fpga/CPLD/IboardCPLD.syr" 
+ngdbuild -ise "CPLD.ise" -intstyle ise -dd _ngo -i -p xc2c32a-VQ44-6 IboardCPLD.ngc IboardCPLD.ngd  
+cpldfit -ise "C:/Users/smillner/Documents/facets/design/fpga/CPLD/CPLD.ise" -intstyle ise -p xc2c32a-6-VQ44 -ofmt vhdl -optimize density -htmlrpt -loc on -slew fast -init low -inputs 32 -pterms 28 -unused keeper -terminate keeper -iostd LVCMOS18 IboardCPLD.ngd 
+XSLTProcess -ise "C:/Users/smillner/Documents/facets/design/fpga/CPLD/CPLD.ise" IboardCPLD_build.xml 
+tsim -ise "C:/Users/smillner/Documents/facets/design/fpga/CPLD/CPLD.ise" -intstyle ise IboardCPLD IboardCPLD.nga 
+taengine -ise "C:/Users/smillner/Documents/facets/design/fpga/CPLD/CPLD.ise" -intstyle ise -f IboardCPLD -w --format html1 -l IboardCPLD_html/tim/timing_report.htm 
+hprep6 -ise "C:/Users/smillner/Documents/facets/design/fpga/CPLD/CPLD.ise" -s IEEE1149 -i IboardCPLD 
+xst -ise "C:/Users/smillner/Documents/facets/design/fpga/CPLD/CPLD.ise" -intstyle ise -ifn "C:/Users/smillner/Documents/facets/design/fpga/CPLD/IboardCPLD.xst" -ofn "C:/Users/smillner/Documents/facets/design/fpga/CPLD/IboardCPLD.syr" 
+ngdbuild -ise "CPLD.ise" -intstyle ise -dd _ngo -i -p xc2c32a-VQ44-6 IboardCPLD.ngc IboardCPLD.ngd  
+cpldfit -ise "C:/Users/smillner/Documents/facets/design/fpga/CPLD/CPLD.ise" -intstyle ise -p xc2c32a-6-VQ44 -ofmt vhdl -optimize density -htmlrpt -loc on -slew fast -init low -inputs 32 -pterms 28 -unused keeper -terminate keeper -iostd LVCMOS18 IboardCPLD.ngd 
+XSLTProcess -ise "C:/Users/smillner/Documents/facets/design/fpga/CPLD/CPLD.ise" IboardCPLD_build.xml 
+tsim -ise "C:/Users/smillner/Documents/facets/design/fpga/CPLD/CPLD.ise" -intstyle ise IboardCPLD IboardCPLD.nga 
+taengine -ise "C:/Users/smillner/Documents/facets/design/fpga/CPLD/CPLD.ise" -intstyle ise -f IboardCPLD -w --format html1 -l IboardCPLD_html/tim/timing_report.htm 
+hprep6 -ise "C:/Users/smillner/Documents/facets/design/fpga/CPLD/CPLD.ise" -s IEEE1149 -i IboardCPLD 
+xst -ise "C:/Users/smillner/Documents/facets/design/fpga/CPLD/CPLD.ise" -intstyle ise -ifn "C:/Users/smillner/Documents/facets/design/fpga/CPLD/IboardCPLD.xst" -ofn "C:/Users/smillner/Documents/facets/design/fpga/CPLD/IboardCPLD.syr" 
+ngdbuild -ise "CPLD.ise" -intstyle ise -dd _ngo -i -p xc2c32a-VQ44-6 IboardCPLD.ngc IboardCPLD.ngd  
+cpldfit -ise "C:/Users/smillner/Documents/facets/design/fpga/CPLD/CPLD.ise" -intstyle ise -p xc2c32a-6-VQ44 -ofmt vhdl -optimize density -htmlrpt -loc on -slew fast -init low -inputs 32 -pterms 28 -unused keeper -terminate keeper -iostd LVCMOS18 IboardCPLD.ngd 
+XSLTProcess -ise "C:/Users/smillner/Documents/facets/design/fpga/CPLD/CPLD.ise" IboardCPLD_build.xml 
+tsim -ise "C:/Users/smillner/Documents/facets/design/fpga/CPLD/CPLD.ise" -intstyle ise IboardCPLD IboardCPLD.nga 
+taengine -ise "C:/Users/smillner/Documents/facets/design/fpga/CPLD/CPLD.ise" -intstyle ise -f IboardCPLD -w --format html1 -l IboardCPLD_html/tim/timing_report.htm 
+hprep6 -ise "C:/Users/smillner/Documents/facets/design/fpga/CPLD/CPLD.ise" -s IEEE1149 -i IboardCPLD 
+xst -ise "C:/Users/smillner/Documents/facets/design/fpga/CPLD/CPLD.ise" -intstyle ise -ifn "C:/Users/smillner/Documents/facets/design/fpga/CPLD/IboardCPLD.xst" -ofn "C:/Users/smillner/Documents/facets/design/fpga/CPLD/IboardCPLD.syr" 
+ngdbuild -ise "CPLD.ise" -intstyle ise -dd _ngo -i -p xc2c32a-VQ44-4 IboardCPLD.ngc IboardCPLD.ngd  
+xst -ise "C:/Users/smillner/Documents/facets/design/fpga/CPLD/CPLD.ise" -intstyle ise -ifn "C:/Users/smillner/Documents/facets/design/fpga/CPLD/IboardCPLD.xst" -ofn "C:/Users/smillner/Documents/facets/design/fpga/CPLD/IboardCPLD.syr" 
+xst -ise "C:/Users/smillner/Documents/facets/design/fpga/CPLD/CPLD.ise" -intstyle ise -ifn "C:/Users/smillner/Documents/facets/design/fpga/CPLD/IboardCPLD.xst" -ofn "C:/Users/smillner/Documents/facets/design/fpga/CPLD/IboardCPLD.syr" 
+ngdbuild -ise "CPLD.ise" -intstyle ise -dd _ngo -i -p xc2c32a-VQ44-4 IboardCPLD.ngc IboardCPLD.ngd  
+cpldfit -ise "C:/Users/smillner/Documents/facets/design/fpga/CPLD/CPLD.ise" -intstyle ise -p xc2c32a-4-VQ44 -ofmt vhdl -optimize density -htmlrpt -loc on -slew fast -init low -inputs 32 -pterms 28 -unused keeper -terminate keeper -iostd LVCMOS18 IboardCPLD.ngd 
+XSLTProcess -ise "C:/Users/smillner/Documents/facets/design/fpga/CPLD/CPLD.ise" IboardCPLD_build.xml 
+tsim -ise "C:/Users/smillner/Documents/facets/design/fpga/CPLD/CPLD.ise" -intstyle ise IboardCPLD IboardCPLD.nga 
+taengine -ise "C:/Users/smillner/Documents/facets/design/fpga/CPLD/CPLD.ise" -intstyle ise -f IboardCPLD -w --format html1 -l IboardCPLD_html/tim/timing_report.htm 
+hprep6 -ise "C:/Users/smillner/Documents/facets/design/fpga/CPLD/CPLD.ise" -s IEEE1149 -i IboardCPLD 
+xst -ise "C:/Users/smillner/Documents/facets/design/fpga/CPLD/CPLD.ise" -intstyle ise -ifn "C:/Users/smillner/Documents/facets/design/fpga/CPLD/IboardCPLD.xst" -ofn "C:/Users/smillner/Documents/facets/design/fpga/CPLD/IboardCPLD.syr" 
+ngdbuild -ise "CPLD.ise" -intstyle ise -dd _ngo -i -p xc2c32a-VQ44-4 IboardCPLD.ngc IboardCPLD.ngd  
+cpldfit -ise "C:/Users/smillner/Documents/facets/design/fpga/CPLD/CPLD.ise" -intstyle ise -p xc2c32a-4-VQ44 -ofmt vhdl -optimize density -htmlrpt -loc on -slew fast -init low -nomlopt -inputs 32 -pterms 28 -unused keeper -terminate keeper -iostd LVCMOS18 -wysiwyg IboardCPLD.ngd 
+XSLTProcess -ise "C:/Users/smillner/Documents/facets/design/fpga/CPLD/CPLD.ise" IboardCPLD_build.xml 
+tsim -ise "C:/Users/smillner/Documents/facets/design/fpga/CPLD/CPLD.ise" -intstyle ise IboardCPLD IboardCPLD.nga 
+taengine -ise "C:/Users/smillner/Documents/facets/design/fpga/CPLD/CPLD.ise" -intstyle ise -f IboardCPLD -w --format html1 -l IboardCPLD_html/tim/timing_report.htm 
+hprep6 -ise "C:/Users/smillner/Documents/facets/design/fpga/CPLD/CPLD.ise" -s IEEE1149 -i IboardCPLD 
+xst -ise "C:/Users/smillner/Documents/facets/design/fpga/CPLD/CPLD.ise" -intstyle ise -ifn "C:/Users/smillner/Documents/facets/design/fpga/CPLD/IboardCPLD.xst" -ofn "C:/Users/smillner/Documents/facets/design/fpga/CPLD/IboardCPLD.syr" 
+ngdbuild -ise "CPLD.ise" -intstyle ise -dd _ngo -i -p xc2c32a-VQ44-4 IboardCPLD.ngc IboardCPLD.ngd  
+cpldfit -ise "C:/Users/smillner/Documents/facets/design/fpga/CPLD/CPLD.ise" -intstyle ise -p xc2c32a-4-VQ44 -ofmt vhdl -optimize density -htmlrpt -loc on -slew fast -init low -inputs 32 -pterms 28 -unused keeper -terminate keeper -iostd LVCMOS18 IboardCPLD.ngd 
+XSLTProcess -ise "C:/Users/smillner/Documents/facets/design/fpga/CPLD/CPLD.ise" IboardCPLD_build.xml 
+tsim -ise "C:/Users/smillner/Documents/facets/design/fpga/CPLD/CPLD.ise" -intstyle ise IboardCPLD IboardCPLD.nga 
+taengine -ise "C:/Users/smillner/Documents/facets/design/fpga/CPLD/CPLD.ise" -intstyle ise -f IboardCPLD -w --format html1 -l IboardCPLD_html/tim/timing_report.htm 
+hprep6 -ise "C:/Users/smillner/Documents/facets/design/fpga/CPLD/CPLD.ise" -s IEEE1149 -i IboardCPLD 
+xst -ise "C:/Users/smillner/Documents/facets/design/fpga/CPLD/CPLD.ise" -intstyle ise -ifn "C:/Users/smillner/Documents/facets/design/fpga/CPLD/IboardCPLD.xst" -ofn "C:/Users/smillner/Documents/facets/design/fpga/CPLD/IboardCPLD.syr" 
+ngdbuild -ise "CPLD.ise" -intstyle ise -dd _ngo -i -p xc2c32a-VQ44-4 IboardCPLD.ngc IboardCPLD.ngd  
+cpldfit -ise "C:/Users/smillner/Documents/facets/design/fpga/CPLD/CPLD.ise" -intstyle ise -p xc2c32a-4-VQ44 -ofmt vhdl -optimize density -htmlrpt -loc on -slew fast -init low -inputs 32 -pterms 28 -unused keeper -terminate keeper -iostd LVCMOS18 IboardCPLD.ngd 
+XSLTProcess -ise "C:/Users/smillner/Documents/facets/design/fpga/CPLD/CPLD.ise" IboardCPLD_build.xml 
+tsim -ise "C:/Users/smillner/Documents/facets/design/fpga/CPLD/CPLD.ise" -intstyle ise IboardCPLD IboardCPLD.nga 
+taengine -ise "C:/Users/smillner/Documents/facets/design/fpga/CPLD/CPLD.ise" -intstyle ise -f IboardCPLD -w --format html1 -l IboardCPLD_html/tim/timing_report.htm 
+hprep6 -ise "C:/Users/smillner/Documents/facets/design/fpga/CPLD/CPLD.ise" -s IEEE1149 -i IboardCPLD 
+xst -ise "C:/Users/smillner/Documents/facets/design/fpga/CPLD/CPLD.ise" -intstyle ise -ifn "C:/Users/smillner/Documents/facets/design/fpga/CPLD/IboardCPLD.xst" -ofn "C:/Users/smillner/Documents/facets/design/fpga/CPLD/IboardCPLD.syr" 
+ngdbuild -ise "CPLD.ise" -intstyle ise -dd _ngo -i -p xc2c32a-VQ44-4 IboardCPLD.ngc IboardCPLD.ngd  
+cpldfit -ise "C:/Users/smillner/Documents/facets/design/fpga/CPLD/CPLD.ise" -intstyle ise -p xc2c32a-4-VQ44 -ofmt vhdl -optimize density -htmlrpt -loc on -slew fast -init low -inputs 32 -pterms 28 -unused keeper -terminate keeper -iostd LVCMOS18 IboardCPLD.ngd 
+XSLTProcess -ise "C:/Users/smillner/Documents/facets/design/fpga/CPLD/CPLD.ise" IboardCPLD_build.xml 
+tsim -ise "C:/Users/smillner/Documents/facets/design/fpga/CPLD/CPLD.ise" -intstyle ise IboardCPLD IboardCPLD.nga 
+taengine -ise "C:/Users/smillner/Documents/facets/design/fpga/CPLD/CPLD.ise" -intstyle ise -f IboardCPLD -w --format html1 -l IboardCPLD_html/tim/timing_report.htm 
+hprep6 -ise "C:/Users/smillner/Documents/facets/design/fpga/CPLD/CPLD.ise" -s IEEE1149 -i IboardCPLD 
+xst -ise "C:/Users/smillner/Documents/facets/design/fpga/CPLD/CPLD.ise" -intstyle ise -ifn "C:/Users/smillner/Documents/facets/design/fpga/CPLD/IboardCPLD.xst" -ofn "C:/Users/smillner/Documents/facets/design/fpga/CPLD/IboardCPLD.syr" 
+ngdbuild -ise "CPLD.ise" -intstyle ise -dd _ngo -i -p xc2c32a-VQ44-4 IboardCPLD.ngc IboardCPLD.ngd  
+cpldfit -ise "C:/Users/smillner/Documents/facets/design/fpga/CPLD/CPLD.ise" -intstyle ise -p xc2c32a-4-VQ44 -ofmt vhdl -optimize density -htmlrpt -loc on -slew fast -init low -inputs 32 -pterms 28 -unused keeper -terminate keeper -iostd LVCMOS18 IboardCPLD.ngd 
+XSLTProcess -ise "C:/Users/smillner/Documents/facets/design/fpga/CPLD/CPLD.ise" IboardCPLD_build.xml 
+tsim -ise "C:/Users/smillner/Documents/facets/design/fpga/CPLD/CPLD.ise" -intstyle ise IboardCPLD IboardCPLD.nga 
+taengine -ise "C:/Users/smillner/Documents/facets/design/fpga/CPLD/CPLD.ise" -intstyle ise -f IboardCPLD -w --format html1 -l IboardCPLD_html/tim/timing_report.htm 
+hprep6 -ise "C:/Users/smillner/Documents/facets/design/fpga/CPLD/CPLD.ise" -s IEEE1149 -i IboardCPLD 
+xst -ise "C:/Users/smillner/Documents/facets/design/fpga/CPLD/CPLD.ise" -intstyle ise -ifn "C:/Users/smillner/Documents/facets/design/fpga/CPLD/IboardCPLD.xst" -ofn "C:/Users/smillner/Documents/facets/design/fpga/CPLD/IboardCPLD.syr" 
+xst -ise "C:/Users/smillner/Documents/facets/design/fpga/CPLD/CPLD.ise" -intstyle ise -ifn "C:/Users/smillner/Documents/facets/design/fpga/CPLD/IboardCPLD.xst" -ofn "C:/Users/smillner/Documents/facets/design/fpga/CPLD/IboardCPLD.syr" 
+ngdbuild -ise "CPLD.ise" -intstyle ise -dd _ngo -i -p xc2c32a-VQ44-4 IboardCPLD.ngc IboardCPLD.ngd  
+cpldfit -ise "C:/Users/smillner/Documents/facets/design/fpga/CPLD/CPLD.ise" -intstyle ise -p xc2c32a-4-VQ44 -ofmt vhdl -optimize density -htmlrpt -loc on -slew fast -init low -inputs 32 -pterms 28 -unused keeper -terminate keeper -iostd LVCMOS18 IboardCPLD.ngd 
+XSLTProcess -ise "C:/Users/smillner/Documents/facets/design/fpga/CPLD/CPLD.ise" IboardCPLD_build.xml 
+tsim -ise "C:/Users/smillner/Documents/facets/design/fpga/CPLD/CPLD.ise" -intstyle ise IboardCPLD IboardCPLD.nga 
+taengine -ise "C:/Users/smillner/Documents/facets/design/fpga/CPLD/CPLD.ise" -intstyle ise -f IboardCPLD -w --format html1 -l IboardCPLD_html/tim/timing_report.htm 
+hprep6 -ise "C:/Users/smillner/Documents/facets/design/fpga/CPLD/CPLD.ise" -s IEEE1149 -i IboardCPLD 
+ngdbuild -ise "CPLD.ise" -intstyle ise -dd _ngo -i -p xc2c32a-VQ44-4 IboardCPLD.ngc IboardCPLD.ngd  
+cpldfit -ise "C:/Users/smillner/Documents/facets/design/fpga/CPLD/CPLD.ise" -intstyle ise -p xc2c32a-4-VQ44 -ofmt vhdl -optimize density -htmlrpt -loc on -slew fast -init low -inputs 32 -pterms 28 -unused keeper -terminate keeper -iostd LVCMOS18 IboardCPLD.ngd 
+XSLTProcess -ise "C:/Users/smillner/Documents/facets/design/fpga/CPLD/CPLD.ise" IboardCPLD_build.xml 
+tsim -ise "C:/Users/smillner/Documents/facets/design/fpga/CPLD/CPLD.ise" -intstyle ise IboardCPLD IboardCPLD.nga 
+taengine -ise "C:/Users/smillner/Documents/facets/design/fpga/CPLD/CPLD.ise" -intstyle ise -f IboardCPLD -w --format html1 -l IboardCPLD_html/tim/timing_report.htm 
+hprep6 -ise "C:/Users/smillner/Documents/facets/design/fpga/CPLD/CPLD.ise" -s IEEE1149 -i IboardCPLD 
+xst -ise "C:/Users/smillner/Documents/facets/design/fpga/CPLD/CPLD.ise" -intstyle ise -ifn "C:/Users/smillner/Documents/facets/design/fpga/CPLD/IboardCPLD.xst" -ofn "C:/Users/smillner/Documents/facets/design/fpga/CPLD/IboardCPLD.syr" 
+ngdbuild -ise "CPLD.ise" -intstyle ise -dd _ngo -i -p xc2c32a-VQ44-4 IboardCPLD.ngc IboardCPLD.ngd  
+cpldfit -ise "C:/Users/smillner/Documents/facets/design/fpga/CPLD/CPLD.ise" -intstyle ise -p xc2c32a-4-VQ44 -ofmt vhdl -optimize density -htmlrpt -loc on -slew fast -init low -inputs 32 -pterms 28 -unused keeper -terminate keeper -iostd LVCMOS18 IboardCPLD.ngd 
+XSLTProcess -ise "C:/Users/smillner/Documents/facets/design/fpga/CPLD/CPLD.ise" IboardCPLD_build.xml 
+tsim -ise "C:/Users/smillner/Documents/facets/design/fpga/CPLD/CPLD.ise" -intstyle ise IboardCPLD IboardCPLD.nga 
+taengine -ise "C:/Users/smillner/Documents/facets/design/fpga/CPLD/CPLD.ise" -intstyle ise -f IboardCPLD -w --format html1 -l IboardCPLD_html/tim/timing_report.htm 
+hprep6 -ise "C:/Users/smillner/Documents/facets/design/fpga/CPLD/CPLD.ise" -s IEEE1149 -i IboardCPLD 
+cpldfit -ise "C:/Users/smillner/Documents/facets/design/fpga/CPLD/CPLD.ise" -intstyle ise -p xc2c32a-4-VQ44 -ofmt vhdl -optimize density -htmlrpt -loc on -slew fast -init low -inputs 32 -pterms 28 -unused keeper -terminate pullup -iostd LVCMOS18 IboardCPLD.ngd 
+XSLTProcess -ise "C:/Users/smillner/Documents/facets/design/fpga/CPLD/CPLD.ise" IboardCPLD_build.xml 
+tsim -ise "C:/Users/smillner/Documents/facets/design/fpga/CPLD/CPLD.ise" -intstyle ise IboardCPLD IboardCPLD.nga 
+taengine -ise "C:/Users/smillner/Documents/facets/design/fpga/CPLD/CPLD.ise" -intstyle ise -f IboardCPLD -w --format html1 -l IboardCPLD_html/tim/timing_report.htm 
+hprep6 -ise "C:/Users/smillner/Documents/facets/design/fpga/CPLD/CPLD.ise" -s IEEE1149 -i IboardCPLD 
+cpldfit -ise "C:/Users/smillner/Documents/facets/design/fpga/CPLD/CPLD.ise" -intstyle ise -p xc2c32a-4-VQ44 -ofmt vhdl -optimize density -htmlrpt -loc on -slew fast -init low -inputs 32 -pterms 28 -unused ground -terminate pullup -iostd LVCMOS18 IboardCPLD.ngd 
+XSLTProcess -ise "C:/Users/smillner/Documents/facets/design/fpga/CPLD/CPLD.ise" IboardCPLD_build.xml 
+tsim -ise "C:/Users/smillner/Documents/facets/design/fpga/CPLD/CPLD.ise" -intstyle ise IboardCPLD IboardCPLD.nga 
+taengine -ise "C:/Users/smillner/Documents/facets/design/fpga/CPLD/CPLD.ise" -intstyle ise -f IboardCPLD -w --format html1 -l IboardCPLD_html/tim/timing_report.htm 
+hprep6 -ise "C:/Users/smillner/Documents/facets/design/fpga/CPLD/CPLD.ise" -s IEEE1149 -i IboardCPLD 
+xst -ise "C:/Users/smillner/Documents/facets/design/fpga/CPLD/CPLD.ise" -intstyle ise -ifn "C:/Users/smillner/Documents/facets/design/fpga/CPLD/IboardCPLD.xst" -ofn "C:/Users/smillner/Documents/facets/design/fpga/CPLD/IboardCPLD.syr" 
+ngdbuild -ise "CPLD.ise" -intstyle ise -dd _ngo -i -p xc2c32a-VQ44-4 IboardCPLD.ngc IboardCPLD.ngd  
+cpldfit -ise "C:/Users/smillner/Documents/facets/design/fpga/CPLD/CPLD.ise" -intstyle ise -p xc2c32a-4-VQ44 -ofmt vhdl -optimize density -htmlrpt -loc on -slew fast -init low -inputs 32 -pterms 28 -unused ground -terminate pullup -iostd LVCMOS18 IboardCPLD.ngd 
+XSLTProcess -ise "C:/Users/smillner/Documents/facets/design/fpga/CPLD/CPLD.ise" IboardCPLD_build.xml 
+tsim -ise "C:/Users/smillner/Documents/facets/design/fpga/CPLD/CPLD.ise" -intstyle ise IboardCPLD IboardCPLD.nga 
+taengine -ise "C:/Users/smillner/Documents/facets/design/fpga/CPLD/CPLD.ise" -intstyle ise -f IboardCPLD -w --format html1 -l IboardCPLD_html/tim/timing_report.htm 
+hprep6 -ise "C:/Users/smillner/Documents/facets/design/fpga/CPLD/CPLD.ise" -s IEEE1149 -i IboardCPLD 
+xst -ise "C:/Users/smillner/Documents/facets/design/fpga/CPLD/CPLD.ise" -intstyle ise -ifn "C:/Users/smillner/Documents/facets/design/fpga/CPLD/IboardCPLD.xst" -ofn "C:/Users/smillner/Documents/facets/design/fpga/CPLD/IboardCPLD.syr" 
+ngdbuild -ise "CPLD.ise" -intstyle ise -dd _ngo -i -p xc2c32a-VQ44-4 IboardCPLD.ngc IboardCPLD.ngd  
+cpldfit -ise "C:/Users/smillner/Documents/facets/design/fpga/CPLD/CPLD.ise" -intstyle ise -p xc2c32a-4-VQ44 -ofmt vhdl -optimize density -htmlrpt -loc on -slew fast -init low -inputs 32 -pterms 28 -unused ground -terminate pullup -iostd LVCMOS18 IboardCPLD.ngd 
+XSLTProcess -ise "C:/Users/smillner/Documents/facets/design/fpga/CPLD/CPLD.ise" IboardCPLD_build.xml 
+tsim -ise "C:/Users/smillner/Documents/facets/design/fpga/CPLD/CPLD.ise" -intstyle ise IboardCPLD IboardCPLD.nga 
+taengine -ise "C:/Users/smillner/Documents/facets/design/fpga/CPLD/CPLD.ise" -intstyle ise -f IboardCPLD -w --format html1 -l IboardCPLD_html/tim/timing_report.htm 
+hprep6 -ise "C:/Users/smillner/Documents/facets/design/fpga/CPLD/CPLD.ise" -s IEEE1149 -i IboardCPLD 
+xst -ise "C:/Users/smillner/Documents/facets/design/fpga/CPLD/CPLD.ise" -intstyle ise -ifn "C:/Users/smillner/Documents/facets/design/fpga/CPLD/IboardCPLD.xst" -ofn "C:/Users/smillner/Documents/facets/design/fpga/CPLD/IboardCPLD.syr" 
+ngdbuild -ise "CPLD.ise" -intstyle ise -dd _ngo -i -p xc2c32a-VQ44-4 IboardCPLD.ngc IboardCPLD.ngd  
+cpldfit -ise "C:/Users/smillner/Documents/facets/design/fpga/CPLD/CPLD.ise" -intstyle ise -p xc2c32a-4-VQ44 -ofmt vhdl -optimize density -htmlrpt -loc on -slew fast -init low -inputs 32 -pterms 28 -unused ground -terminate pullup -iostd LVCMOS18 IboardCPLD.ngd 
+XSLTProcess -ise "C:/Users/smillner/Documents/facets/design/fpga/CPLD/CPLD.ise" IboardCPLD_build.xml 
+tsim -ise "C:/Users/smillner/Documents/facets/design/fpga/CPLD/CPLD.ise" -intstyle ise IboardCPLD IboardCPLD.nga 
+taengine -ise "C:/Users/smillner/Documents/facets/design/fpga/CPLD/CPLD.ise" -intstyle ise -f IboardCPLD -w --format html1 -l IboardCPLD_html/tim/timing_report.htm 
+hprep6 -ise "C:/Users/smillner/Documents/facets/design/fpga/CPLD/CPLD.ise" -s IEEE1149 -i IboardCPLD 
+ngdbuild -ise "CPLD.ise" -intstyle ise -dd _ngo -i -p xc2c32a-VQ44-4 IboardCPLD.ngc IboardCPLD.ngd  
+cpldfit -ise "C:/Users/smillner/Documents/facets/design/fpga/CPLD/CPLD.ise" -intstyle ise -p xc2c32a-4-VQ44 -ofmt vhdl -optimize density -htmlrpt -loc on -slew fast -init low -inputs 32 -pterms 28 -unused ground -terminate pullup -iostd LVCMOS18 IboardCPLD.ngd 
+XSLTProcess -ise "C:/Users/smillner/Documents/facets/design/fpga/CPLD/CPLD.ise" IboardCPLD_build.xml 
+ngdbuild -ise "CPLD.ise" -intstyle ise -dd _ngo -i -p xc2c32a-VQ44-4 IboardCPLD.ngc IboardCPLD.ngd  
+cpldfit -ise "C:/Users/smillner/Documents/facets/design/fpga/CPLD/CPLD.ise" -intstyle ise -p xc2c32a-4-VQ44 -ofmt vhdl -optimize density -htmlrpt -loc on -slew fast -init low -inputs 32 -pterms 28 -unused ground -terminate pullup -iostd LVCMOS18 IboardCPLD.ngd 
+XSLTProcess -ise "C:/Users/smillner/Documents/facets/design/fpga/CPLD/CPLD.ise" IboardCPLD_build.xml 
+tsim -ise "C:/Users/smillner/Documents/facets/design/fpga/CPLD/CPLD.ise" -intstyle ise IboardCPLD IboardCPLD.nga 
+taengine -ise "C:/Users/smillner/Documents/facets/design/fpga/CPLD/CPLD.ise" -intstyle ise -f IboardCPLD -w --format html1 -l IboardCPLD_html/tim/timing_report.htm 
+hprep6 -ise "C:/Users/smillner/Documents/facets/design/fpga/CPLD/CPLD.ise" -s IEEE1149 -i IboardCPLD 
+ngdbuild -ise "CPLD.ise" -intstyle ise -dd _ngo -i -p xc2c32a-VQ44-4 IboardCPLD.ngc IboardCPLD.ngd  
+cpldfit -ise "C:/Users/smillner/Documents/facets/design/fpga/CPLD/CPLD.ise" -intstyle ise -p xc2c32a-4-VQ44 -ofmt vhdl -optimize density -htmlrpt -loc on -slew fast -init low -inputs 32 -pterms 28 -unused ground -terminate pullup -iostd LVCMOS18 IboardCPLD.ngd 
+XSLTProcess -ise "C:/Users/smillner/Documents/facets/design/fpga/CPLD/CPLD.ise" IboardCPLD_build.xml 
+tsim -ise "C:/Users/smillner/Documents/facets/design/fpga/CPLD/CPLD.ise" -intstyle ise IboardCPLD IboardCPLD.nga 
+taengine -ise "C:/Users/smillner/Documents/facets/design/fpga/CPLD/CPLD.ise" -intstyle ise -f IboardCPLD -w --format html1 -l IboardCPLD_html/tim/timing_report.htm 
+hprep6 -ise "C:/Users/smillner/Documents/facets/design/fpga/CPLD/CPLD.ise" -s IEEE1149 -i IboardCPLD 
+ngdbuild -ise "CPLD.ise" -intstyle ise -dd _ngo -i -p xc2c32a-VQ44-4 IboardCPLD.ngc IboardCPLD.ngd  
+cpldfit -ise "C:/Users/smillner/Documents/facets/design/fpga/CPLD/CPLD.ise" -intstyle ise -p xc2c32a-4-VQ44 -ofmt vhdl -optimize density -htmlrpt -loc on -slew fast -init low -inputs 32 -pterms 28 -unused ground -terminate pullup -iostd LVCMOS18 IboardCPLD.ngd 
+XSLTProcess -ise "C:/Users/smillner/Documents/facets/design/fpga/CPLD/CPLD.ise" IboardCPLD_build.xml 
+tsim -ise "C:/Users/smillner/Documents/facets/design/fpga/CPLD/CPLD.ise" -intstyle ise IboardCPLD IboardCPLD.nga 
+taengine -ise "C:/Users/smillner/Documents/facets/design/fpga/CPLD/CPLD.ise" -intstyle ise -f IboardCPLD -w --format html1 -l IboardCPLD_html/tim/timing_report.htm 
+hprep6 -ise "C:/Users/smillner/Documents/facets/design/fpga/CPLD/CPLD.ise" -s IEEE1149 -i IboardCPLD 
+xst -ise "C:/Users/smillner/Documents/facets/design/fpga/CPLD/CPLD.ise" -intstyle ise -ifn "C:/Users/smillner/Documents/facets/design/fpga/CPLD/IboardCPLD.xst" -ofn "C:/Users/smillner/Documents/facets/design/fpga/CPLD/IboardCPLD.syr" 
+ngdbuild -ise "CPLD.ise" -intstyle ise -dd _ngo -i -p xc2c32a-VQ44-4 IboardCPLD.ngc IboardCPLD.ngd  
+cpldfit -ise "C:/Users/smillner/Documents/facets/design/fpga/CPLD/CPLD.ise" -intstyle ise -p xc2c32a-4-VQ44 -ofmt vhdl -optimize density -htmlrpt -loc on -slew fast -init low -inputs 32 -pterms 28 -unused ground -terminate pullup -iostd LVCMOS18 IboardCPLD.ngd 
+XSLTProcess -ise "C:/Users/smillner/Documents/facets/design/fpga/CPLD/CPLD.ise" IboardCPLD_build.xml 
+tsim -ise "C:/Users/smillner/Documents/facets/design/fpga/CPLD/CPLD.ise" -intstyle ise IboardCPLD IboardCPLD.nga 
+taengine -ise "C:/Users/smillner/Documents/facets/design/fpga/CPLD/CPLD.ise" -intstyle ise -f IboardCPLD -w --format html1 -l IboardCPLD_html/tim/timing_report.htm 
+hprep6 -ise "C:/Users/smillner/Documents/facets/design/fpga/CPLD/CPLD.ise" -s IEEE1149 -i IboardCPLD 
+xst -ise "C:/Users/smillner/Documents/facets/design/fpga/CPLD/CPLD.ise" -intstyle ise -ifn "C:/Users/smillner/Documents/facets/design/fpga/CPLD/IboardCPLD.xst" -ofn "C:/Users/smillner/Documents/facets/design/fpga/CPLD/IboardCPLD.syr" 
+ngdbuild -ise "CPLD.ise" -intstyle ise -dd _ngo -i -p xc2c32a-VQ44-4 IboardCPLD.ngc IboardCPLD.ngd  
+cpldfit -ise "C:/Users/smillner/Documents/facets/design/fpga/CPLD/CPLD.ise" -intstyle ise -p xc2c32a-4-VQ44 -ofmt vhdl -optimize density -htmlrpt -loc on -slew fast -init low -inputs 32 -pterms 28 -unused ground -terminate pullup -iostd LVCMOS18 IboardCPLD.ngd 
+XSLTProcess -ise "C:/Users/smillner/Documents/facets/design/fpga/CPLD/CPLD.ise" IboardCPLD_build.xml 
+tsim -ise "C:/Users/smillner/Documents/facets/design/fpga/CPLD/CPLD.ise" -intstyle ise IboardCPLD IboardCPLD.nga 
+taengine -ise "C:/Users/smillner/Documents/facets/design/fpga/CPLD/CPLD.ise" -intstyle ise -f IboardCPLD -w --format html1 -l IboardCPLD_html/tim/timing_report.htm 
+hprep6 -ise "C:/Users/smillner/Documents/facets/design/fpga/CPLD/CPLD.ise" -s IEEE1149 -i IboardCPLD 
+xst -ise "C:/Users/smillner/Documents/facets/design/fpga/CPLD/CPLD.ise" -intstyle ise -ifn "C:/Users/smillner/Documents/facets/design/fpga/CPLD/IboardCPLD.xst" -ofn "C:/Users/smillner/Documents/facets/design/fpga/CPLD/IboardCPLD.syr" 
+ngdbuild -ise "CPLD.ise" -intstyle ise -dd _ngo -i -p xc2c32a-VQ44-4 IboardCPLD.ngc IboardCPLD.ngd  
+cpldfit -ise "C:/Users/smillner/Documents/facets/design/fpga/CPLD/CPLD.ise" -intstyle ise -p xc2c32a-4-VQ44 -ofmt vhdl -optimize density -htmlrpt -loc on -slew fast -init low -inputs 32 -pterms 28 -unused ground -terminate pullup -iostd LVCMOS18 IboardCPLD.ngd 
+XSLTProcess -ise "C:/Users/smillner/Documents/facets/design/fpga/CPLD/CPLD.ise" IboardCPLD_build.xml 
+tsim -ise "C:/Users/smillner/Documents/facets/design/fpga/CPLD/CPLD.ise" -intstyle ise IboardCPLD IboardCPLD.nga 
+taengine -ise "C:/Users/smillner/Documents/facets/design/fpga/CPLD/CPLD.ise" -intstyle ise -f IboardCPLD -w --format html1 -l IboardCPLD_html/tim/timing_report.htm 
+hprep6 -ise "C:/Users/smillner/Documents/facets/design/fpga/CPLD/CPLD.ise" -s IEEE1149 -i IboardCPLD 
+ngdbuild -ise "CPLD.ise" -intstyle ise -dd _ngo -i -p xc2c32a-VQ44-4 IboardCPLD.ngc IboardCPLD.ngd  
+cpldfit -ise "C:/Users/smillner/Documents/facets/design/fpga/CPLD/CPLD.ise" -intstyle ise -p xc2c32a-4-VQ44 -ofmt vhdl -optimize density -htmlrpt -loc on -slew fast -init low -inputs 32 -pterms 28 -unused ground -terminate pullup -iostd LVCMOS18 IboardCPLD.ngd 
+XSLTProcess -ise "C:/Users/smillner/Documents/facets/design/fpga/CPLD/CPLD.ise" IboardCPLD_build.xml 
+tsim -ise "C:/Users/smillner/Documents/facets/design/fpga/CPLD/CPLD.ise" -intstyle ise IboardCPLD IboardCPLD.nga 
+taengine -ise "C:/Users/smillner/Documents/facets/design/fpga/CPLD/CPLD.ise" -intstyle ise -f IboardCPLD -w --format html1 -l IboardCPLD_html/tim/timing_report.htm 
+hprep6 -ise "C:/Users/smillner/Documents/facets/design/fpga/CPLD/CPLD.ise" -s IEEE1149 -i IboardCPLD 
+xst -intstyle ise -ifn "/afs/kip.uni-heidelberg.de/user/smillner/stage2/CPLD/IboardCPLD.xst" -ofn "/afs/kip.uni-heidelberg.de/user/smillner/stage2/CPLD/IboardCPLD.syr" 
+ngdbuild -intstyle ise -dd _ngo -uc IboardCPLD.ucf -p xc2c32a-VQ44-4 IboardCPLD.ngc IboardCPLD.ngd  
+cpldfit -intstyle ise -p xc2c32a-4-VQ44 -ofmt vhdl -optimize density -htmlrpt -loc on -slew fast -init low -inputs 32 -pterms 28 -unused ground -terminate pullup -iostd LVCMOS18 IboardCPLD.ngd 
+XSLTProcess IboardCPLD_build.xml 
+tsim -intstyle ise IboardCPLD IboardCPLD.nga 
+taengine -intstyle ise -f IboardCPLD -w --format html1 -l IboardCPLD_html/tim/timing_report.htm 
+hprep6 -s IEEE1149 -i IboardCPLD 
+xst -intstyle ise -ifn "/afs/kip.uni-heidelberg.de/user/smillner/stage2/CPLD/IboardCPLD.xst" -ofn "/afs/kip.uni-heidelberg.de/user/smillner/stage2/CPLD/IboardCPLD.syr" 
+ngdbuild -intstyle ise -dd _ngo -uc IboardCPLD.ucf -p xc2c32a-VQ44-4 IboardCPLD.ngc IboardCPLD.ngd  
+cpldfit -intstyle ise -p xc2c32a-4-VQ44 -ofmt vhdl -optimize density -htmlrpt -loc on -slew fast -init low -inputs 32 -pterms 28 -unused ground -terminate pullup -iostd LVCMOS18 IboardCPLD.ngd 
+XSLTProcess IboardCPLD_build.xml 
+tsim -intstyle ise IboardCPLD IboardCPLD.nga 
+taengine -intstyle ise -f IboardCPLD -w --format html1 -l IboardCPLD_html/tim/timing_report.htm 
+hprep6 -s IEEE1149 -i IboardCPLD 
+xst -intstyle ise -ifn "/home/agruebl/project/HICANN-system_tagid_quickhack/CPLD/IboardCPLD.xst" -ofn "/home/agruebl/project/HICANN-system_tagid_quickhack/CPLD/IboardCPLD.syr" 
+ngdbuild -intstyle ise -dd _ngo -uc IboardCPLD.ucf -p xc2c32a-VQ44-4 IboardCPLD.ngc IboardCPLD.ngd  
+cpldfit -intstyle ise -p xc2c32a-4-VQ44 -ofmt vhdl -optimize density -htmlrpt -loc on -slew fast -init low -inputs 32 -pterms 28 -unused ground -terminate pullup -iostd LVCMOS18 IboardCPLD.ngd 
+XSLTProcess IboardCPLD_build.xml 
+tsim -intstyle ise IboardCPLD IboardCPLD.nga 
+taengine -intstyle ise -f IboardCPLD -w --format html1 -l IboardCPLD_html/tim/timing_report.htm 
+hprep6 -s IEEE1149 -i IboardCPLD 
+xst -intstyle ise -ifn "/home/agruebl/project/HICANN-system_tagid_quickhack/CPLD/IboardCPLD.xst" -ofn "/home/agruebl/project/HICANN-system_tagid_quickhack/CPLD/IboardCPLD.syr" 
+ngdbuild -intstyle ise -dd _ngo -uc IboardCPLD.ucf -p xc2c32a-VQ44-4 IboardCPLD.ngc IboardCPLD.ngd  
+cpldfit -intstyle ise -p xc2c32a-4-VQ44 -ofmt vhdl -optimize density -htmlrpt -loc on -slew fast -init low -inputs 32 -pterms 28 -unused ground -terminate pullup -iostd LVCMOS18 IboardCPLD.ngd 
+XSLTProcess IboardCPLD_build.xml 
+tsim -intstyle ise IboardCPLD IboardCPLD.nga 
+taengine -intstyle ise -f IboardCPLD -w --format html1 -l IboardCPLD_html/tim/timing_report.htm 
+hprep6 -s IEEE1149 -i IboardCPLD 
+xst -intstyle ise -ifn "/home/agruebl/project/HICANN-system/CPLD/IboardCPLD.xst" -ofn "/home/agruebl/project/HICANN-system/CPLD/IboardCPLD.syr" 
+ngdbuild -intstyle ise -dd _ngo -uc IboardCPLD.ucf -p xc2c64a-VQ44-5 IboardCPLD.ngc IboardCPLD.ngd  
+cpldfit -intstyle ise -p xc2c64a-5-VQ44 -ofmt vhdl -optimize density -htmlrpt -loc on -slew fast -init low -inputs 32 -pterms 28 -unused ground -terminate pullup -iostd LVCMOS18 IboardCPLD.ngd 
+XSLTProcess IboardCPLD_build.xml 
+tsim -intstyle ise IboardCPLD IboardCPLD.nga 
+taengine -intstyle ise -f IboardCPLD -w --format html1 -l IboardCPLD_html/tim/timing_report.htm 
+hprep6 -s IEEE1149 -i IboardCPLD 

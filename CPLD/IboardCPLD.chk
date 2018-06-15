@@ -1,0 +1,101 @@
+
+----------------------------------------
+|  P a r t i t i o n    S u c c e e d  |
+----------------------------------------
+0 Group(s)
+
+Banked output:
+[ARESET_L](2/-1) [FREE1](0/-1) [FREE2](0/-1) [LED1](0/-1) [LED2](0/-1) [LED3](0/-1) [TCK](2/-1) [TDI](2/-1) [TDO33](0/-1) [TMS_SYSSTART](2/-1) 
+Banked input:
+[ARESET_L33](0/-1) [CLK](0/-1) [SYSSTART33](0/-1) [TCK33](0/-1) [TDI33](0/-1) [TDO](2/-1) [TMS33](0/-1) 
+LOB1(0/-1): POB0 
+Float/Total=0/12 signals: [ARESET_L33](0/-1) [CLK](0/-1) [FREE1](0/-1) [FREE2](0/-1) [LED1](0/-1) [LED2](0/-1) [LED3](0/-1) [SYSSTART33](0/-1) [TCK33](0/-1) [TDI33](0/-1) [TDO33](0/-1) [TMS33](0/-1) 
+
+LOB0(2/-1): POB1 
+Float/Total=0/5 signals: [ARESET_L](2/-1) [TCK](2/-1) [TDI](2/-1) [TDO](2/-1) [TMS_SYSSTART](2/-1) 
+
+
+POB0(0/-1): LOB1 
+12 signals: [ARESET_L33](0/-1) [CLK](0/-1) [FREE1](0/-1) [FREE2](0/-1) [LED1](0/-1) [LED2](0/-1) [LED3](0/-1) [SYSSTART33](0/-1) [TCK33](0/-1) [TDI33](0/-1) [TDO33](0/-1) [TMS33](0/-1) 
+0 vrefs: 
+POB0's input pads:
+	..::@@:@@::@:@@::::@@:::::@:GAP:.:@@:.
+	00::00:00::0:00::::00:::::0:GAP:0:00:0
+
+POB0 has 4 pins, 0 Dinputs, 25 mcells, 58 fanins, 103 pla pts free in FB2 FB4 
+
+POB1(2/-1): LOB0 
+5 signals: [ARESET_L](2/-1) [TCK](2/-1) [TDI](2/-1) [TDO](2/-1) [TMS_SYSSTART](2/-1) 
+0 vrefs: 
+POB1's input pads:
+	@.:GAP:...:GAP:..::...:::.:::::..@::::@:@@
+	00:GAP:000:GAP:00::000:::0:::::000::::0:00
+
+POB1 has 12 pins, 0 Dinputs, 19 mcells, 59 fanins, 96 pla pts free in FB1 FB3 
+
+
+GCLK1: 1=CLK.p
+----------------- B l o c k 0 ------------------
+PLApt(15/56), Fanin(16/38), Clk(1/3), Bct(1/4), Pin(4/8), Mcell(12/16)
+PLApts[15/56] 18 19 5 11 () 2 () () () () () () () () () () () () () 0 () () 9 () () 12 () () 13 () () 14 () 
+              () () () () 7 () () () () () () () () 10 () () 15 () () 16 () () 17
+Fanins[16] ARESET_L.n LED1.n count<0>.n count<1>.n count<2>.n count<3>.n count<4>.n count<5>.n count<6>.n 
+           count<7>.n running.n running1.n ARESET_L33.p SYSSTART33.p TDI33.p TMS33.p
+clk[1] CLK 
+CTC: 
+CTR: (pt=2) ARESET_L33' ;
+CTS: 
+CTE: 
+vref: [0]
+Signal[13] [ARESET_L(55),ARESET_L(32)] [TMS_SYSSTART(56),TMS_SYSSTART(31)] [TDI(54),TDI(33)] [TDO(30)]  
+           [count<7>(60)] [count<6>(59)] [count<5>(58)] [count<4>(52)] [count<3>(51)] [count<2>(50)]  
+           [count<1>(49)] [count<0>(48)] [running1(57)] 
+Signal[13] [ 0: (38)  ][ 1: (37)  ][ 2: (36)  ][ 3: count<0>(48)  ][ 4: count<1>(49)  ][ 5: count<2>(50)  ] 
+           [ 6: count<3>(51)  ][ 7: count<4>(52)  ][ 8: (34)  ][ 9: TDI(54) TDI(33)  ][ 10: ARESET_L(55)  
+           ARESET_L(32)  ][ 11: TMS_SYSSTART(56) TMS_SYSSTART(31)  ][ 12: running1(57) TDO(30)  ][ 13:  
+           count<5>(58)  ][ 14: count<6>(59)  ][ 15: count<7>(60)  ]
+----------------- B l o c k 1 ------------------
+PLApt(4/56), Fanin(12/38), Clk(1/3), Bct(1/4), Pin(7/9), Mcell(3/16)
+PLApts[4/29] () () () () () 2 () () () () () () () () () () () () () () () () 4 () () 3 () () 18
+Fanins[12] LED1.n count<0>.n count<1>.n count<2>.n count<3>.n count<4>.n count<5>.n count<6>.n count<7>.n 
+           ARESET_L33.p SYSSTART33.p TMS33.p
+clk[1] CLK 
+CTC: 
+CTR: (pt=2) ARESET_L33' ;
+CTS: 
+CTE: 
+vref: [0]
+Signal[ 7] [LED1(67),LED1(43)] [LED2(66),LED2(42)] [LED3(65),LED3(41)] [ARESET_L33(1)] [CLK(44)] [TCK33(2)]  
+           [TDI33(3)] 
+Signal[ 7] [ 0: (39)  ][ 1: (40)  ][ 2:  ][ 3:  ][ 4: LED3(65) LED3(41)  ][ 5: LED2(66) LED2(42)  ][ 6:  
+           LED1(67) LED1(43)  ][ 7: CLK(44)  ][ 8:  ][ 9: ARESET_L33(1)  ][ 10:  ][ 11: TCK33(2)  ][ 12:  
+           TDI33(3)  ][ 13:  ][ 14:  ][ 15:  ]
+----------------- B l o c k 2 ------------------
+PLApt(1/56), Fanin(1/38), Clk(0/3), Bct(0/4), Pin(1/9), Mcell(1/16)
+PLApts[1/11] () () () () () () () () () () 6
+Fanins[ 1] TCK33.p
+clk[0] 
+CTC: 
+CTR: 
+CTS: 
+CTE: 
+vref: [0]
+Signal[ 1] [TCK(77),TCK(29)] 
+Signal[ 1] [ 0: TCK(77) TCK(29)  ][ 1: (28)  ][ 2: (27)  ][ 3:  ][ 4:  ][ 5: (23)  ][ 6:  ][ 7:  ][ 8:  ] 
+           [ 9: (22)  ][ 10: (21)  ][ 11: (20)  ][ 12:  ][ 13: (19)  ][ 14: (18)  ][ 15:  ]
+----------------- B l o c k 3 ------------------
+PLApt(5/56), Fanin(6/38), Clk(1/3), Bct(1/4), Pin(5/7), Mcell(4/16)
+PLApts[5/47] 5 11 () () () 2 () () () () () () () () () () () () () () () () () () () () () () 8 () () () () 
+             () () () () () () () () () () () () () 6
+Fanins[ 6] running1.n ARESET_L33.p SYSSTART33.p TCK33.p TDO.p TMS33.p
+clk[1] CLK 
+CTC: 
+CTR: (pt=2) ARESET_L33' ;
+CTS: 
+CTE: 
+vref: [0]
+Signal[ 6] [FREE2(106),FREE2(14)] [FREE1(105),FREE1(13)] [TDO33(99),TDO33(8)] [TMS33(6)]  
+           [running,SYSSTART33(5)] 
+Signal[ 6] [ 0: running(93) SYSSTART33(5)  ][ 1: TMS33(6)  ][ 2:  ][ 3:  ][ 4:  ][ 5:  ][ 6: TDO33(99)  
+           TDO33(8)  ][ 7:  ][ 8:  ][ 9:  ][ 10: (12)  ][ 11:  ][ 12: FREE1(105) FREE1(13)  ][ 13:  
+           FREE2(106) FREE2(14)  ][ 14: (16)  ][ 15:  ]

@@ -1,0 +1,45 @@
+#reset hicann, set vol and voh and both plls to 100MHz
+cat <<EOF >key
+1
+2
+3
+8
+4ff
+b
+6
+5
+b
+5
+5
+b
+4
+2.5
+b
+6
+10.5
+b
+2
+0.9
+b
+1
+0.7
+b
+3
+1.2
+g
+0
+80
+g
+1
+80
+x
+EOF
+./tests2 -bje2f 1 0 -ip 192.168.1.19 -jp 1701 -m tm_iboardv2 -c ../conf/smillner/FGparam_uniform_mod.xml < key
+
+cat <<EOF >key2
+0
+p
+x
+EOF
+./tests2 -bje2f 1 0 -ip 192.168.1.19 -jp 1701 -m tm_capo_net -c ../conf/smillner/FGparam_uniform_mod.xml  < key2
+

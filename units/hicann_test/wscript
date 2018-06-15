@@ -1,0 +1,169 @@
+#!/usr/bin/env python
+import sys, os
+
+from waflib.extras.symwaf2ic import SYMWAF2IC_VERSION
+from waflib import Options
+
+def depends(ctx):
+    ctx('lib-rcf', branch='v2')
+    ctx('hicann-system', 'units/stage2_hal')
+    ctx('hicann-system', 'units/measure')
+    ctx('hicann-system', 'units/hicann_cfg')
+    ctx('sctrltp')
+
+
+def options(ctx):
+    hopts = ctx.get_option_group('HICANN system')
+    if not hopts:
+        hopts = ctx.add_option_group('HICANN system')
+    hopts.add_option('--without-tests2',
+            action='store_false', default=True, dest='tests2',
+            help='Disable build of HICANN test')
+
+    hopts.add_option('--with-experiment',
+            action='store_true', default=False, dest='experiment',
+            help='Enable build of RCF tests2/experiment starter')
+
+    hopts.add_option('--with-mpi',
+            action='store_true', default=False, dest='mpimode',
+            help='Enable build of MPI stuff')
+
+    ctx.load('compiler_cxx')
+    ctx.load('boost')
+    ctx.load('gtest')
+    ctx.load('compiler_c')
+
+
+def configure(ctx):
+    ctx.load('compiler_cxx')
+    ctx.load('boost')
+    ctx.load('gtest')
+    ctx.load('compiler_c')
+
+    ctx.env.tests2     = Options.options.tests2
+    ctx.env.experiment = Options.options.experiment
+    ctx.env.mpimode    = Options.options.mpimode
+
+    ctx.check_boost(lib='system program_options', uselib_store='BOOST4TESTS2')
+    if ctx.env.mpimode:
+        ctx.check_boost(lib='mpi', uselib_store='BOOST4S2HALMPI')
+
+    ctx.check_cfg(package='libusb-1.0', args=['--cflags', '--libs'], uselib_store='USB')
+
+
+def build(ctx):
+    # testmodes requiring only ANSI C++
+    SOURCES = '''
+        tmag_fpga_i2c.cpp tmag_p_plltest_multi.cpp tmag_switchramtest.cpp tmag_switchramtest_2hc.cpp tmjs_repeater.cpp tmjs_stdpctrl.cpp \
+        tmjs_neuronmem.cpp tm_fgzero.cpp  tm_singleneuron.cpp tm_fgkeithley.cpp tm_fgrowinc.cpp tmsm_neuronout.cpp tmsm_fg.cpp\
+        tmsm_neuronsynin.cpp tm_spl1.cpp tmag_hcinit.cpp tm_fgkeithleymean.cpp tm_l2init.cpp tm_iboardv2.cpp tmag_l2onrep.cpp tm_neuron.cpp\
+        tmsm_repeater.cpp tmak_iboardv2.cpp tm_neuronram.cpp tmsm_fgfunctional.cpp tm_jitter.cpp tmak_fg.cpp tm_neuronctrl.cpp\
+        tmms_neurontimeout.cpp tmsf_stdpctrl.cpp tm_calibration.cpp tmah_repeaterProblem.cpp tm_quicktests.cpp tmsubm2_neuronmem.cpp tmsubm2_repeater.cpp\
+        tm_l2pulses.cpp tm_wafertest.cpp Serial.cpp ChipTest.cpp PowerSupply.cpp tmak_2hicanns.cpp tmag_timestamp_test.cpp\
+        tmak_wafertest.cpp tmag_spl1_loopback.cpp tm_bsreview_y1.cpp tmak_bsreview_y1.cpp tmsm_aout.cpp\
+        tmag_jtagchainrnd.cpp tmcapo_net.cpp tm_l2bench.cpp tm_hardwaretest.cpp tmbv_l1addressflip.cpp tm_nmsampling.cpp \
+        tm_arq_burnin.cpp tmjenkins_switchramtest_arq.cpp tmvk_arqperftest.cpp tmjp_playback_srtest.cpp \
+        tmecm_pbmemtraceloop.cpp tmecm_hicannreads.cpp tm_arq_burnin_parallel.cpp tmcm_hostarq_loopback.cpp tm_empty.cpp \
+        tm_neuronctrlv2.cpp tmsubm2_stdpctrl.cpp tm_hicann_sram_reset.cpp tmcm_fpgastats.cpp
+    '''.split()
+
+    MPISOURCES = ['tm_sysbench.cpp', 'tmss_jtagidreadout.cpp']
+
+    ctx(
+        # uh, ugly shit - global namespace but very unglobal name here...
+        target          = 'test_inc',
+        export_includes = 'source',
+    )
+
+    # better this?
+    ctx(
+        target          = 'hicann_test_inc',
+        export_includes = 'source',
+    )
+
+    # always re-check git version, user could have changed stuff at arbitrary times
+    from subprocess import check_output, CalledProcessError
+    try:
+        git_version = check_output(['git', 'describe', '--long', '--dirty' ,'--always', '--abbrev=32'],
+                cwd=ctx.path.abspath()).rstrip()
+    except CalledProcessError:
+        git_version = "unversioned_build"
+    ctx(
+        # string literal
+        rule = 'echo \'char const * GIT_VERSION = "%s";\' > ${TGT}' % git_version,
+        target = 'git_version.h',
+        export_includes = [ctx.path.get_bld()],
+       )
+
+    if ctx.env.tests2:
+        # build test2 objects (reused by python wrapper)
+        ctx.objects (
+            target          = 'tests2_obj',
+            source          = [ 'source/tests2.cpp' ] + \
+                    [ ctx.path.find_resource('source/%s' % x) for x in SOURCES ],
+            cxxflags        = ['-fPIC', '-w'],
+            use             = [ 'test_inc', 'hicann_cfg_inc', 'BOOST4TESTS2', 's2hal_obj', 'measure_obj', 'rcf-boost-only', 'git_version.h' , 'sctrl_inc', 'arqstream_obj' ],
+        )
+
+    if ctx.env.mpimode:
+        ctx.objects (
+            target          = 'tests2mpi_obj',
+            source          = [ 'source/tests2.cpp' ] + \
+                    [ ctx.path.find_resource('source/%s' % x) for x in MPISOURCES ],
+            cxxflags        = ['-fPIC', '-w'],
+            defines         = ['MPIMODE', ],
+            use             = [ 'test_inc', 'hicann_cfg_inc', 'BOOST4S2HALMPI', 's2hal_obj', 'measure_obj', 'rcf-boost-only' ],
+        )
+
+    ctx.objects (
+        target          = 'getch_obj',
+        source          = 'source/getch.c',
+        cflags          = ['-fPIC',],
+    )
+
+    if ctx.env.tests2:
+        # link test2 tool
+        ctx(
+            target          = 'tests2',
+            features        = 'cxx cxxprogram',
+            use             = [ 'tests2_obj', 'TESTS2USE', 'USB', 'sctrl', 'tud_jtag' ],
+            install_path    = 'bin',
+        )
+
+        if ctx.env.mpimode:
+            ctx(
+                target          = 'tests2mpi',
+                features        = 'cxx cxxprogram',
+                use             = [ 'tests2mpi_obj', 'BOOST4S2HALMPI', 'TESTS2USE', 'USB'],
+                install_path    = 'bin',
+            )
+
+    if ctx.env.experiment:
+        # build experiment executable
+        ctx(
+            source          = ['source/experiment.cpp'],
+            target          = 'experiment',
+            features        = 'cxx cxxprogram',
+            use             = [ 'rcf-boost-only', 'TESTS2USE'],
+            install_path    = 'bin',
+        )
+        ctx(
+            source          = ['source/test-experiment.cpp'],
+            target          = 'test-experiment',
+            features        = 'cxx cxxprogram',
+            use             = [ 'rcf-boost-only', 'TESTS2USE'],
+            install_path    = 'bin',
+        )
+
+    # Google-Test-based tests
+    gtests_srcs = ctx.path.ant_glob('source/gtest_*.cpp')
+
+    ctx(
+        target = 'gtest-main',
+        features = 'gtest cxx cxxprogram',
+        test_main = 'source/gtest.cpp',
+        source = gtests_srcs,
+        use = [ 's2hal_obj', 'arqstream_obj', 'sctrl', 'tud_jtag', 'BOOST4TESTS2' ],
+        install_path = 'bin',
+        skip_run = True, # needs lots of hardware ;p
+    )

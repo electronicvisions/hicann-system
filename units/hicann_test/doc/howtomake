@@ -1,0 +1,12 @@
+"Designed for Ubuntu 10.4"
+
+Needed libraries:
+libxerces, version 3.1
+libboost, version 1.4
+
+Needed globals:
+ICPRO_DIR: Points to the root directory of your project. (s_system)
+SYMAP2IC_DIR: Points to the root directory of your symaptic checkout. Needed for logger.
+
+Working with Keythly Multimeter:
+currently only supported with manually loaded kernel module on Ubuntu 8.04.

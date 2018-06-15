@@ -1,0 +1,174 @@
+/* empty definitions */
+#ifndef PID
+	#define PID(name)
+#endif
+#ifndef UINT16
+	#define UINT16(name)
+#endif
+#ifndef UINT16P
+	#define UINT16P(name, bits)
+#endif
+#ifndef UINT32
+	#define UINT32(name)
+#endif
+#ifndef UINT32P
+	#define UINT32P(name, bits)
+#endif
+#ifndef UINT64
+	#define UINT64(name)
+#endif
+#ifndef UINT64P
+	#define UINT64P(name, bits)
+#endif
+#ifndef TIMESTAMP
+	#define TIMESTAMP(name)
+#endif
+#ifndef LABEL
+	#define LABEL(name)
+#endif
+#ifndef LABELS
+	#define LABELS(name, length)
+#endif
+#ifndef INNERPACKET
+	#define INNERPACKET(name, length, fields)
+#endif
+#ifndef PACKET
+	#define PACKET(pid, name, size, fields)
+#endif
+
+
+/**********************************************************************/
+/*                                                                    */
+/*      Definition of packet formats for Host-FPGA communication      */
+/*                                                                    */
+/**********************************************************************/
+
+/* FPGA trace/pulse data (from FPGA) */
+#define HMF_FPGA_PULSE_MAX (HMF_MTU-4)/4
+PACKET(0x0CA5, fpga_pulse, (HMF_FPGA_PULSE_MAX*4+4),
+	PID(pid) /*0x0CA5*/
+	UINT16(N)
+	UNION(entry, HMF_FPGA_PULSE_MAX, 
+		INNERPACKET(pulse,
+			UINT16P(type, 1)
+			TIMESTAMPP(t, 15)
+			UINT16P(pad, 2)
+			LABELP(l, 14)
+		)
+		INNERPACKET(overflow,
+			UINT16P(type, 1)
+			UINT32P(N, 31)
+		)
+	)
+)
+#undef HMF_FPGA_PULSE_MAX
+
+
+/* HICANN Read Data */
+#define HMF_FPGA_READ_MAX (HMF_MTU-4)/8
+PACKET(0x0CA3, fpga_read, (HMF_FPGA_READ_MAX*8+4),
+	PID(pid) /*0x0CA3*/
+	UINT16(N)
+	UNION(entry, HMF_FPGA_READ_MAX, 
+		INNERPACKET(read,
+			UINT16P(type, 1)
+			TIMESTAMPP(t, 15)
+			UINT64P(data, 48)
+		)
+		INNERPACKET(overflow,
+			UINT16P(type, 1)
+			UINT32P(N, 31)
+			UINT32(pad)
+		)
+	)
+)
+#undef HMF_FPGA_READ_MAX
+
+
+/* playback memory data */
+#define HMF_FPGA_PBMEM_MAX (HMF_MTU-2)/2
+#define HMF_FPGA_PBMEM_PACKET_SZ (HMF_FPGA_PBMEM_MAX * 2 + 2)
+PACKET(0x0C5A, fpga_pbmem, HMF_FPGA_PBMEM_PACKET_SZ,
+	PID(pid) /*0x0C5A*/
+	UINT16S(fields, HMF_FPGA_PBMEM_MAX)
+	// TODO: really ugly...
+)
+#undef HMF_FPGA_PBMEM_MAX
+#undef HMF_FPGA_PBMEM_PACKET_SZ
+
+
+/* FPGA routing (provisional) */
+#define HMF_FPGA_ROUTE_MAX (HMF_MTU-4)/6
+#define HMF_FPGA_ROUTE_PACKET_SZ (HMF_FPGA_ROUTE_MAX * 6 + 4)
+PACKET(0x0CAA, fpga_route, HMF_FPGA_ROUTE_MAX * 6 + 4,
+	PID(pid) /*0x0CAA*/
+	UINT16(N)
+	INNERPACKETS(entry, HMF_FPGA_ROUTE_MAX,
+		UINT32(h) /* ugly inside  */
+		UINT16(l) /* ugly outside */
+	)
+)
+#undef HMF_FPGA_ROUTE_MAX
+#undef HMF_FPGA_ROUTE_PACKET_SZ
+
+
+/* FPGA configuration (provisional) */
+#define HMF_FPGA_CONFIG_PACKET_SZ (4)
+PACKET(0x0C1B, fpga_config, HMF_FPGA_CONFIG_PACKET_SZ,
+	PID(pid) /*0x0C1B*/
+	UINT16P(clr_pbmem,         1)
+	UINT16P(clr_tracemem,      1)
+	UINT16P(start_trace,       1)
+	UINT16P(stop_trace,        1)
+	UINT16P(start_trace_read,  1)
+	UINT16P(pad,              11)
+)
+#undef HMF_FPGA_CONFIG_PACKET_SZ
+
+
+/* HICANN config packet, with ARQ in software */
+#define HMF_HICANN_CONFIGSW_MAX (HMF_MTU-4)/8
+#define HMF_HICANN_CONFIGSW_PACKET_SZ (HMF_HICANN_CONFIGSW_MAX * 8 + 4)
+PACKET(0x2A1B, hicann_configsw, HMF_HICANN_CONFIGSW_PACKET_SZ,
+	PID(pid) /*0x2A1B*/
+	UINT16P(dst, 5)
+	UINT16P(N,  11)
+	INNERPACKETS(data, HMF_HICANN_CONFIGSW_MAX,
+		UINT64(payload)
+	)
+)
+#undef HMF_HICANN_CONFIGSW_MAX
+#undef HMF_HICANN_CONFIGSW_PACKET_SZ
+
+
+/* HICANN config packet, with ARQ in FPGA */
+#define HMF_HICANN_CONFIG_MAX (HMF_MTU-4)/8
+#define HMF_HICANN_CONFIG_PACKET_SZ (HMF_HICANN_CONFIG_MAX * 8 + 4)
+PACKET(0xDEAD, hicann_config, HMF_HICANN_CONFIG_PACKET_SZ,
+	PID(pid) /*0xDEAD*/
+	UINT16(N)
+	INNERPACKETS(data, HMF_HICANN_CONFIG_MAX,
+		UINT64P(dnc,      3)
+		UINT64P(hicann,   5)
+		UINT64P(pad0,     7)
+		UINT64P(payload, 49)
+	)
+)
+#undef HMF_HICANN_CONFIG_MAX
+#undef HMF_HICANN_CONFIG_PACKET_SZ
+/**********************************************************************/
+
+
+/* undefine everything, prevent namespace pollution */
+#undef PACKET
+#undef INNERPACKET
+#undef PID
+#undef UINT16
+#undef UINT16P
+#undef UINT32
+#undef UINT32P
+#undef UINT64
+#undef UINT64P
+#undef TIMESTAMP
+#undef LABEL
+#undef LABELS

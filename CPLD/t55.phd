@@ -1,0 +1,185 @@
+" XPLAOPT Version 9.99.99.99
+" Created on Tue Jan 31 17:06:35 2012
+" 20 Mcells, 23 PLApts, 1 Levels, 69 Fanins
+" XPLAOPT -run s -it b -i IboardCPLD.blx -dev XC2C64A-5VQ44 -reg -xor a -mode 1 
+"         -th 28 -fi 32 -bfi 38 -pre keep -unused ground -terminate pullup -no_output_files 
+MODULE IboardCPLD
+
+	ARESET_L  pin 32 ;  " 2 pt.
+ 	ARESET_L33  pin 1 ; 
+ 	CLK  pin 44 ; 
+ 	FREE1  pin 13 ;  " 1 pt.
+ 	FREE2  pin 14 ;  " 2 pt.
+ 	LED1  pin 43 ;  " 1 pt.
+ 	LED2  pin 42 ;  " 1 pt.
+ 	LED3  pin 41 ;  " 1 pt.
+ 	SYSSTART33  pin 5 ; 
+ 	TCK  pin 29 ;  " 1 pt.
+ 	TCK33  pin 2 ; 
+ 	TDI  pin 33 ;  " 1 pt.
+ 	TDI33  pin 3 ; 
+ 	TDO  pin 30 ; 
+ 	TDO33  pin 8 ;  " 1 pt.
+ 	TMS33  pin 6 ; 
+ 	TMS_SYSSTART  pin 31 ;  " 2 pt.
+ 
+
+	count<0>  node ;  " 1 pt.
+ 	count<1>  node ;  " 1 pt.
+ 	count<2>  node ;  " 1 pt.
+ 	count<3>  node ;  " 1 pt.
+ 	count<4>  node ;  " 1 pt.
+ 	count<5>  node ;  " 1 pt.
+ 	count<6>  node ;  " 1 pt.
+ 	count<7>  node ;  " 1 pt.
+ 	running  node ;  " 1 pt.
+ 	running1  node ;  " 1 pt.
+ 
+
+xpla property 'USER_SLEW_RATE LED1 TMS_SYSSTART TCK FREE1 FREE2 LED2 LED3 TDI TDO33 ARESET_L '; 
+	
+xpla property 'GLOBAL_CLK CLK '; 
+xpla property 'terminate_unused'; 
+xpla property 'timespec  TMS33 TMS_SYSSTART 1.000000'; 
+xpla property 'timespec  SYSSTART33 TMS_SYSSTART 1.000000'; 
+xpla property 'timespec  LED1.Q LED1.D 6.000000'; 
+xpla property 'timespec  count<7>.Q LED1.D 6.000000'; 
+xpla property 'timespec  count<6>.Q LED1.D 6.000000'; 
+xpla property 'timespec  count<5>.Q LED1.D 6.000000'; 
+xpla property 'timespec  count<4>.Q LED1.D 6.000000'; 
+xpla property 'timespec  count<3>.Q LED1.D 6.000000'; 
+xpla property 'timespec  count<2>.Q LED1.D 6.000000'; 
+xpla property 'timespec  count<0>.Q LED1.D 6.000000'; 
+xpla property 'timespec  count<1>.Q LED1.D 6.000000'; 
+xpla property 'timespec  LED1.Q LED1.CE 6.000000'; 
+xpla property 'timespec  count<0>.Q count<0>.D 6.000000'; 
+xpla property 'timespec  LED1.Q count<0>.CE 6.000000'; 
+xpla property 'timespec  count<1>.Q count<1>.D 6.000000'; 
+xpla property 'timespec  count<0>.Q count<1>.D 6.000000'; 
+xpla property 'timespec  LED1.Q count<1>.CE 6.000000'; 
+xpla property 'timespec  count<2>.Q count<2>.D 6.000000'; 
+xpla property 'timespec  count<0>.Q count<2>.D 6.000000'; 
+xpla property 'timespec  count<1>.Q count<2>.D 6.000000'; 
+xpla property 'timespec  LED1.Q count<2>.CE 6.000000'; 
+xpla property 'timespec  count<3>.Q count<3>.D 6.000000'; 
+xpla property 'timespec  count<2>.Q count<3>.D 6.000000'; 
+xpla property 'timespec  count<0>.Q count<3>.D 6.000000'; 
+xpla property 'timespec  count<1>.Q count<3>.D 6.000000'; 
+xpla property 'timespec  LED1.Q count<3>.CE 6.000000'; 
+xpla property 'timespec  count<4>.Q count<4>.D 6.000000'; 
+xpla property 'timespec  count<3>.Q count<4>.D 6.000000'; 
+xpla property 'timespec  count<2>.Q count<4>.D 6.000000'; 
+xpla property 'timespec  count<0>.Q count<4>.D 6.000000'; 
+xpla property 'timespec  count<1>.Q count<4>.D 6.000000'; 
+xpla property 'timespec  LED1.Q count<4>.CE 6.000000'; 
+xpla property 'timespec  count<5>.Q count<5>.D 6.000000'; 
+xpla property 'timespec  count<4>.Q count<5>.D 6.000000'; 
+xpla property 'timespec  count<3>.Q count<5>.D 6.000000'; 
+xpla property 'timespec  count<2>.Q count<5>.D 6.000000'; 
+xpla property 'timespec  count<0>.Q count<5>.D 6.000000'; 
+xpla property 'timespec  count<1>.Q count<5>.D 6.000000'; 
+xpla property 'timespec  LED1.Q count<5>.CE 6.000000'; 
+xpla property 'timespec  count<6>.Q count<6>.D 6.000000'; 
+xpla property 'timespec  count<5>.Q count<6>.D 6.000000'; 
+xpla property 'timespec  count<4>.Q count<6>.D 6.000000'; 
+xpla property 'timespec  count<3>.Q count<6>.D 6.000000'; 
+xpla property 'timespec  count<2>.Q count<6>.D 6.000000'; 
+xpla property 'timespec  count<0>.Q count<6>.D 6.000000'; 
+xpla property 'timespec  count<1>.Q count<6>.D 6.000000'; 
+xpla property 'timespec  LED1.Q count<6>.CE 6.000000'; 
+xpla property 'timespec  count<7>.Q count<7>.D 6.000000'; 
+xpla property 'timespec  count<6>.Q count<7>.D 6.000000'; 
+xpla property 'timespec  count<5>.Q count<7>.D 6.000000'; 
+xpla property 'timespec  count<4>.Q count<7>.D 6.000000'; 
+xpla property 'timespec  count<3>.Q count<7>.D 6.000000'; 
+xpla property 'timespec  count<2>.Q count<7>.D 6.000000'; 
+xpla property 'timespec  count<0>.Q count<7>.D 6.000000'; 
+xpla property 'timespec  count<1>.Q count<7>.D 6.000000'; 
+xpla property 'timespec  LED1.Q count<7>.CE 6.000000'; 
+xpla property 'timespec  running.Q running1.D 6.000000'; 
+xpla property 'timespec  LED1.Q ARESET_L.D 6.000000'; 
+xpla property 'timespec  count<7>.Q ARESET_L.D 6.000000'; 
+xpla property 'timespec  count<6>.Q ARESET_L.D 6.000000'; 
+xpla property 'timespec  count<5>.Q ARESET_L.D 6.000000'; 
+xpla property 'timespec  count<4>.Q ARESET_L.D 6.000000'; 
+xpla property 'timespec  count<3>.Q ARESET_L.D 6.000000'; 
+xpla property 'timespec  count<2>.Q ARESET_L.D 6.000000'; 
+xpla property 'timespec  count<0>.Q ARESET_L.D 6.000000'; 
+xpla property 'timespec  count<1>.Q ARESET_L.D 6.000000'; 
+xpla property 'timespec  LED1.Q ARESET_L.CE 6.000000'; 
+xpla property 'IOSTD LED1 0 -1';
+xpla property 'IOSTD CLK 0 -1';
+xpla property 'IOSTD ARESET_L33 0 -1';
+xpla property 'IOSTD SYSSTART33 0 -1';
+xpla property 'IOSTD TMS_SYSSTART 2 -1';
+xpla property 'IOSTD TMS33 0 -1';
+xpla property 'IOSTD TCK 2 -1';
+xpla property 'IOSTD TCK33 0 -1';
+xpla property 'IOSTD FREE1 0 -1';
+xpla property 'IOSTD FREE2 0 -1';
+xpla property 'IOSTD LED2 0 -1';
+xpla property 'IOSTD LED3 0 -1';
+xpla property 'IOSTD TDI 2 -1';
+xpla property 'IOSTD TDI33 0 -1';
+xpla property 'IOSTD TDO33 0 -1';
+xpla property 'IOSTD TDO 2 -1';
+xpla property 'IOSTD ARESET_L 2 -1';
+EQUATIONS 
+
+ ARESET_L.AR = !ARESET_L33;		"--- [PT=1, FI=1, LVL=1] ---
+ ARESET_L.CLK = CLK;		"--- [PT=1, FI=1, LVL=1] ---
+ ARESET_L.D = !LED1.Q & count<0>.Q & count<1>.Q & count<2>.Q & count<3>.Q & 
+    count<4>.Q & count<5>.Q & count<6>.Q & count<7>.Q
+      # LED1.Q & ARESET_L.Q;		"--- [PT=2, FI=10, LVL=1] ---
+ FREE1 = TCK33;		"--- [PT=1, FI=1, LVL=1] ---
+! FREE2 = !TMS33 & running1.Q
+      # !SYSSTART33 & !TMS33;		"--- [PT=2, FI=3, LVL=1] ---
+ LED1.AR = !ARESET_L33;		"--- [PT=1, FI=1, LVL=1] ---
+ LED1.CLK = CLK;		"--- [PT=1, FI=1, LVL=1] ---
+ LED1.T = !LED1.Q & count<0>.Q & count<1>.Q & count<2>.Q & count<3>.Q & 
+    count<4>.Q & count<5>.Q & count<6>.Q & count<7>.Q
+    ;		"--- [PT=1, FI=9, LVL=1] ---
+ LED2 = SYSSTART33;		"--- [PT=1, FI=1, LVL=1] ---
+ LED3 = TMS33;		"--- [PT=1, FI=1, LVL=1] ---
+ TCK = TCK33;		"--- [PT=1, FI=1, LVL=1] ---
+ TDI = TDI33;		"--- [PT=1, FI=1, LVL=1] ---
+ TDO33 = TDO;		"--- [PT=1, FI=1, LVL=1] ---
+! TMS_SYSSTART = !TMS33 & running1.Q
+      # !SYSSTART33 & !TMS33;		"--- [PT=2, FI=3, LVL=1] ---
+ count<0>.AR = !ARESET_L33;		"--- [PT=1, FI=1, LVL=1] ---
+ count<0>.CLK = CLK;		"--- [PT=1, FI=1, LVL=1] ---
+ count<0>.T = !LED1.Q;		"--- [PT=1, FI=1, LVL=1] ---
+ count<1>.AR = !ARESET_L33;		"--- [PT=1, FI=1, LVL=1] ---
+ count<1>.CLK = CLK;		"--- [PT=1, FI=1, LVL=1] ---
+ count<1>.T = !LED1.Q & count<0>.Q;		"--- [PT=1, FI=2, LVL=1] ---
+ count<2>.AR = !ARESET_L33;		"--- [PT=1, FI=1, LVL=1] ---
+ count<2>.CLK = CLK;		"--- [PT=1, FI=1, LVL=1] ---
+ count<2>.T = !LED1.Q & count<0>.Q & count<1>.Q
+    ;		"--- [PT=1, FI=3, LVL=1] ---
+ count<3>.AR = !ARESET_L33;		"--- [PT=1, FI=1, LVL=1] ---
+ count<3>.CLK = CLK;		"--- [PT=1, FI=1, LVL=1] ---
+ count<3>.T = !LED1.Q & count<0>.Q & count<1>.Q & count<2>.Q
+    ;		"--- [PT=1, FI=4, LVL=1] ---
+ count<4>.AR = !ARESET_L33;		"--- [PT=1, FI=1, LVL=1] ---
+ count<4>.CLK = CLK;		"--- [PT=1, FI=1, LVL=1] ---
+ count<4>.T = !LED1.Q & count<0>.Q & count<1>.Q & count<2>.Q & count<3>.Q
+    ;		"--- [PT=1, FI=5, LVL=1] ---
+ count<5>.AR = !ARESET_L33;		"--- [PT=1, FI=1, LVL=1] ---
+ count<5>.CLK = CLK;		"--- [PT=1, FI=1, LVL=1] ---
+ count<5>.T = !LED1.Q & count<0>.Q & count<1>.Q & count<2>.Q & count<3>.Q & 
+    count<4>.Q;		"--- [PT=1, FI=6, LVL=1] ---
+ count<6>.AR = !ARESET_L33;		"--- [PT=1, FI=1, LVL=1] ---
+ count<6>.CLK = CLK;		"--- [PT=1, FI=1, LVL=1] ---
+ count<6>.T = !LED1.Q & count<0>.Q & count<1>.Q & count<2>.Q & count<3>.Q & 
+    count<4>.Q & count<5>.Q;		"--- [PT=1, FI=7, LVL=1] ---
+ count<7>.AR = !ARESET_L33;		"--- [PT=1, FI=1, LVL=1] ---
+ count<7>.CLK = CLK;		"--- [PT=1, FI=1, LVL=1] ---
+ count<7>.T = !LED1.Q & count<0>.Q & count<1>.Q & count<2>.Q & count<3>.Q & 
+    count<4>.Q & count<5>.Q & count<6>.Q;		"--- [PT=1, FI=8, LVL=1] ---
+ running.AR = !ARESET_L33;		"--- [PT=1, FI=1, LVL=1] ---
+ running.CLK = CLK;		"--- [PT=1, FI=1, LVL=1] ---
+ running.D = SYSSTART33;		"--- [PT=1, FI=1, LVL=1] ---
+ running1.AR = !ARESET_L33;		"--- [PT=1, FI=1, LVL=1] ---
+ running1.CLK = CLK;		"--- [PT=1, FI=1, LVL=1] ---
+ running1.D = running.Q;		"--- [PT=1, FI=1, LVL=1] ---
+END

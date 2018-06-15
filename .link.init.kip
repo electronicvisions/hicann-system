@@ -1,0 +1,6 @@
+
+
+%l /cad/libs/u18/u18_1.2 resources/u18
+%l /afs/kip/projects/vision/p_facets/s_hicann1 resources/s_hicann1
+%l /afs/kip/projects/vision/p_facets/s_systemsim resources/s_systemsim
+%l %%tdir%%/xml_styles env/xml

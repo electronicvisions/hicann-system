@@ -1,0 +1,1049 @@
+NDS Database:  version M.53d
+
+NDS_INFO | xbr | 2C64A44VQ | XC2C64A-5-VQ44
+
+DEVICE | 2C64A | 2C64A44VQ | 
+
+NETWORK | IboardCPLD | 0 | 0 | 49158 | 0
+
+MACROCELL_INSTANCE | PrldLow | ARESET_L_MC | IboardCPLD_COPY_0_COPY_0 | 1024 | 12 | 2
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | LED1_MC.UIM | 1442 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | LED1_MC.Q | LED1_MC | 1 | 0 | MC_UIM
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | ARESET_L_MC.UIM | 1490 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | ARESET_L_MC.Q | ARESET_L_MC | 1 | 0 | MC_UIM
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | count<0> | 1443 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | count<0>_MC.Q | count<0>_MC | 1 | 0 | MC_UIM
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | count<1> | 1453 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | count<1>_MC.Q | count<1>_MC | 1 | 0 | MC_UIM
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | count<2> | 1458 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | count<2>_MC.Q | count<2>_MC | 1 | 0 | MC_UIM
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | count<3> | 1463 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | count<3>_MC.Q | count<3>_MC | 1 | 0 | MC_UIM
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | count<4> | 1468 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | count<4>_MC.Q | count<4>_MC | 1 | 0 | MC_UIM
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | count<5> | 1473 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | count<5>_MC.Q | count<5>_MC | 1 | 0 | MC_UIM
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | count<6> | 1478 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | count<6>_MC.Q | count<6>_MC | 1 | 0 | MC_UIM
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | count<7> | 1483 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | count<7>_MC.Q | count<7>_MC | 1 | 0 | MC_UIM
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | CLK_II/FCLK | 1449 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | NULL | CLK_II | 3 | 5 | II_FCLK
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+SIGNAL | NODE | FOOBAR1__ctinst/5 | 1450 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | NULL | FOOBAR1__ctinst | 5 | 12 | CT_SI5
+SPPTERM | 1 | IV_FALSE | ARESET_L33_II/UIM
+OUTPUT_NODE_TYPE | 0 | 0 | MC_Q
+NODE | ARESET_L_MC.Q | 1491 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | ARESET_L_MC.Q | ARESET_L_MC | 0 | 0 | MC_Q
+OUTPUT_NODE_TYPE | 1 | 0 | MC_UIM
+NODE | ARESET_L_MC.UIM | 1490 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | ARESET_L_MC.Q | ARESET_L_MC | 1 | 0 | MC_UIM
+
+SIGNAL_INSTANCE | ARESET_L_MC.SI | ARESET_L_MC | 0 | 10 | 2
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | LED1_MC.UIM | 1442 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | LED1_MC.Q | LED1_MC | 1 | 0 | MC_UIM
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | ARESET_L_MC.UIM | 1490 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | ARESET_L_MC.Q | ARESET_L_MC | 1 | 0 | MC_UIM
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | count<0> | 1443 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | count<0>_MC.Q | count<0>_MC | 1 | 0 | MC_UIM
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | count<1> | 1453 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | count<1>_MC.Q | count<1>_MC | 1 | 0 | MC_UIM
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | count<2> | 1458 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | count<2>_MC.Q | count<2>_MC | 1 | 0 | MC_UIM
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | count<3> | 1463 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | count<3>_MC.Q | count<3>_MC | 1 | 0 | MC_UIM
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | count<4> | 1468 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | count<4>_MC.Q | count<4>_MC | 1 | 0 | MC_UIM
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | count<5> | 1473 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | count<5>_MC.Q | count<5>_MC | 1 | 0 | MC_UIM
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | count<6> | 1478 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | count<6>_MC.Q | count<6>_MC | 1 | 0 | MC_UIM
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | count<7> | 1483 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | count<7>_MC.Q | count<7>_MC | 1 | 0 | MC_UIM
+OUTPUT_NODE_TYPE | 1 | 9 | MC_SI_D1
+SIGNAL | NODE | ARESET_L_MC.D1 | 1437 | ? | 0 | 0 | ARESET_L_MC | NULL | NULL | ARESET_L_MC.SI | 1 | 9 | MC_SI_D1
+SPPTERM | 0 | IV_ZERO
+OUTPUT_NODE_TYPE | 2 | 9 | MC_SI_D2
+SIGNAL | NODE | ARESET_L_MC.D2 | 1436 | ? | 0 | 0 | ARESET_L_MC | NULL | NULL | ARESET_L_MC.SI | 2 | 9 | MC_SI_D2
+SPPTERM | 2 | IV_TRUE | LED1_MC.UIM | IV_TRUE | ARESET_L_MC.UIM
+SPPTERM | 9 | IV_FALSE | LED1_MC.UIM | IV_TRUE | count<0> | IV_TRUE | count<1> | IV_TRUE | count<2> | IV_TRUE | count<3> | IV_TRUE | count<4> | IV_TRUE | count<5> | IV_TRUE | count<6> | IV_TRUE | count<7>
+
+SRFF_INSTANCE | ARESET_L_MC.REG | ARESET_L_MC | 0 | 3 | 1
+INPUT_NODE_TYPE | 0 | 8 | SRFF_D
+NODE | ARESET_L_MC.D | 1435 | ? | 0 | 0 | ARESET_L_MC | NULL | NULL | ARESET_L_MC.XOR | 0 | 7 | ALU_F
+INPUT_NODE_TYPE | 1 | 8 | SRFF_C
+NODE | CLK_II/FCLK | 1449 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | NULL | CLK_II | 3 | 5 | II_FCLK
+INPUT_NODE_TYPE | 3 | 8 | SRFF_R
+SIGNAL | NODE | FOOBAR1__ctinst/5 | 1450 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | NULL | FOOBAR1__ctinst | 5 | 12 | CT_SI5
+SPPTERM | 1 | IV_FALSE | ARESET_L33_II/UIM
+OUTPUT_NODE_TYPE | 0 | 8 | SRFF_Q
+NODE | ARESET_L_MC.Q | 1489 | ? | 0 | 0 | ARESET_L_MC | NULL | NULL | ARESET_L_MC.REG | 0 | 8 | SRFF_Q
+TNAME | CLK
+
+MACROCELL_INSTANCE | PrldLow+Tff | LED1_MC | IboardCPLD_COPY_0_COPY_0 | 5120 | 11 | 2
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | LED1_MC.UIM | 1442 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | LED1_MC.Q | LED1_MC | 1 | 0 | MC_UIM
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | count<0> | 1443 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | count<0>_MC.Q | count<0>_MC | 1 | 0 | MC_UIM
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | count<1> | 1453 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | count<1>_MC.Q | count<1>_MC | 1 | 0 | MC_UIM
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | count<2> | 1458 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | count<2>_MC.Q | count<2>_MC | 1 | 0 | MC_UIM
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | count<3> | 1463 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | count<3>_MC.Q | count<3>_MC | 1 | 0 | MC_UIM
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | count<4> | 1468 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | count<4>_MC.Q | count<4>_MC | 1 | 0 | MC_UIM
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | count<5> | 1473 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | count<5>_MC.Q | count<5>_MC | 1 | 0 | MC_UIM
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | count<6> | 1478 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | count<6>_MC.Q | count<6>_MC | 1 | 0 | MC_UIM
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | count<7> | 1483 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | count<7>_MC.Q | count<7>_MC | 1 | 0 | MC_UIM
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | CLK_II/FCLK | 1449 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | NULL | CLK_II | 3 | 5 | II_FCLK
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+SIGNAL | NODE | FOOBAR2__ctinst/5 | 1488 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | NULL | FOOBAR2__ctinst | 5 | 12 | CT_SI5
+SPPTERM | 1 | IV_FALSE | ARESET_L33_II/UIM
+OUTPUT_NODE_TYPE | 0 | 0 | MC_Q
+NODE | LED1_MC.Q | 1519 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | LED1_MC.Q | LED1_MC | 0 | 0 | MC_Q
+OUTPUT_NODE_TYPE | 1 | 0 | MC_UIM
+NODE | LED1_MC.UIM | 1442 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | LED1_MC.Q | LED1_MC | 1 | 0 | MC_UIM
+
+SIGNAL_INSTANCE | LED1_MC.SI | LED1_MC | 0 | 9 | 2
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | LED1_MC.UIM | 1442 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | LED1_MC.Q | LED1_MC | 1 | 0 | MC_UIM
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | count<0> | 1443 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | count<0>_MC.Q | count<0>_MC | 1 | 0 | MC_UIM
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | count<1> | 1453 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | count<1>_MC.Q | count<1>_MC | 1 | 0 | MC_UIM
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | count<2> | 1458 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | count<2>_MC.Q | count<2>_MC | 1 | 0 | MC_UIM
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | count<3> | 1463 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | count<3>_MC.Q | count<3>_MC | 1 | 0 | MC_UIM
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | count<4> | 1468 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | count<4>_MC.Q | count<4>_MC | 1 | 0 | MC_UIM
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | count<5> | 1473 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | count<5>_MC.Q | count<5>_MC | 1 | 0 | MC_UIM
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | count<6> | 1478 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | count<6>_MC.Q | count<6>_MC | 1 | 0 | MC_UIM
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | count<7> | 1483 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | count<7>_MC.Q | count<7>_MC | 1 | 0 | MC_UIM
+OUTPUT_NODE_TYPE | 1 | 9 | MC_SI_D1
+SIGNAL | NODE | LED1_MC.D1 | 1439 | ? | 0 | 0 | LED1_MC | NULL | NULL | LED1_MC.SI | 1 | 9 | MC_SI_D1
+SPPTERM | 9 | IV_FALSE | LED1_MC.UIM | IV_TRUE | count<0> | IV_TRUE | count<1> | IV_TRUE | count<2> | IV_TRUE | count<3> | IV_TRUE | count<4> | IV_TRUE | count<5> | IV_TRUE | count<6> | IV_TRUE | count<7>
+OUTPUT_NODE_TYPE | 2 | 9 | MC_SI_D2
+SIGNAL | NODE | LED1_MC.D2 | 1440 | ? | 0 | 0 | LED1_MC | NULL | NULL | LED1_MC.SI | 2 | 9 | MC_SI_D2
+SPPTERM | 0 | IV_ZERO
+
+SRFF_INSTANCE | LED1_MC.REG | LED1_MC | 0 | 3 | 1
+INPUT_NODE_TYPE | 0 | 8 | SRFF_D
+NODE | LED1_MC.D | 1438 | ? | 0 | 0 | LED1_MC | NULL | NULL | LED1_MC.XOR | 0 | 7 | ALU_F
+INPUT_NODE_TYPE | 1 | 8 | SRFF_C
+NODE | CLK_II/FCLK | 1449 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | NULL | CLK_II | 3 | 5 | II_FCLK
+INPUT_NODE_TYPE | 3 | 8 | SRFF_R
+SIGNAL | NODE | FOOBAR2__ctinst/5 | 1488 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | NULL | FOOBAR2__ctinst | 5 | 12 | CT_SI5
+SPPTERM | 1 | IV_FALSE | ARESET_L33_II/UIM
+OUTPUT_NODE_TYPE | 0 | 8 | SRFF_Q
+NODE | LED1_MC.Q | 1441 | ? | 0 | 0 | LED1_MC | NULL | NULL | LED1_MC.REG | 0 | 8 | SRFF_Q
+TNAME | CLK
+
+MACROCELL_INSTANCE | PrldLow+Tff | count<0>_MC | IboardCPLD_COPY_0_COPY_0 | 5120 | 3 | 1
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | LED1_MC.UIM | 1442 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | LED1_MC.Q | LED1_MC | 1 | 0 | MC_UIM
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | CLK_II/FCLK | 1449 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | NULL | CLK_II | 3 | 5 | II_FCLK
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+SIGNAL | NODE | FOOBAR1__ctinst/5 | 1450 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | NULL | FOOBAR1__ctinst | 5 | 12 | CT_SI5
+SPPTERM | 1 | IV_FALSE | ARESET_L33_II/UIM
+OUTPUT_NODE_TYPE | 1 | 0 | MC_UIM
+NODE | count<0> | 1443 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | count<0>_MC.Q | count<0>_MC | 1 | 0 | MC_UIM
+
+SIGNAL_INSTANCE | count<0>_MC.SI | count<0>_MC | 0 | 1 | 2
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | LED1_MC.UIM | 1442 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | LED1_MC.Q | LED1_MC | 1 | 0 | MC_UIM
+OUTPUT_NODE_TYPE | 1 | 9 | MC_SI_D1
+SIGNAL | NODE | count<0>_MC.D1 | 1446 | ? | 0 | 0 | count<0>_MC | NULL | NULL | count<0>_MC.SI | 1 | 9 | MC_SI_D1
+SPPTERM | 1 | IV_FALSE | LED1_MC.UIM
+OUTPUT_NODE_TYPE | 2 | 9 | MC_SI_D2
+SIGNAL | NODE | count<0>_MC.D2 | 1447 | ? | 0 | 0 | count<0>_MC | NULL | NULL | count<0>_MC.SI | 2 | 9 | MC_SI_D2
+SPPTERM | 0 | IV_ZERO
+
+SRFF_INSTANCE | count<0>_MC.REG | count<0>_MC | 0 | 3 | 1
+INPUT_NODE_TYPE | 0 | 8 | SRFF_D
+NODE | count<0>_MC.D | 1445 | ? | 0 | 0 | count<0>_MC | NULL | NULL | count<0>_MC.XOR | 0 | 7 | ALU_F
+INPUT_NODE_TYPE | 1 | 8 | SRFF_C
+NODE | CLK_II/FCLK | 1449 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | NULL | CLK_II | 3 | 5 | II_FCLK
+INPUT_NODE_TYPE | 3 | 8 | SRFF_R
+SIGNAL | NODE | FOOBAR1__ctinst/5 | 1450 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | NULL | FOOBAR1__ctinst | 5 | 12 | CT_SI5
+SPPTERM | 1 | IV_FALSE | ARESET_L33_II/UIM
+OUTPUT_NODE_TYPE | 0 | 8 | SRFF_Q
+NODE | count<0>_MC.Q | 1444 | ? | 0 | 0 | count<0>_MC | NULL | NULL | count<0>_MC.REG | 0 | 8 | SRFF_Q
+TNAME | CLK
+
+INPUT_INSTANCE | 0 | 0 | NULL | CLK_II | IboardCPLD_COPY_0_COPY_0 | 8 | 1 | 1
+INPUT_NODE_TYPE | 0 | 5 | II_IN
+NODE | CLK | 1448 | PI | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | CLK;CLK;CLK | NULL | NULL | 0 | 100 | NOTYPE
+OUTPUT_NODE_TYPE | 3 | 5 | II_FCLK
+NODE | CLK_II/FCLK | 1449 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | NULL | CLK_II | 3 | 5 | II_FCLK
+
+INPUT_INSTANCE | 0 | 0 | NULL | ARESET_L33_II | IboardCPLD_COPY_0_COPY_0 | 8 | 1 | 1
+INPUT_NODE_TYPE | 0 | 5 | II_IN
+NODE | ARESET_L33 | 1451 | PI | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | NULL | NULL | 0 | 100 | NOTYPE
+OUTPUT_NODE_TYPE | 0 | 5 | II_IMUX
+NODE | ARESET_L33_II/UIM | 1452 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | NULL | ARESET_L33_II | 0 | 5 | II_IMUX
+
+MACROCELL_INSTANCE | PrldLow+Tff | count<1>_MC | IboardCPLD_COPY_0_COPY_0 | 5120 | 4 | 1
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | LED1_MC.UIM | 1442 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | LED1_MC.Q | LED1_MC | 1 | 0 | MC_UIM
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | count<0> | 1443 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | count<0>_MC.Q | count<0>_MC | 1 | 0 | MC_UIM
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | CLK_II/FCLK | 1449 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | NULL | CLK_II | 3 | 5 | II_FCLK
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+SIGNAL | NODE | FOOBAR1__ctinst/5 | 1450 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | NULL | FOOBAR1__ctinst | 5 | 12 | CT_SI5
+SPPTERM | 1 | IV_FALSE | ARESET_L33_II/UIM
+OUTPUT_NODE_TYPE | 1 | 0 | MC_UIM
+NODE | count<1> | 1453 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | count<1>_MC.Q | count<1>_MC | 1 | 0 | MC_UIM
+
+SIGNAL_INSTANCE | count<1>_MC.SI | count<1>_MC | 0 | 2 | 2
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | LED1_MC.UIM | 1442 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | LED1_MC.Q | LED1_MC | 1 | 0 | MC_UIM
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | count<0> | 1443 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | count<0>_MC.Q | count<0>_MC | 1 | 0 | MC_UIM
+OUTPUT_NODE_TYPE | 1 | 9 | MC_SI_D1
+SIGNAL | NODE | count<1>_MC.D1 | 1456 | ? | 0 | 0 | count<1>_MC | NULL | NULL | count<1>_MC.SI | 1 | 9 | MC_SI_D1
+SPPTERM | 2 | IV_FALSE | LED1_MC.UIM | IV_TRUE | count<0>
+OUTPUT_NODE_TYPE | 2 | 9 | MC_SI_D2
+SIGNAL | NODE | count<1>_MC.D2 | 1457 | ? | 0 | 0 | count<1>_MC | NULL | NULL | count<1>_MC.SI | 2 | 9 | MC_SI_D2
+SPPTERM | 0 | IV_ZERO
+
+SRFF_INSTANCE | count<1>_MC.REG | count<1>_MC | 0 | 3 | 1
+INPUT_NODE_TYPE | 0 | 8 | SRFF_D
+NODE | count<1>_MC.D | 1455 | ? | 0 | 0 | count<1>_MC | NULL | NULL | count<1>_MC.XOR | 0 | 7 | ALU_F
+INPUT_NODE_TYPE | 1 | 8 | SRFF_C
+NODE | CLK_II/FCLK | 1449 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | NULL | CLK_II | 3 | 5 | II_FCLK
+INPUT_NODE_TYPE | 3 | 8 | SRFF_R
+SIGNAL | NODE | FOOBAR1__ctinst/5 | 1450 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | NULL | FOOBAR1__ctinst | 5 | 12 | CT_SI5
+SPPTERM | 1 | IV_FALSE | ARESET_L33_II/UIM
+OUTPUT_NODE_TYPE | 0 | 8 | SRFF_Q
+NODE | count<1>_MC.Q | 1454 | ? | 0 | 0 | count<1>_MC | NULL | NULL | count<1>_MC.REG | 0 | 8 | SRFF_Q
+TNAME | CLK
+
+MACROCELL_INSTANCE | PrldLow+Tff | count<2>_MC | IboardCPLD_COPY_0_COPY_0 | 5120 | 5 | 1
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | LED1_MC.UIM | 1442 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | LED1_MC.Q | LED1_MC | 1 | 0 | MC_UIM
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | count<0> | 1443 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | count<0>_MC.Q | count<0>_MC | 1 | 0 | MC_UIM
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | count<1> | 1453 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | count<1>_MC.Q | count<1>_MC | 1 | 0 | MC_UIM
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | CLK_II/FCLK | 1449 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | NULL | CLK_II | 3 | 5 | II_FCLK
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+SIGNAL | NODE | FOOBAR1__ctinst/5 | 1450 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | NULL | FOOBAR1__ctinst | 5 | 12 | CT_SI5
+SPPTERM | 1 | IV_FALSE | ARESET_L33_II/UIM
+OUTPUT_NODE_TYPE | 1 | 0 | MC_UIM
+NODE | count<2> | 1458 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | count<2>_MC.Q | count<2>_MC | 1 | 0 | MC_UIM
+
+SIGNAL_INSTANCE | count<2>_MC.SI | count<2>_MC | 0 | 3 | 2
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | LED1_MC.UIM | 1442 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | LED1_MC.Q | LED1_MC | 1 | 0 | MC_UIM
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | count<0> | 1443 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | count<0>_MC.Q | count<0>_MC | 1 | 0 | MC_UIM
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | count<1> | 1453 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | count<1>_MC.Q | count<1>_MC | 1 | 0 | MC_UIM
+OUTPUT_NODE_TYPE | 1 | 9 | MC_SI_D1
+SIGNAL | NODE | count<2>_MC.D1 | 1461 | ? | 0 | 0 | count<2>_MC | NULL | NULL | count<2>_MC.SI | 1 | 9 | MC_SI_D1
+SPPTERM | 3 | IV_FALSE | LED1_MC.UIM | IV_TRUE | count<0> | IV_TRUE | count<1>
+OUTPUT_NODE_TYPE | 2 | 9 | MC_SI_D2
+SIGNAL | NODE | count<2>_MC.D2 | 1462 | ? | 0 | 0 | count<2>_MC | NULL | NULL | count<2>_MC.SI | 2 | 9 | MC_SI_D2
+SPPTERM | 0 | IV_ZERO
+
+SRFF_INSTANCE | count<2>_MC.REG | count<2>_MC | 0 | 3 | 1
+INPUT_NODE_TYPE | 0 | 8 | SRFF_D
+NODE | count<2>_MC.D | 1460 | ? | 0 | 0 | count<2>_MC | NULL | NULL | count<2>_MC.XOR | 0 | 7 | ALU_F
+INPUT_NODE_TYPE | 1 | 8 | SRFF_C
+NODE | CLK_II/FCLK | 1449 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | NULL | CLK_II | 3 | 5 | II_FCLK
+INPUT_NODE_TYPE | 3 | 8 | SRFF_R
+SIGNAL | NODE | FOOBAR1__ctinst/5 | 1450 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | NULL | FOOBAR1__ctinst | 5 | 12 | CT_SI5
+SPPTERM | 1 | IV_FALSE | ARESET_L33_II/UIM
+OUTPUT_NODE_TYPE | 0 | 8 | SRFF_Q
+NODE | count<2>_MC.Q | 1459 | ? | 0 | 0 | count<2>_MC | NULL | NULL | count<2>_MC.REG | 0 | 8 | SRFF_Q
+TNAME | CLK
+
+MACROCELL_INSTANCE | PrldLow+Tff | count<3>_MC | IboardCPLD_COPY_0_COPY_0 | 5120 | 6 | 1
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | LED1_MC.UIM | 1442 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | LED1_MC.Q | LED1_MC | 1 | 0 | MC_UIM
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | count<0> | 1443 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | count<0>_MC.Q | count<0>_MC | 1 | 0 | MC_UIM
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | count<1> | 1453 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | count<1>_MC.Q | count<1>_MC | 1 | 0 | MC_UIM
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | count<2> | 1458 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | count<2>_MC.Q | count<2>_MC | 1 | 0 | MC_UIM
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | CLK_II/FCLK | 1449 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | NULL | CLK_II | 3 | 5 | II_FCLK
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+SIGNAL | NODE | FOOBAR1__ctinst/5 | 1450 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | NULL | FOOBAR1__ctinst | 5 | 12 | CT_SI5
+SPPTERM | 1 | IV_FALSE | ARESET_L33_II/UIM
+OUTPUT_NODE_TYPE | 1 | 0 | MC_UIM
+NODE | count<3> | 1463 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | count<3>_MC.Q | count<3>_MC | 1 | 0 | MC_UIM
+
+SIGNAL_INSTANCE | count<3>_MC.SI | count<3>_MC | 0 | 4 | 2
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | LED1_MC.UIM | 1442 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | LED1_MC.Q | LED1_MC | 1 | 0 | MC_UIM
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | count<0> | 1443 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | count<0>_MC.Q | count<0>_MC | 1 | 0 | MC_UIM
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | count<1> | 1453 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | count<1>_MC.Q | count<1>_MC | 1 | 0 | MC_UIM
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | count<2> | 1458 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | count<2>_MC.Q | count<2>_MC | 1 | 0 | MC_UIM
+OUTPUT_NODE_TYPE | 1 | 9 | MC_SI_D1
+SIGNAL | NODE | count<3>_MC.D1 | 1466 | ? | 0 | 0 | count<3>_MC | NULL | NULL | count<3>_MC.SI | 1 | 9 | MC_SI_D1
+SPPTERM | 4 | IV_FALSE | LED1_MC.UIM | IV_TRUE | count<0> | IV_TRUE | count<1> | IV_TRUE | count<2>
+OUTPUT_NODE_TYPE | 2 | 9 | MC_SI_D2
+SIGNAL | NODE | count<3>_MC.D2 | 1467 | ? | 0 | 0 | count<3>_MC | NULL | NULL | count<3>_MC.SI | 2 | 9 | MC_SI_D2
+SPPTERM | 0 | IV_ZERO
+
+SRFF_INSTANCE | count<3>_MC.REG | count<3>_MC | 0 | 3 | 1
+INPUT_NODE_TYPE | 0 | 8 | SRFF_D
+NODE | count<3>_MC.D | 1465 | ? | 0 | 0 | count<3>_MC | NULL | NULL | count<3>_MC.XOR | 0 | 7 | ALU_F
+INPUT_NODE_TYPE | 1 | 8 | SRFF_C
+NODE | CLK_II/FCLK | 1449 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | NULL | CLK_II | 3 | 5 | II_FCLK
+INPUT_NODE_TYPE | 3 | 8 | SRFF_R
+SIGNAL | NODE | FOOBAR1__ctinst/5 | 1450 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | NULL | FOOBAR1__ctinst | 5 | 12 | CT_SI5
+SPPTERM | 1 | IV_FALSE | ARESET_L33_II/UIM
+OUTPUT_NODE_TYPE | 0 | 8 | SRFF_Q
+NODE | count<3>_MC.Q | 1464 | ? | 0 | 0 | count<3>_MC | NULL | NULL | count<3>_MC.REG | 0 | 8 | SRFF_Q
+TNAME | CLK
+
+MACROCELL_INSTANCE | PrldLow+Tff | count<4>_MC | IboardCPLD_COPY_0_COPY_0 | 5120 | 7 | 1
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | LED1_MC.UIM | 1442 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | LED1_MC.Q | LED1_MC | 1 | 0 | MC_UIM
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | count<0> | 1443 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | count<0>_MC.Q | count<0>_MC | 1 | 0 | MC_UIM
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | count<1> | 1453 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | count<1>_MC.Q | count<1>_MC | 1 | 0 | MC_UIM
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | count<2> | 1458 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | count<2>_MC.Q | count<2>_MC | 1 | 0 | MC_UIM
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | count<3> | 1463 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | count<3>_MC.Q | count<3>_MC | 1 | 0 | MC_UIM
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | CLK_II/FCLK | 1449 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | NULL | CLK_II | 3 | 5 | II_FCLK
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+SIGNAL | NODE | FOOBAR1__ctinst/5 | 1450 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | NULL | FOOBAR1__ctinst | 5 | 12 | CT_SI5
+SPPTERM | 1 | IV_FALSE | ARESET_L33_II/UIM
+OUTPUT_NODE_TYPE | 1 | 0 | MC_UIM
+NODE | count<4> | 1468 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | count<4>_MC.Q | count<4>_MC | 1 | 0 | MC_UIM
+
+SIGNAL_INSTANCE | count<4>_MC.SI | count<4>_MC | 0 | 5 | 2
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | LED1_MC.UIM | 1442 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | LED1_MC.Q | LED1_MC | 1 | 0 | MC_UIM
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | count<0> | 1443 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | count<0>_MC.Q | count<0>_MC | 1 | 0 | MC_UIM
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | count<1> | 1453 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | count<1>_MC.Q | count<1>_MC | 1 | 0 | MC_UIM
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | count<2> | 1458 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | count<2>_MC.Q | count<2>_MC | 1 | 0 | MC_UIM
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | count<3> | 1463 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | count<3>_MC.Q | count<3>_MC | 1 | 0 | MC_UIM
+OUTPUT_NODE_TYPE | 1 | 9 | MC_SI_D1
+SIGNAL | NODE | count<4>_MC.D1 | 1471 | ? | 0 | 0 | count<4>_MC | NULL | NULL | count<4>_MC.SI | 1 | 9 | MC_SI_D1
+SPPTERM | 5 | IV_FALSE | LED1_MC.UIM | IV_TRUE | count<0> | IV_TRUE | count<1> | IV_TRUE | count<2> | IV_TRUE | count<3>
+OUTPUT_NODE_TYPE | 2 | 9 | MC_SI_D2
+SIGNAL | NODE | count<4>_MC.D2 | 1472 | ? | 0 | 0 | count<4>_MC | NULL | NULL | count<4>_MC.SI | 2 | 9 | MC_SI_D2
+SPPTERM | 0 | IV_ZERO
+
+SRFF_INSTANCE | count<4>_MC.REG | count<4>_MC | 0 | 3 | 1
+INPUT_NODE_TYPE | 0 | 8 | SRFF_D
+NODE | count<4>_MC.D | 1470 | ? | 0 | 0 | count<4>_MC | NULL | NULL | count<4>_MC.XOR | 0 | 7 | ALU_F
+INPUT_NODE_TYPE | 1 | 8 | SRFF_C
+NODE | CLK_II/FCLK | 1449 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | NULL | CLK_II | 3 | 5 | II_FCLK
+INPUT_NODE_TYPE | 3 | 8 | SRFF_R
+SIGNAL | NODE | FOOBAR1__ctinst/5 | 1450 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | NULL | FOOBAR1__ctinst | 5 | 12 | CT_SI5
+SPPTERM | 1 | IV_FALSE | ARESET_L33_II/UIM
+OUTPUT_NODE_TYPE | 0 | 8 | SRFF_Q
+NODE | count<4>_MC.Q | 1469 | ? | 0 | 0 | count<4>_MC | NULL | NULL | count<4>_MC.REG | 0 | 8 | SRFF_Q
+TNAME | CLK
+
+MACROCELL_INSTANCE | PrldLow+Tff | count<5>_MC | IboardCPLD_COPY_0_COPY_0 | 5120 | 8 | 1
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | LED1_MC.UIM | 1442 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | LED1_MC.Q | LED1_MC | 1 | 0 | MC_UIM
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | count<0> | 1443 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | count<0>_MC.Q | count<0>_MC | 1 | 0 | MC_UIM
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | count<1> | 1453 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | count<1>_MC.Q | count<1>_MC | 1 | 0 | MC_UIM
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | count<2> | 1458 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | count<2>_MC.Q | count<2>_MC | 1 | 0 | MC_UIM
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | count<3> | 1463 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | count<3>_MC.Q | count<3>_MC | 1 | 0 | MC_UIM
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | count<4> | 1468 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | count<4>_MC.Q | count<4>_MC | 1 | 0 | MC_UIM
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | CLK_II/FCLK | 1449 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | NULL | CLK_II | 3 | 5 | II_FCLK
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+SIGNAL | NODE | FOOBAR1__ctinst/5 | 1450 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | NULL | FOOBAR1__ctinst | 5 | 12 | CT_SI5
+SPPTERM | 1 | IV_FALSE | ARESET_L33_II/UIM
+OUTPUT_NODE_TYPE | 1 | 0 | MC_UIM
+NODE | count<5> | 1473 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | count<5>_MC.Q | count<5>_MC | 1 | 0 | MC_UIM
+
+SIGNAL_INSTANCE | count<5>_MC.SI | count<5>_MC | 0 | 6 | 2
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | LED1_MC.UIM | 1442 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | LED1_MC.Q | LED1_MC | 1 | 0 | MC_UIM
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | count<0> | 1443 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | count<0>_MC.Q | count<0>_MC | 1 | 0 | MC_UIM
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | count<1> | 1453 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | count<1>_MC.Q | count<1>_MC | 1 | 0 | MC_UIM
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | count<2> | 1458 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | count<2>_MC.Q | count<2>_MC | 1 | 0 | MC_UIM
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | count<3> | 1463 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | count<3>_MC.Q | count<3>_MC | 1 | 0 | MC_UIM
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | count<4> | 1468 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | count<4>_MC.Q | count<4>_MC | 1 | 0 | MC_UIM
+OUTPUT_NODE_TYPE | 1 | 9 | MC_SI_D1
+SIGNAL | NODE | count<5>_MC.D1 | 1476 | ? | 0 | 0 | count<5>_MC | NULL | NULL | count<5>_MC.SI | 1 | 9 | MC_SI_D1
+SPPTERM | 6 | IV_FALSE | LED1_MC.UIM | IV_TRUE | count<0> | IV_TRUE | count<1> | IV_TRUE | count<2> | IV_TRUE | count<3> | IV_TRUE | count<4>
+OUTPUT_NODE_TYPE | 2 | 9 | MC_SI_D2
+SIGNAL | NODE | count<5>_MC.D2 | 1477 | ? | 0 | 0 | count<5>_MC | NULL | NULL | count<5>_MC.SI | 2 | 9 | MC_SI_D2
+SPPTERM | 0 | IV_ZERO
+
+SRFF_INSTANCE | count<5>_MC.REG | count<5>_MC | 0 | 3 | 1
+INPUT_NODE_TYPE | 0 | 8 | SRFF_D
+NODE | count<5>_MC.D | 1475 | ? | 0 | 0 | count<5>_MC | NULL | NULL | count<5>_MC.XOR | 0 | 7 | ALU_F
+INPUT_NODE_TYPE | 1 | 8 | SRFF_C
+NODE | CLK_II/FCLK | 1449 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | NULL | CLK_II | 3 | 5 | II_FCLK
+INPUT_NODE_TYPE | 3 | 8 | SRFF_R
+SIGNAL | NODE | FOOBAR1__ctinst/5 | 1450 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | NULL | FOOBAR1__ctinst | 5 | 12 | CT_SI5
+SPPTERM | 1 | IV_FALSE | ARESET_L33_II/UIM
+OUTPUT_NODE_TYPE | 0 | 8 | SRFF_Q
+NODE | count<5>_MC.Q | 1474 | ? | 0 | 0 | count<5>_MC | NULL | NULL | count<5>_MC.REG | 0 | 8 | SRFF_Q
+TNAME | CLK
+
+MACROCELL_INSTANCE | PrldLow+Tff | count<6>_MC | IboardCPLD_COPY_0_COPY_0 | 5120 | 9 | 1
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | LED1_MC.UIM | 1442 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | LED1_MC.Q | LED1_MC | 1 | 0 | MC_UIM
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | count<0> | 1443 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | count<0>_MC.Q | count<0>_MC | 1 | 0 | MC_UIM
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | count<1> | 1453 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | count<1>_MC.Q | count<1>_MC | 1 | 0 | MC_UIM
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | count<2> | 1458 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | count<2>_MC.Q | count<2>_MC | 1 | 0 | MC_UIM
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | count<3> | 1463 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | count<3>_MC.Q | count<3>_MC | 1 | 0 | MC_UIM
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | count<4> | 1468 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | count<4>_MC.Q | count<4>_MC | 1 | 0 | MC_UIM
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | count<5> | 1473 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | count<5>_MC.Q | count<5>_MC | 1 | 0 | MC_UIM
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | CLK_II/FCLK | 1449 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | NULL | CLK_II | 3 | 5 | II_FCLK
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+SIGNAL | NODE | FOOBAR1__ctinst/5 | 1450 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | NULL | FOOBAR1__ctinst | 5 | 12 | CT_SI5
+SPPTERM | 1 | IV_FALSE | ARESET_L33_II/UIM
+OUTPUT_NODE_TYPE | 1 | 0 | MC_UIM
+NODE | count<6> | 1478 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | count<6>_MC.Q | count<6>_MC | 1 | 0 | MC_UIM
+
+SIGNAL_INSTANCE | count<6>_MC.SI | count<6>_MC | 0 | 7 | 2
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | LED1_MC.UIM | 1442 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | LED1_MC.Q | LED1_MC | 1 | 0 | MC_UIM
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | count<0> | 1443 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | count<0>_MC.Q | count<0>_MC | 1 | 0 | MC_UIM
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | count<1> | 1453 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | count<1>_MC.Q | count<1>_MC | 1 | 0 | MC_UIM
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | count<2> | 1458 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | count<2>_MC.Q | count<2>_MC | 1 | 0 | MC_UIM
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | count<3> | 1463 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | count<3>_MC.Q | count<3>_MC | 1 | 0 | MC_UIM
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | count<4> | 1468 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | count<4>_MC.Q | count<4>_MC | 1 | 0 | MC_UIM
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | count<5> | 1473 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | count<5>_MC.Q | count<5>_MC | 1 | 0 | MC_UIM
+OUTPUT_NODE_TYPE | 1 | 9 | MC_SI_D1
+SIGNAL | NODE | count<6>_MC.D1 | 1481 | ? | 0 | 0 | count<6>_MC | NULL | NULL | count<6>_MC.SI | 1 | 9 | MC_SI_D1
+SPPTERM | 7 | IV_FALSE | LED1_MC.UIM | IV_TRUE | count<0> | IV_TRUE | count<1> | IV_TRUE | count<2> | IV_TRUE | count<3> | IV_TRUE | count<4> | IV_TRUE | count<5>
+OUTPUT_NODE_TYPE | 2 | 9 | MC_SI_D2
+SIGNAL | NODE | count<6>_MC.D2 | 1482 | ? | 0 | 0 | count<6>_MC | NULL | NULL | count<6>_MC.SI | 2 | 9 | MC_SI_D2
+SPPTERM | 0 | IV_ZERO
+
+SRFF_INSTANCE | count<6>_MC.REG | count<6>_MC | 0 | 3 | 1
+INPUT_NODE_TYPE | 0 | 8 | SRFF_D
+NODE | count<6>_MC.D | 1480 | ? | 0 | 0 | count<6>_MC | NULL | NULL | count<6>_MC.XOR | 0 | 7 | ALU_F
+INPUT_NODE_TYPE | 1 | 8 | SRFF_C
+NODE | CLK_II/FCLK | 1449 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | NULL | CLK_II | 3 | 5 | II_FCLK
+INPUT_NODE_TYPE | 3 | 8 | SRFF_R
+SIGNAL | NODE | FOOBAR1__ctinst/5 | 1450 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | NULL | FOOBAR1__ctinst | 5 | 12 | CT_SI5
+SPPTERM | 1 | IV_FALSE | ARESET_L33_II/UIM
+OUTPUT_NODE_TYPE | 0 | 8 | SRFF_Q
+NODE | count<6>_MC.Q | 1479 | ? | 0 | 0 | count<6>_MC | NULL | NULL | count<6>_MC.REG | 0 | 8 | SRFF_Q
+TNAME | CLK
+
+MACROCELL_INSTANCE | PrldLow+Tff | count<7>_MC | IboardCPLD_COPY_0_COPY_0 | 5120 | 10 | 1
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | LED1_MC.UIM | 1442 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | LED1_MC.Q | LED1_MC | 1 | 0 | MC_UIM
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | count<0> | 1443 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | count<0>_MC.Q | count<0>_MC | 1 | 0 | MC_UIM
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | count<1> | 1453 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | count<1>_MC.Q | count<1>_MC | 1 | 0 | MC_UIM
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | count<2> | 1458 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | count<2>_MC.Q | count<2>_MC | 1 | 0 | MC_UIM
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | count<3> | 1463 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | count<3>_MC.Q | count<3>_MC | 1 | 0 | MC_UIM
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | count<4> | 1468 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | count<4>_MC.Q | count<4>_MC | 1 | 0 | MC_UIM
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | count<5> | 1473 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | count<5>_MC.Q | count<5>_MC | 1 | 0 | MC_UIM
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | count<6> | 1478 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | count<6>_MC.Q | count<6>_MC | 1 | 0 | MC_UIM
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | CLK_II/FCLK | 1449 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | NULL | CLK_II | 3 | 5 | II_FCLK
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+SIGNAL | NODE | FOOBAR1__ctinst/5 | 1450 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | NULL | FOOBAR1__ctinst | 5 | 12 | CT_SI5
+SPPTERM | 1 | IV_FALSE | ARESET_L33_II/UIM
+OUTPUT_NODE_TYPE | 1 | 0 | MC_UIM
+NODE | count<7> | 1483 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | count<7>_MC.Q | count<7>_MC | 1 | 0 | MC_UIM
+
+SIGNAL_INSTANCE | count<7>_MC.SI | count<7>_MC | 0 | 8 | 2
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | LED1_MC.UIM | 1442 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | LED1_MC.Q | LED1_MC | 1 | 0 | MC_UIM
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | count<0> | 1443 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | count<0>_MC.Q | count<0>_MC | 1 | 0 | MC_UIM
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | count<1> | 1453 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | count<1>_MC.Q | count<1>_MC | 1 | 0 | MC_UIM
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | count<2> | 1458 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | count<2>_MC.Q | count<2>_MC | 1 | 0 | MC_UIM
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | count<3> | 1463 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | count<3>_MC.Q | count<3>_MC | 1 | 0 | MC_UIM
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | count<4> | 1468 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | count<4>_MC.Q | count<4>_MC | 1 | 0 | MC_UIM
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | count<5> | 1473 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | count<5>_MC.Q | count<5>_MC | 1 | 0 | MC_UIM
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | count<6> | 1478 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | count<6>_MC.Q | count<6>_MC | 1 | 0 | MC_UIM
+OUTPUT_NODE_TYPE | 1 | 9 | MC_SI_D1
+SIGNAL | NODE | count<7>_MC.D1 | 1486 | ? | 0 | 0 | count<7>_MC | NULL | NULL | count<7>_MC.SI | 1 | 9 | MC_SI_D1
+SPPTERM | 8 | IV_FALSE | LED1_MC.UIM | IV_TRUE | count<0> | IV_TRUE | count<1> | IV_TRUE | count<2> | IV_TRUE | count<3> | IV_TRUE | count<4> | IV_TRUE | count<5> | IV_TRUE | count<6>
+OUTPUT_NODE_TYPE | 2 | 9 | MC_SI_D2
+SIGNAL | NODE | count<7>_MC.D2 | 1487 | ? | 0 | 0 | count<7>_MC | NULL | NULL | count<7>_MC.SI | 2 | 9 | MC_SI_D2
+SPPTERM | 0 | IV_ZERO
+
+SRFF_INSTANCE | count<7>_MC.REG | count<7>_MC | 0 | 3 | 1
+INPUT_NODE_TYPE | 0 | 8 | SRFF_D
+NODE | count<7>_MC.D | 1485 | ? | 0 | 0 | count<7>_MC | NULL | NULL | count<7>_MC.XOR | 0 | 7 | ALU_F
+INPUT_NODE_TYPE | 1 | 8 | SRFF_C
+NODE | CLK_II/FCLK | 1449 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | NULL | CLK_II | 3 | 5 | II_FCLK
+INPUT_NODE_TYPE | 3 | 8 | SRFF_R
+SIGNAL | NODE | FOOBAR1__ctinst/5 | 1450 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | NULL | FOOBAR1__ctinst | 5 | 12 | CT_SI5
+SPPTERM | 1 | IV_FALSE | ARESET_L33_II/UIM
+OUTPUT_NODE_TYPE | 0 | 8 | SRFF_Q
+NODE | count<7>_MC.Q | 1484 | ? | 0 | 0 | count<7>_MC | NULL | NULL | count<7>_MC.REG | 0 | 8 | SRFF_Q
+TNAME | CLK
+
+OUTPUT_INSTANCE | 0 | ARESET_L | IboardCPLD_COPY_0_COPY_0 | 3 | 1 | 1
+INPUT_NODE_TYPE | 0 | 6 | OI_IN
+NODE | ARESET_L_MC.Q | 1491 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | ARESET_L_MC.Q | ARESET_L_MC | 0 | 0 | MC_Q
+OUTPUT_NODE_TYPE | 0 | 6 | OI_OUT
+NODE | ARESET_L | 1492 | PO | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | NULL | ARESET_L | 0 | 6 | OI_OUT
+
+MACROCELL_INSTANCE | NULL | FREE1_MC | IboardCPLD_COPY_0_COPY_0 | 0 | 1 | 1
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | TCK33_II/UIM | 1497 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | NULL | TCK33_II | 0 | 5 | II_IMUX
+OUTPUT_NODE_TYPE | 0 | 0 | MC_Q
+NODE | FREE1_MC.Q | 1499 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | FREE1_MC.Q | FREE1_MC | 0 | 0 | MC_Q
+
+SIGNAL_INSTANCE | FREE1_MC.SI | FREE1_MC | 0 | 1 | 2
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | TCK33_II/UIM | 1497 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | NULL | TCK33_II | 0 | 5 | II_IMUX
+OUTPUT_NODE_TYPE | 1 | 9 | MC_SI_D1
+SIGNAL | NODE | FREE1_MC.D1 | 1494 | ? | 0 | 0 | FREE1_MC | NULL | NULL | FREE1_MC.SI | 1 | 9 | MC_SI_D1
+SPPTERM | 1 | IV_TRUE | TCK33_II/UIM
+OUTPUT_NODE_TYPE | 2 | 9 | MC_SI_D2
+SIGNAL | NODE | FREE1_MC.D2 | 1495 | ? | 0 | 0 | FREE1_MC | NULL | NULL | FREE1_MC.SI | 2 | 9 | MC_SI_D2
+SPPTERM | 0 | IV_ZERO
+
+SRFF_INSTANCE | FREE1_MC.REG | FREE1_MC | 0 | 1 | 1
+INPUT_NODE_TYPE | 0 | 8 | SRFF_D
+NODE | FREE1_MC.D | 1493 | ? | 0 | 0 | FREE1_MC | NULL | NULL | FREE1_MC.XOR | 0 | 7 | ALU_F
+OUTPUT_NODE_TYPE | 0 | 8 | SRFF_Q
+NODE | FREE1_MC.Q | 1498 | ? | 0 | 0 | FREE1_MC | NULL | NULL | FREE1_MC.REG | 0 | 8 | SRFF_Q
+
+INPUT_INSTANCE | 0 | 0 | NULL | TCK33_II | IboardCPLD_COPY_0_COPY_0 | 8 | 1 | 1
+INPUT_NODE_TYPE | 0 | 5 | II_IN
+NODE | TCK33 | 1496 | PI | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | NULL | NULL | 0 | 100 | NOTYPE
+OUTPUT_NODE_TYPE | 0 | 5 | II_IMUX
+NODE | TCK33_II/UIM | 1497 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | NULL | TCK33_II | 0 | 5 | II_IMUX
+
+OUTPUT_INSTANCE | 0 | FREE1 | IboardCPLD_COPY_0_COPY_0 | 3 | 1 | 1
+INPUT_NODE_TYPE | 0 | 6 | OI_IN
+NODE | FREE1_MC.Q | 1499 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | FREE1_MC.Q | FREE1_MC | 0 | 0 | MC_Q
+OUTPUT_NODE_TYPE | 0 | 6 | OI_OUT
+NODE | FREE1 | 1500 | PO | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | NULL | FREE1 | 0 | 6 | OI_OUT
+
+MACROCELL_INSTANCE | Inv | FREE2_MC | IboardCPLD_COPY_0_COPY_0 | 256 | 3 | 1
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | SYSSTART33_II/UIM | 1505 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | NULL | SYSSTART33_II | 0 | 5 | II_IMUX
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | TMS33_II/UIM | 1507 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | NULL | TMS33_II | 0 | 5 | II_IMUX
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | running1 | 1508 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | running1_MC.Q | running1_MC | 1 | 0 | MC_UIM
+OUTPUT_NODE_TYPE | 0 | 0 | MC_Q
+NODE | FREE2_MC.Q | 1517 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | FREE2_MC.Q | FREE2_MC | 0 | 0 | MC_Q
+
+SIGNAL_INSTANCE | FREE2_MC.SI | FREE2_MC | 0 | 3 | 2
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | SYSSTART33_II/UIM | 1505 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | NULL | SYSSTART33_II | 0 | 5 | II_IMUX
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | TMS33_II/UIM | 1507 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | NULL | TMS33_II | 0 | 5 | II_IMUX
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | running1 | 1508 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | running1_MC.Q | running1_MC | 1 | 0 | MC_UIM
+OUTPUT_NODE_TYPE | 1 | 9 | MC_SI_D1
+SIGNAL | NODE | FREE2_MC.D1 | 1503 | ? | 0 | 0 | FREE2_MC | NULL | NULL | FREE2_MC.SI | 1 | 9 | MC_SI_D1
+SPPTERM | 0 | IV_ZERO
+OUTPUT_NODE_TYPE | 2 | 9 | MC_SI_D2
+SIGNAL | NODE | FREE2_MC.D2 | 1502 | ? | 0 | 0 | FREE2_MC | NULL | NULL | FREE2_MC.SI | 2 | 9 | MC_SI_D2
+SPPTERM | 2 | IV_FALSE | SYSSTART33_II/UIM | IV_FALSE | TMS33_II/UIM
+SPPTERM | 2 | IV_FALSE | TMS33_II/UIM | IV_TRUE | running1
+
+SRFF_INSTANCE | FREE2_MC.REG | FREE2_MC | 0 | 1 | 1
+INPUT_NODE_TYPE | 0 | 8 | SRFF_D
+NODE | FREE2_MC.D | 1501 | ? | 0 | 0 | FREE2_MC | NULL | NULL | FREE2_MC.XOR | 0 | 7 | ALU_F
+OUTPUT_NODE_TYPE | 0 | 8 | SRFF_Q
+NODE | FREE2_MC.Q | 1516 | ? | 0 | 0 | FREE2_MC | NULL | NULL | FREE2_MC.REG | 0 | 8 | SRFF_Q
+
+INPUT_INSTANCE | 0 | 0 | NULL | SYSSTART33_II | IboardCPLD_COPY_0_COPY_0 | 8 | 1 | 2
+INPUT_NODE_TYPE | 0 | 5 | II_IN
+NODE | SYSSTART33 | 1504 | PI | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | SYSSTART_TMS_IN | NULL | NULL | 0 | 100 | NOTYPE
+OUTPUT_NODE_TYPE | 0 | 5 | II_IMUX
+NODE | SYSSTART33_II/UIM | 1505 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | NULL | SYSSTART33_II | 0 | 5 | II_IMUX
+OUTPUT_NODE_TYPE | 10 | 5 | II_REG
+NODE | SYSSTART33_II/IREG | 1561 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | NULL | SYSSTART33_II | 10 | 5 | II_REG
+
+INPUT_INSTANCE | 0 | 0 | NULL | TMS33_II | IboardCPLD_COPY_0_COPY_0 | 8 | 1 | 1
+INPUT_NODE_TYPE | 0 | 5 | II_IN
+NODE | TMS33 | 1506 | PI | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | SYSSTART_TMS_IN | NULL | NULL | 0 | 100 | NOTYPE
+OUTPUT_NODE_TYPE | 0 | 5 | II_IMUX
+NODE | TMS33_II/UIM | 1507 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | NULL | TMS33_II | 0 | 5 | II_IMUX
+
+MACROCELL_INSTANCE | PrldLow | running1_MC | IboardCPLD_COPY_0_COPY_0 | 1024 | 3 | 1
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | running | 1513 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | running_MC.Q | running_MC | 1 | 0 | MC_UIM
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | CLK_II/FCLK | 1449 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | NULL | CLK_II | 3 | 5 | II_FCLK
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+SIGNAL | NODE | FOOBAR1__ctinst/5 | 1450 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | NULL | FOOBAR1__ctinst | 5 | 12 | CT_SI5
+SPPTERM | 1 | IV_FALSE | ARESET_L33_II/UIM
+OUTPUT_NODE_TYPE | 1 | 0 | MC_UIM
+NODE | running1 | 1508 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | running1_MC.Q | running1_MC | 1 | 0 | MC_UIM
+
+SIGNAL_INSTANCE | running1_MC.SI | running1_MC | 0 | 1 | 2
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | running | 1513 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | running_MC.Q | running_MC | 1 | 0 | MC_UIM
+OUTPUT_NODE_TYPE | 1 | 9 | MC_SI_D1
+SIGNAL | NODE | running1_MC.D1 | 1511 | ? | 0 | 0 | running1_MC | NULL | NULL | running1_MC.SI | 1 | 9 | MC_SI_D1
+SPPTERM | 1 | IV_TRUE | running
+OUTPUT_NODE_TYPE | 2 | 9 | MC_SI_D2
+SIGNAL | NODE | running1_MC.D2 | 1512 | ? | 0 | 0 | running1_MC | NULL | NULL | running1_MC.SI | 2 | 9 | MC_SI_D2
+SPPTERM | 0 | IV_ZERO
+
+SRFF_INSTANCE | running1_MC.REG | running1_MC | 0 | 3 | 1
+INPUT_NODE_TYPE | 0 | 8 | SRFF_D
+NODE | running1_MC.D | 1510 | ? | 0 | 0 | running1_MC | NULL | NULL | running1_MC.XOR | 0 | 7 | ALU_F
+INPUT_NODE_TYPE | 1 | 8 | SRFF_C
+NODE | CLK_II/FCLK | 1449 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | NULL | CLK_II | 3 | 5 | II_FCLK
+INPUT_NODE_TYPE | 3 | 8 | SRFF_R
+SIGNAL | NODE | FOOBAR1__ctinst/5 | 1450 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | NULL | FOOBAR1__ctinst | 5 | 12 | CT_SI5
+SPPTERM | 1 | IV_FALSE | ARESET_L33_II/UIM
+OUTPUT_NODE_TYPE | 0 | 8 | SRFF_Q
+NODE | running1_MC.Q | 1509 | ? | 0 | 0 | running1_MC | NULL | NULL | running1_MC.REG | 0 | 8 | SRFF_Q
+TNAME | CLK
+
+MACROCELL_INSTANCE | PrldLow | running_MC | IboardCPLD_COPY_0_COPY_0 | 1024 | 3 | 1
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | CLK_II/FCLK | 1449 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | NULL | CLK_II | 3 | 5 | II_FCLK
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+SIGNAL | NODE | FOOBAR4__ctinst/5 | 1515 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | NULL | FOOBAR4__ctinst | 5 | 12 | CT_SI5
+SPPTERM | 1 | IV_FALSE | ARESET_L33_II/UIM
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | SYSSTART33_II/IREG | 1561 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | NULL | SYSSTART33_II | 10 | 5 | II_REG
+OUTPUT_NODE_TYPE | 1 | 0 | MC_UIM
+NODE | running | 1513 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | running_MC.Q | running_MC | 1 | 0 | MC_UIM
+
+SRFF_INSTANCE | running_MC.REG | running_MC | 0 | 3 | 1
+INPUT_NODE_TYPE | 0 | 8 | SRFF_D
+NODE | SYSSTART33_II/IREG | 1561 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | NULL | SYSSTART33_II | 10 | 5 | II_REG
+INPUT_NODE_TYPE | 1 | 8 | SRFF_C
+NODE | CLK_II/FCLK | 1449 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | NULL | CLK_II | 3 | 5 | II_FCLK
+INPUT_NODE_TYPE | 3 | 8 | SRFF_R
+SIGNAL | NODE | FOOBAR4__ctinst/5 | 1515 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | NULL | FOOBAR4__ctinst | 5 | 12 | CT_SI5
+SPPTERM | 1 | IV_FALSE | ARESET_L33_II/UIM
+OUTPUT_NODE_TYPE | 0 | 8 | SRFF_Q
+NODE | running_MC.Q | 1514 | ? | 0 | 0 | running_MC | NULL | NULL | running_MC.REG | 0 | 8 | SRFF_Q
+TNAME | CLK
+
+OUTPUT_INSTANCE | 0 | FREE2 | IboardCPLD_COPY_0_COPY_0 | 3 | 1 | 1
+INPUT_NODE_TYPE | 0 | 6 | OI_IN
+NODE | FREE2_MC.Q | 1517 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | FREE2_MC.Q | FREE2_MC | 0 | 0 | MC_Q
+OUTPUT_NODE_TYPE | 0 | 6 | OI_OUT
+NODE | FREE2 | 1518 | PO | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | NULL | FREE2 | 0 | 6 | OI_OUT
+
+OUTPUT_INSTANCE | 0 | LED1 | IboardCPLD_COPY_0_COPY_0 | 3 | 1 | 1
+INPUT_NODE_TYPE | 0 | 6 | OI_IN
+NODE | LED1_MC.Q | 1519 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | LED1_MC.Q | LED1_MC | 0 | 0 | MC_Q
+OUTPUT_NODE_TYPE | 0 | 6 | OI_OUT
+NODE | LED1 | 1520 | PO | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | NULL | LED1 | 0 | 6 | OI_OUT
+
+MACROCELL_INSTANCE | NULL | LED2_MC | IboardCPLD_COPY_0_COPY_0 | 0 | 1 | 1
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | SYSSTART33_II/UIM | 1505 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | NULL | SYSSTART33_II | 0 | 5 | II_IMUX
+OUTPUT_NODE_TYPE | 0 | 0 | MC_Q
+NODE | LED2_MC.Q | 1525 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | LED2_MC.Q | LED2_MC | 0 | 0 | MC_Q
+
+SIGNAL_INSTANCE | LED2_MC.SI | LED2_MC | 0 | 1 | 2
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | SYSSTART33_II/UIM | 1505 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | NULL | SYSSTART33_II | 0 | 5 | II_IMUX
+OUTPUT_NODE_TYPE | 1 | 9 | MC_SI_D1
+SIGNAL | NODE | LED2_MC.D1 | 1522 | ? | 0 | 0 | LED2_MC | NULL | NULL | LED2_MC.SI | 1 | 9 | MC_SI_D1
+SPPTERM | 1 | IV_TRUE | SYSSTART33_II/UIM
+OUTPUT_NODE_TYPE | 2 | 9 | MC_SI_D2
+SIGNAL | NODE | LED2_MC.D2 | 1523 | ? | 0 | 0 | LED2_MC | NULL | NULL | LED2_MC.SI | 2 | 9 | MC_SI_D2
+SPPTERM | 0 | IV_ZERO
+
+SRFF_INSTANCE | LED2_MC.REG | LED2_MC | 0 | 1 | 1
+INPUT_NODE_TYPE | 0 | 8 | SRFF_D
+NODE | LED2_MC.D | 1521 | ? | 0 | 0 | LED2_MC | NULL | NULL | LED2_MC.XOR | 0 | 7 | ALU_F
+OUTPUT_NODE_TYPE | 0 | 8 | SRFF_Q
+NODE | LED2_MC.Q | 1524 | ? | 0 | 0 | LED2_MC | NULL | NULL | LED2_MC.REG | 0 | 8 | SRFF_Q
+
+OUTPUT_INSTANCE | 0 | LED2 | IboardCPLD_COPY_0_COPY_0 | 3 | 1 | 1
+INPUT_NODE_TYPE | 0 | 6 | OI_IN
+NODE | LED2_MC.Q | 1525 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | LED2_MC.Q | LED2_MC | 0 | 0 | MC_Q
+OUTPUT_NODE_TYPE | 0 | 6 | OI_OUT
+NODE | LED2 | 1526 | PO | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | NULL | LED2 | 0 | 6 | OI_OUT
+
+MACROCELL_INSTANCE | NULL | LED3_MC | IboardCPLD_COPY_0_COPY_0 | 0 | 1 | 1
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | TMS33_II/UIM | 1507 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | NULL | TMS33_II | 0 | 5 | II_IMUX
+OUTPUT_NODE_TYPE | 0 | 0 | MC_Q
+NODE | LED3_MC.Q | 1531 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | LED3_MC.Q | LED3_MC | 0 | 0 | MC_Q
+
+SIGNAL_INSTANCE | LED3_MC.SI | LED3_MC | 0 | 1 | 2
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | TMS33_II/UIM | 1507 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | NULL | TMS33_II | 0 | 5 | II_IMUX
+OUTPUT_NODE_TYPE | 1 | 9 | MC_SI_D1
+SIGNAL | NODE | LED3_MC.D1 | 1528 | ? | 0 | 0 | LED3_MC | NULL | NULL | LED3_MC.SI | 1 | 9 | MC_SI_D1
+SPPTERM | 1 | IV_TRUE | TMS33_II/UIM
+OUTPUT_NODE_TYPE | 2 | 9 | MC_SI_D2
+SIGNAL | NODE | LED3_MC.D2 | 1529 | ? | 0 | 0 | LED3_MC | NULL | NULL | LED3_MC.SI | 2 | 9 | MC_SI_D2
+SPPTERM | 0 | IV_ZERO
+
+SRFF_INSTANCE | LED3_MC.REG | LED3_MC | 0 | 1 | 1
+INPUT_NODE_TYPE | 0 | 8 | SRFF_D
+NODE | LED3_MC.D | 1527 | ? | 0 | 0 | LED3_MC | NULL | NULL | LED3_MC.XOR | 0 | 7 | ALU_F
+OUTPUT_NODE_TYPE | 0 | 8 | SRFF_Q
+NODE | LED3_MC.Q | 1530 | ? | 0 | 0 | LED3_MC | NULL | NULL | LED3_MC.REG | 0 | 8 | SRFF_Q
+
+OUTPUT_INSTANCE | 0 | LED3 | IboardCPLD_COPY_0_COPY_0 | 3 | 1 | 1
+INPUT_NODE_TYPE | 0 | 6 | OI_IN
+NODE | LED3_MC.Q | 1531 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | LED3_MC.Q | LED3_MC | 0 | 0 | MC_Q
+OUTPUT_NODE_TYPE | 0 | 6 | OI_OUT
+NODE | LED3 | 1532 | PO | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | NULL | LED3 | 0 | 6 | OI_OUT
+
+MACROCELL_INSTANCE | NULL | TCK_MC | IboardCPLD_COPY_0_COPY_0 | 0 | 1 | 1
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | TCK33_II/UIM | 1497 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | NULL | TCK33_II | 0 | 5 | II_IMUX
+OUTPUT_NODE_TYPE | 0 | 0 | MC_Q
+NODE | TCK_MC.Q | 1537 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | TCK_MC.Q | TCK_MC | 0 | 0 | MC_Q
+
+SIGNAL_INSTANCE | TCK_MC.SI | TCK_MC | 0 | 1 | 2
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | TCK33_II/UIM | 1497 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | NULL | TCK33_II | 0 | 5 | II_IMUX
+OUTPUT_NODE_TYPE | 1 | 9 | MC_SI_D1
+SIGNAL | NODE | TCK_MC.D1 | 1534 | ? | 0 | 0 | TCK_MC | NULL | NULL | TCK_MC.SI | 1 | 9 | MC_SI_D1
+SPPTERM | 1 | IV_TRUE | TCK33_II/UIM
+OUTPUT_NODE_TYPE | 2 | 9 | MC_SI_D2
+SIGNAL | NODE | TCK_MC.D2 | 1535 | ? | 0 | 0 | TCK_MC | NULL | NULL | TCK_MC.SI | 2 | 9 | MC_SI_D2
+SPPTERM | 0 | IV_ZERO
+
+SRFF_INSTANCE | TCK_MC.REG | TCK_MC | 0 | 1 | 1
+INPUT_NODE_TYPE | 0 | 8 | SRFF_D
+NODE | TCK_MC.D | 1533 | ? | 0 | 0 | TCK_MC | NULL | NULL | TCK_MC.XOR | 0 | 7 | ALU_F
+OUTPUT_NODE_TYPE | 0 | 8 | SRFF_Q
+NODE | TCK_MC.Q | 1536 | ? | 0 | 0 | TCK_MC | NULL | NULL | TCK_MC.REG | 0 | 8 | SRFF_Q
+
+OUTPUT_INSTANCE | 0 | TCK | IboardCPLD_COPY_0_COPY_0 | 3 | 1 | 1
+INPUT_NODE_TYPE | 0 | 6 | OI_IN
+NODE | TCK_MC.Q | 1537 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | TCK_MC.Q | TCK_MC | 0 | 0 | MC_Q
+OUTPUT_NODE_TYPE | 0 | 6 | OI_OUT
+NODE | TCK | 1538 | PO | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | NULL | TCK | 0 | 6 | OI_OUT
+
+MACROCELL_INSTANCE | NULL | TDI_MC | IboardCPLD_COPY_0_COPY_0 | 0 | 1 | 1
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | TDI33_II/UIM | 1543 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | NULL | TDI33_II | 0 | 5 | II_IMUX
+OUTPUT_NODE_TYPE | 0 | 0 | MC_Q
+NODE | TDI_MC.Q | 1545 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | TDI_MC.Q | TDI_MC | 0 | 0 | MC_Q
+
+SIGNAL_INSTANCE | TDI_MC.SI | TDI_MC | 0 | 1 | 2
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | TDI33_II/UIM | 1543 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | NULL | TDI33_II | 0 | 5 | II_IMUX
+OUTPUT_NODE_TYPE | 1 | 9 | MC_SI_D1
+SIGNAL | NODE | TDI_MC.D1 | 1540 | ? | 0 | 0 | TDI_MC | NULL | NULL | TDI_MC.SI | 1 | 9 | MC_SI_D1
+SPPTERM | 1 | IV_TRUE | TDI33_II/UIM
+OUTPUT_NODE_TYPE | 2 | 9 | MC_SI_D2
+SIGNAL | NODE | TDI_MC.D2 | 1541 | ? | 0 | 0 | TDI_MC | NULL | NULL | TDI_MC.SI | 2 | 9 | MC_SI_D2
+SPPTERM | 0 | IV_ZERO
+
+SRFF_INSTANCE | TDI_MC.REG | TDI_MC | 0 | 1 | 1
+INPUT_NODE_TYPE | 0 | 8 | SRFF_D
+NODE | TDI_MC.D | 1539 | ? | 0 | 0 | TDI_MC | NULL | NULL | TDI_MC.XOR | 0 | 7 | ALU_F
+OUTPUT_NODE_TYPE | 0 | 8 | SRFF_Q
+NODE | TDI_MC.Q | 1544 | ? | 0 | 0 | TDI_MC | NULL | NULL | TDI_MC.REG | 0 | 8 | SRFF_Q
+
+INPUT_INSTANCE | 0 | 0 | NULL | TDI33_II | IboardCPLD_COPY_0_COPY_0 | 8 | 1 | 1
+INPUT_NODE_TYPE | 0 | 5 | II_IN
+NODE | TDI33 | 1542 | PI | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | NULL | NULL | 0 | 100 | NOTYPE
+OUTPUT_NODE_TYPE | 0 | 5 | II_IMUX
+NODE | TDI33_II/UIM | 1543 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | NULL | TDI33_II | 0 | 5 | II_IMUX
+
+OUTPUT_INSTANCE | 0 | TDI | IboardCPLD_COPY_0_COPY_0 | 3 | 1 | 1
+INPUT_NODE_TYPE | 0 | 6 | OI_IN
+NODE | TDI_MC.Q | 1545 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | TDI_MC.Q | TDI_MC | 0 | 0 | MC_Q
+OUTPUT_NODE_TYPE | 0 | 6 | OI_OUT
+NODE | TDI | 1546 | PO | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | NULL | TDI | 0 | 6 | OI_OUT
+
+INPUT_INSTANCE | 0 | 0 | NULL | TDO_II | IboardCPLD_COPY_0_COPY_0 | 0 | 1 | 1
+INPUT_NODE_TYPE | 0 | 5 | II_IN
+NODE | TDO | 1547 | PI | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | NULL | NULL | 0 | 100 | NOTYPE
+OUTPUT_NODE_TYPE | 0 | 5 | II_IMUX
+NODE | TDO_II/UIM | 1551 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | NULL | TDO_II | 0 | 5 | II_IMUX
+
+MACROCELL_INSTANCE | NULL | TDO33_MC | IboardCPLD_COPY_0_COPY_0 | 0 | 1 | 1
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | TDO_II/UIM | 1551 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | NULL | TDO_II | 0 | 5 | II_IMUX
+OUTPUT_NODE_TYPE | 0 | 0 | MC_Q
+NODE | TDO33_MC.Q | 1553 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | TDO33_MC.Q | TDO33_MC | 0 | 0 | MC_Q
+
+SIGNAL_INSTANCE | TDO33_MC.SI | TDO33_MC | 0 | 1 | 2
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | TDO_II/UIM | 1551 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | NULL | TDO_II | 0 | 5 | II_IMUX
+OUTPUT_NODE_TYPE | 1 | 9 | MC_SI_D1
+SIGNAL | NODE | TDO33_MC.D1 | 1549 | ? | 0 | 0 | TDO33_MC | NULL | NULL | TDO33_MC.SI | 1 | 9 | MC_SI_D1
+SPPTERM | 1 | IV_TRUE | TDO_II/UIM
+OUTPUT_NODE_TYPE | 2 | 9 | MC_SI_D2
+SIGNAL | NODE | TDO33_MC.D2 | 1550 | ? | 0 | 0 | TDO33_MC | NULL | NULL | TDO33_MC.SI | 2 | 9 | MC_SI_D2
+SPPTERM | 0 | IV_ZERO
+
+SRFF_INSTANCE | TDO33_MC.REG | TDO33_MC | 0 | 1 | 1
+INPUT_NODE_TYPE | 0 | 8 | SRFF_D
+NODE | TDO33_MC.D | 1548 | ? | 0 | 0 | TDO33_MC | NULL | NULL | TDO33_MC.XOR | 0 | 7 | ALU_F
+OUTPUT_NODE_TYPE | 0 | 8 | SRFF_Q
+NODE | TDO33_MC.Q | 1552 | ? | 0 | 0 | TDO33_MC | NULL | NULL | TDO33_MC.REG | 0 | 8 | SRFF_Q
+
+OUTPUT_INSTANCE | 0 | TDO33 | IboardCPLD_COPY_0_COPY_0 | 3 | 1 | 1
+INPUT_NODE_TYPE | 0 | 6 | OI_IN
+NODE | TDO33_MC.Q | 1553 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | TDO33_MC.Q | TDO33_MC | 0 | 0 | MC_Q
+OUTPUT_NODE_TYPE | 0 | 6 | OI_OUT
+NODE | TDO33 | 1554 | PO | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | NULL | TDO33 | 0 | 6 | OI_OUT
+
+MACROCELL_INSTANCE | Inv | TMS_SYSSTART_MC | IboardCPLD_COPY_0_COPY_0 | 256 | 3 | 1
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | SYSSTART33_II/UIM | 1505 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | NULL | SYSSTART33_II | 0 | 5 | II_IMUX
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | TMS33_II/UIM | 1507 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | NULL | TMS33_II | 0 | 5 | II_IMUX
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | running1 | 1508 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | running1_MC.Q | running1_MC | 1 | 0 | MC_UIM
+OUTPUT_NODE_TYPE | 0 | 0 | MC_Q
+NODE | TMS_SYSSTART_MC.Q | 1559 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | TMS_SYSSTART_MC.Q | TMS_SYSSTART_MC | 0 | 0 | MC_Q
+
+SIGNAL_INSTANCE | TMS_SYSSTART_MC.SI | TMS_SYSSTART_MC | 0 | 3 | 2
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | SYSSTART33_II/UIM | 1505 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | NULL | SYSSTART33_II | 0 | 5 | II_IMUX
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | TMS33_II/UIM | 1507 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | NULL | TMS33_II | 0 | 5 | II_IMUX
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | running1 | 1508 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | running1_MC.Q | running1_MC | 1 | 0 | MC_UIM
+OUTPUT_NODE_TYPE | 1 | 9 | MC_SI_D1
+SIGNAL | NODE | TMS_SYSSTART_MC.D1 | 1557 | ? | 0 | 0 | TMS_SYSSTART_MC | NULL | NULL | TMS_SYSSTART_MC.SI | 1 | 9 | MC_SI_D1
+SPPTERM | 0 | IV_ZERO
+OUTPUT_NODE_TYPE | 2 | 9 | MC_SI_D2
+SIGNAL | NODE | TMS_SYSSTART_MC.D2 | 1556 | ? | 0 | 0 | TMS_SYSSTART_MC | NULL | NULL | TMS_SYSSTART_MC.SI | 2 | 9 | MC_SI_D2
+SPPTERM | 2 | IV_FALSE | SYSSTART33_II/UIM | IV_FALSE | TMS33_II/UIM
+SPPTERM | 2 | IV_FALSE | TMS33_II/UIM | IV_TRUE | running1
+
+SRFF_INSTANCE | TMS_SYSSTART_MC.REG | TMS_SYSSTART_MC | 0 | 1 | 1
+INPUT_NODE_TYPE | 0 | 8 | SRFF_D
+NODE | TMS_SYSSTART_MC.D | 1555 | ? | 0 | 0 | TMS_SYSSTART_MC | NULL | NULL | TMS_SYSSTART_MC.XOR | 0 | 7 | ALU_F
+OUTPUT_NODE_TYPE | 0 | 8 | SRFF_Q
+NODE | TMS_SYSSTART_MC.Q | 1558 | ? | 0 | 0 | TMS_SYSSTART_MC | NULL | NULL | TMS_SYSSTART_MC.REG | 0 | 8 | SRFF_Q
+
+OUTPUT_INSTANCE | 0 | TMS_SYSSTART | IboardCPLD_COPY_0_COPY_0 | 3 | 1 | 1
+INPUT_NODE_TYPE | 0 | 6 | OI_IN
+NODE | TMS_SYSSTART_MC.Q | 1559 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | TMS_SYSSTART_MC.Q | TMS_SYSSTART_MC | 0 | 0 | MC_Q
+OUTPUT_NODE_TYPE | 0 | 6 | OI_OUT
+NODE | TMS_SYSSTART | 1560 | PO | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | SYSSTART_TMS_OUT | NULL | TMS_SYSSTART | 0 | 6 | OI_OUT
+
+FB_INSTANCE | FOOBAR1_ | IboardCPLD_COPY_0_COPY_0 | 0 | 0 | 0
+FBPIN | 4 | count<0>_MC | 1 | NULL | 0 | NULL | 0
+FBPIN | 5 | count<1>_MC | 1 | NULL | 0 | NULL | 0
+FBPIN | 6 | count<2>_MC | 1 | NULL | 0 | NULL | 0
+FBPIN | 7 | count<3>_MC | 1 | NULL | 0 | NULL | 0
+FBPIN | 8 | count<4>_MC | 1 | NULL | 0 | NULL | 0
+FBPIN | 10 | TDI_MC | 1 | NULL | 0 | TDI | 1 | 33 | 53248
+FBPIN | 11 | ARESET_L_MC | 1 | NULL | 0 | ARESET_L | 1 | 32 | 53248
+FBPIN | 12 | TMS_SYSSTART_MC | 1 | NULL | 0 | TMS_SYSSTART | 1 | 31 | 53248
+FBPIN | 13 | running1_MC | 1 | TDO_II | 1 | NULL | 0 | 30 | 51200
+FBPIN | 14 | count<5>_MC | 1 | NULL | 0 | NULL | 0
+FBPIN | 15 | count<6>_MC | 1 | NULL | 0 | NULL | 0
+FBPIN | 16 | count<7>_MC | 1 | NULL | 0 | NULL | 0
+
+FB_INSTANCE | FOOBAR2_ | IboardCPLD_COPY_0_COPY_0 | 0 | 0 | 0
+FBPIN | 5 | LED3_MC | 1 | NULL | 0 | LED3 | 1 | 41 | 49152
+FBPIN | 6 | LED2_MC | 1 | NULL | 0 | LED2 | 1 | 42 | 49152
+FBPIN | 7 | LED1_MC | 1 | NULL | 0 | LED1 | 1 | 43 | 57344
+FBPIN | 8 | NULL | 0 | CLK_II | 1 | NULL | 0 | 44 | 57344
+FBPIN | 10 | NULL | 0 | ARESET_L33_II | 1 | NULL | 0 | 1 | 57344
+FBPIN | 12 | NULL | 0 | TCK33_II | 1 | NULL | 0 | 2 | 49152
+FBPIN | 13 | NULL | 0 | TDI33_II | 1 | NULL | 0 | 3 | 49152
+
+FB_INSTANCE | FOOBAR3_ | IboardCPLD_COPY_0_COPY_0 | 0 | 0 | 0
+FBPIN | 1 | TCK_MC | 1 | NULL | 0 | TCK | 1 | 29 | 49152
+
+FB_INSTANCE | FOOBAR4_ | IboardCPLD_COPY_0_COPY_0 | 0 | 0 | 0
+FBPIN | 1 | running_MC | 1 | SYSSTART33_II | 1 | NULL | 0 | 5 | 49152
+FBPIN | 2 | NULL | 0 | TMS33_II | 1 | NULL | 0 | 6 | 49152
+FBPIN | 7 | TDO33_MC | 1 | NULL | 0 | TDO33 | 1 | 8 | 49152
+FBPIN | 13 | FREE1_MC | 1 | NULL | 0 | FREE1 | 1 | 13 | 49152
+FBPIN | 14 | FREE2_MC | 1 | NULL | 0 | FREE2 | 1 | 14 | 49152
+
+FB_INSTANCE | INPUTPINS_FOOBAR5_ | IboardCPLD_COPY_0_COPY_0 | 0 | 0 | 0
+
+CT_INSTANCE | FOOBAR1_ | FOOBAR1__ctinst | IboardCPLD_COPY_0_COPY_0 | 0 | 1 | 1
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | ARESET_L33_II/UIM | 1452 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | NULL | ARESET_L33_II | 0 | 5 | II_IMUX
+OUTPUT_NODE_TYPE | 5 | 12 | CT_SI5
+SIGNAL | NODE | FOOBAR1__ctinst/5 | 1450 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | NULL | FOOBAR1__ctinst | 5 | 12 | CT_SI5
+SPPTERM | 1 | IV_FALSE | ARESET_L33_II/UIM
+
+CT_INSTANCE | FOOBAR2_ | FOOBAR2__ctinst | IboardCPLD_COPY_0_COPY_0 | 0 | 1 | 1
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | ARESET_L33_II/UIM | 1452 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | NULL | ARESET_L33_II | 0 | 5 | II_IMUX
+OUTPUT_NODE_TYPE | 5 | 12 | CT_SI5
+SIGNAL | NODE | FOOBAR2__ctinst/5 | 1488 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | NULL | FOOBAR2__ctinst | 5 | 12 | CT_SI5
+SPPTERM | 1 | IV_FALSE | ARESET_L33_II/UIM
+
+CT_INSTANCE | FOOBAR3_ | FOOBAR3__ctinst | IboardCPLD_COPY_0_COPY_0 | 0 | 0 | 0
+
+CT_INSTANCE | FOOBAR4_ | FOOBAR4__ctinst | IboardCPLD_COPY_0_COPY_0 | 0 | 1 | 1
+INPUT_NODE_TYPE | 1 | 100 | NOTYPE
+NODE | ARESET_L33_II/UIM | 1452 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | NULL | ARESET_L33_II | 0 | 5 | II_IMUX
+OUTPUT_NODE_TYPE | 5 | 12 | CT_SI5
+SIGNAL | NODE | FOOBAR4__ctinst/5 | 1515 | ? | 0 | 0 | IboardCPLD_COPY_0_COPY_0 | NULL | NULL | FOOBAR4__ctinst | 5 | 12 | CT_SI5
+SPPTERM | 1 | IV_FALSE | ARESET_L33_II/UIM
+
+PLA | FOOBAR1_ | 15
+PLA_TERM | 0 | 
+SPPTERM | 9 | IV_FALSE | LED1_MC.UIM | IV_TRUE | count<0> | IV_TRUE | count<1> | IV_TRUE | count<2> | IV_TRUE | count<3> | IV_TRUE | count<4> | IV_TRUE | count<5> | IV_TRUE | count<6> | IV_TRUE | count<7>
+PLA_TERM | 1 | 
+SPPTERM | 2 | IV_TRUE | LED1_MC.UIM | IV_TRUE | ARESET_L_MC.UIM
+PLA_TERM | 2 | 
+SPPTERM | 2 | IV_FALSE | SYSSTART33_II/UIM | IV_FALSE | TMS33_II/UIM
+PLA_TERM | 3 | 
+SPPTERM | 2 | IV_FALSE | TMS33_II/UIM | IV_TRUE | running1
+PLA_TERM | 5 | 
+SPPTERM | 1 | IV_FALSE | ARESET_L33_II/UIM
+PLA_TERM | 19 | 
+SPPTERM | 1 | IV_FALSE | LED1_MC.UIM
+PLA_TERM | 22 | 
+SPPTERM | 2 | IV_FALSE | LED1_MC.UIM | IV_TRUE | count<0>
+PLA_TERM | 25 | 
+SPPTERM | 3 | IV_FALSE | LED1_MC.UIM | IV_TRUE | count<0> | IV_TRUE | count<1>
+PLA_TERM | 28 | 
+SPPTERM | 4 | IV_FALSE | LED1_MC.UIM | IV_TRUE | count<0> | IV_TRUE | count<1> | IV_TRUE | count<2>
+PLA_TERM | 31 | 
+SPPTERM | 5 | IV_FALSE | LED1_MC.UIM | IV_TRUE | count<0> | IV_TRUE | count<1> | IV_TRUE | count<2> | IV_TRUE | count<3>
+PLA_TERM | 37 | 
+SPPTERM | 1 | IV_TRUE | TDI33_II/UIM
+PLA_TERM | 46 | 
+SPPTERM | 1 | IV_TRUE | running
+PLA_TERM | 49 | 
+SPPTERM | 6 | IV_FALSE | LED1_MC.UIM | IV_TRUE | count<0> | IV_TRUE | count<1> | IV_TRUE | count<2> | IV_TRUE | count<3> | IV_TRUE | count<4>
+PLA_TERM | 52 | 
+SPPTERM | 7 | IV_FALSE | LED1_MC.UIM | IV_TRUE | count<0> | IV_TRUE | count<1> | IV_TRUE | count<2> | IV_TRUE | count<3> | IV_TRUE | count<4> | IV_TRUE | count<5>
+PLA_TERM | 55 | 
+SPPTERM | 8 | IV_FALSE | LED1_MC.UIM | IV_TRUE | count<0> | IV_TRUE | count<1> | IV_TRUE | count<2> | IV_TRUE | count<3> | IV_TRUE | count<4> | IV_TRUE | count<5> | IV_TRUE | count<6>
+
+PLA | FOOBAR2_ | 4
+PLA_TERM | 5 | 
+SPPTERM | 1 | IV_FALSE | ARESET_L33_II/UIM
+PLA_TERM | 22 | 
+SPPTERM | 1 | IV_TRUE | TMS33_II/UIM
+PLA_TERM | 25 | 
+SPPTERM | 1 | IV_TRUE | SYSSTART33_II/UIM
+PLA_TERM | 28 | 
+SPPTERM | 9 | IV_FALSE | LED1_MC.UIM | IV_TRUE | count<0> | IV_TRUE | count<1> | IV_TRUE | count<2> | IV_TRUE | count<3> | IV_TRUE | count<4> | IV_TRUE | count<5> | IV_TRUE | count<6> | IV_TRUE | count<7>
+
+PLA | FOOBAR3_ | 1
+PLA_TERM | 10 | 
+SPPTERM | 1 | IV_TRUE | TCK33_II/UIM
+
+PLA | FOOBAR4_ | 5
+PLA_TERM | 0 | 
+SPPTERM | 2 | IV_FALSE | SYSSTART33_II/UIM | IV_FALSE | TMS33_II/UIM
+PLA_TERM | 1 | 
+SPPTERM | 2 | IV_FALSE | TMS33_II/UIM | IV_TRUE | running1
+PLA_TERM | 5 | 
+SPPTERM | 1 | IV_FALSE | ARESET_L33_II/UIM
+PLA_TERM | 28 | 
+SPPTERM | 1 | IV_TRUE | TDO_II/UIM
+PLA_TERM | 46 | 
+SPPTERM | 1 | IV_TRUE | TCK33_II/UIM
+
+
+IOSTD | LVCMOS18
+CLK | LVTTL
+ARESET_L33 | LVTTL
+ARESET_L | LVCMOS18
+TCK33 | LVTTL
+FREE1 | LVTTL
+SYSSTART33 | LVTTL
+TMS33 | LVTTL
+FREE2 | LVTTL
+LED1 | LVTTL
+LED2 | LVTTL
+LED3 | LVTTL
+TCK | LVCMOS18
+TDI33 | LVTTL
+TDI | LVCMOS18
+TDO | LVCMOS18
+TDO33 | LVTTL
+TMS_SYSSTART | LVCMOS18
+
+
+FB_ORDER_OF_INPUTS | FOOBAR1_ | 0 | count<1> | NULL | 1 | count<7> | NULL | 3 | running | NULL | 4 | count<3> | NULL | 5 | TDI33 | 3
+FB_ORDER_OF_INPUTS | FOOBAR1_ | 6 | count<5> | NULL | 8 | count<6> | NULL | 9 | ARESET_L_MC.UIM | NULL | 10 | LED1_MC.UIM | NULL | 12 | SYSSTART33 | 5
+FB_ORDER_OF_INPUTS | FOOBAR1_ | 13 | running1 | NULL | 14 | count<0> | NULL | 15 | count<2> | NULL | 18 | ARESET_L33 | 1 | 27 | count<4> | NULL
+FB_ORDER_OF_INPUTS | FOOBAR1_ | 29 | TMS33 | 6
+
+FB_IMUX_INDEX | FOOBAR1_ | 68 | 79 | -1 | 112 | 70 | 28 | 77 | -1 | 78 | 74 | 86 | -1 | 48 | 76 | 67 | 69 | -1 | -1 | 25 | -1 | -1 | -1 | -1 | -1 | -1 | -1 | -1 | 71 | -1 | 49 | -1 | -1 | -1 | -1 | -1 | -1 | -1 | -1 | -1 | -1
+
+
+FB_ORDER_OF_INPUTS | FOOBAR2_ | 0 | count<1> | NULL | 1 | count<7> | NULL | 3 | count<4> | NULL | 4 | count<3> | NULL | 6 | count<5> | NULL
+FB_ORDER_OF_INPUTS | FOOBAR2_ | 8 | count<6> | NULL | 9 | ARESET_L33 | 1 | 10 | LED1_MC.UIM | NULL | 12 | SYSSTART33 | 5 | 14 | count<0> | NULL
+FB_ORDER_OF_INPUTS | FOOBAR2_ | 15 | count<2> | NULL | 29 | TMS33 | 6
+
+FB_IMUX_INDEX | FOOBAR2_ | 68 | 79 | -1 | 71 | 70 | -1 | 77 | -1 | 78 | 25 | 86 | -1 | 48 | -1 | 67 | 69 | -1 | -1 | -1 | -1 | -1 | -1 | -1 | -1 | -1 | -1 | -1 | -1 | -1 | 49 | -1 | -1 | -1 | -1 | -1 | -1 | -1 | -1 | -1 | -1
+
+
+FB_ORDER_OF_INPUTS | FOOBAR3_ | 8 | TCK33 | 2
+
+FB_IMUX_INDEX | FOOBAR3_ | -1 | -1 | -1 | -1 | -1 | -1 | -1 | -1 | 27 | -1 | -1 | -1 | -1 | -1 | -1 | -1 | -1 | -1 | -1 | -1 | -1 | -1 | -1 | -1 | -1 | -1 | -1 | -1 | -1 | -1 | -1 | -1 | -1 | -1 | -1 | -1 | -1 | -1 | -1 | -1
+
+
+FB_ORDER_OF_INPUTS | FOOBAR4_ | 1 | TDO | 30 | 6 | SYSSTART33 | 5 | 8 | TCK33 | 2 | 9 | ARESET_L33 | 1 | 10 | running1 | NULL
+FB_ORDER_OF_INPUTS | FOOBAR4_ | 15 | TMS33 | 6
+
+FB_IMUX_INDEX | FOOBAR4_ | -1 | 12 | -1 | -1 | -1 | -1 | 48 | -1 | 27 | 25 | 76 | -1 | -1 | -1 | -1 | 49 | -1 | -1 | -1 | -1 | -1 | -1 | -1 | -1 | -1 | -1 | -1 | -1 | -1 | -1 | -1 | -1 | -1 | -1 | -1 | -1 | -1 | -1 | -1 | -1
+
+
+GLOBAL_FCLK | CLK | 1 | 1
+
+TIME_TSPEC | TS_CLK | PERIOD:CLK:20.000nS:HIGH:10.000nS | CLK | 10003 | 200 | 100 | NULL
+
+TIME_TSPEC | TS_ | FROM:SYSSTART_TMS_IN:TO:SYSSTART_TMS_OUT:4.000nS | NULL | 10000 | 40 | 0 | NULL
+
+TIME_GRP | TS__from | SYSSTART_TMS_IN | 0
+
+TIME_GRP | TS__to | SYSSTART_TMS_OUT | 0

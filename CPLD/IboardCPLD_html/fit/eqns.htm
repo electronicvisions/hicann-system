@@ -1,0 +1,241 @@
+<html><head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<script src="paths.js"></script><script src="eqns.js"></script><script>
+      var design = "IboardCPLD";
+      var device = "XC2C64A";
+      signals = new Array("ARESET_L","FREE1","FREE2","LED1","LED2","LED3","TCK","TDI","TDO33","TMS_SYSSTART","count0_SPECSIG","count1_SPECSIG","count2_SPECSIG","count3_SPECSIG","count4_SPECSIG","count5_SPECSIG","count6_SPECSIG","count7_SPECSIG","running","running1");
+      sigNegs = new Array("OFF","OFF","ON","OFF","OFF","OFF","OFF","OFF","OFF","ON","OFF","OFF","OFF","OFF","OFF","OFF","OFF","OFF","OFF","OFF");
+      sigTypes = new Array("DFF","","","TFF","","","","","","","TFF","TFF","TFF","TFF","TFF","TFF","TFF","TFF","DFF","DFF");
+
+      
+           iostyle["CLK"]=new Array("PU");
+        
+           iostyle["ARESET_L33"]=new Array("PU");
+        
+           iostyle["TCK33"]=new Array("PU");
+        
+           iostyle["TDI33"]=new Array("PU");
+        
+           iostyle["SYSSTART33"]=new Array("PU");
+        
+           iostyle["TMS33"]=new Array("PU");
+        
+        specSig["count0_SPECSIG"]=new Array("count<0>");
+      
+        specSig["count1_SPECSIG"]=new Array("count<1>");
+      
+        specSig["count2_SPECSIG"]=new Array("count<2>");
+      
+        specSig["count3_SPECSIG"]=new Array("count<3>");
+      
+        specSig["count4_SPECSIG"]=new Array("count<4>");
+      
+        specSig["count5_SPECSIG"]=new Array("count<5>");
+      
+        specSig["count6_SPECSIG"]=new Array("count<6>");
+      
+        specSig["count7_SPECSIG"]=new Array("count<7>");
+      
+            pterms["FB1_0"]=new Array("/LED1","count0_SPECSIG","count1_SPECSIG","count2_SPECSIG","count3_SPECSIG","count4_SPECSIG","count5_SPECSIG","count6_SPECSIG","count7_SPECSIG");
+          
+            pterms["FB1_1"]=new Array("LED1","ARESET_L");
+          
+            pterms["FB1_2"]=new Array("/SYSSTART33","/TMS33");
+          
+            pterms["FB1_3"]=new Array("/TMS33","running1");
+          
+            pterms["FB1_5"]=new Array("/ARESET_L33");
+          
+            pterms["FB1_19"]=new Array("/LED1");
+          
+            pterms["FB1_22"]=new Array("/LED1","count0_SPECSIG");
+          
+            pterms["FB1_25"]=new Array("/LED1","count0_SPECSIG","count1_SPECSIG");
+          
+            pterms["FB1_28"]=new Array("/LED1","count0_SPECSIG","count1_SPECSIG","count2_SPECSIG");
+          
+            pterms["FB1_31"]=new Array("/LED1","count0_SPECSIG","count1_SPECSIG","count2_SPECSIG","count3_SPECSIG");
+          
+            pterms["FB1_37"]=new Array("TDI33");
+          
+            pterms["FB1_46"]=new Array("running");
+          
+            pterms["FB1_49"]=new Array("/LED1","count0_SPECSIG","count1_SPECSIG","count2_SPECSIG","count3_SPECSIG","count4_SPECSIG");
+          
+            pterms["FB1_52"]=new Array("/LED1","count0_SPECSIG","count1_SPECSIG","count2_SPECSIG","count3_SPECSIG","count4_SPECSIG","count5_SPECSIG");
+          
+            pterms["FB1_55"]=new Array("/LED1","count0_SPECSIG","count1_SPECSIG","count2_SPECSIG","count3_SPECSIG","count4_SPECSIG","count5_SPECSIG","count6_SPECSIG");
+          
+            pterms["FB2_5"]=new Array("/ARESET_L33");
+          
+            pterms["FB2_22"]=new Array("TMS33");
+          
+            pterms["FB2_25"]=new Array("SYSSTART33");
+          
+            pterms["FB2_28"]=new Array("/LED1","count0_SPECSIG","count1_SPECSIG","count2_SPECSIG","count3_SPECSIG","count4_SPECSIG","count5_SPECSIG","count6_SPECSIG","count7_SPECSIG");
+          
+            pterms["FB3_10"]=new Array("TCK33");
+          
+            pterms["FB4_0"]=new Array("/SYSSTART33","/TMS33");
+          
+            pterms["FB4_1"]=new Array("/TMS33","running1");
+          
+            pterms["FB4_5"]=new Array("/ARESET_L33");
+          
+            pterms["FB4_28"]=new Array("TDO");
+          
+            pterms["FB4_46"]=new Array("TCK33");
+          
+          d1["count0_SPECSIG"]=new Array("FB1_19");
+          
+              gblclk["count0_SPECSIG"]=new Array("CLK");
+            
+              rst["count0_SPECSIG"]=new Array("FB1_5");
+              prld["count0_SPECSIG"]="GND";
+          d1["count1_SPECSIG"]=new Array("FB1_22");
+          
+              gblclk["count1_SPECSIG"]=new Array("CLK");
+            
+              rst["count1_SPECSIG"]=new Array("FB1_5");
+              prld["count1_SPECSIG"]="GND";
+          d1["count2_SPECSIG"]=new Array("FB1_25");
+          
+              gblclk["count2_SPECSIG"]=new Array("CLK");
+            
+              rst["count2_SPECSIG"]=new Array("FB1_5");
+              prld["count2_SPECSIG"]="GND";
+          d1["count3_SPECSIG"]=new Array("FB1_28");
+          
+              gblclk["count3_SPECSIG"]=new Array("CLK");
+            
+              rst["count3_SPECSIG"]=new Array("FB1_5");
+              prld["count3_SPECSIG"]="GND";
+          d1["count4_SPECSIG"]=new Array("FB1_31");
+          
+              gblclk["count4_SPECSIG"]=new Array("CLK");
+            
+              rst["count4_SPECSIG"]=new Array("FB1_5");
+              prld["count4_SPECSIG"]="GND";
+          d1["TDI"]=new Array("FB1_37");
+          
+          d2["ARESET_L"]=new Array("FB1_1","FB1_0");
+          
+              gblclk["ARESET_L"]=new Array("CLK");
+            
+              rst["ARESET_L"]=new Array("FB1_5");
+              prld["ARESET_L"]="GND";
+          d2["TMS_SYSSTART"]=new Array("FB1_2","FB1_3");
+          
+          d1["running1"]=new Array("FB1_46");
+          
+              gblclk["running1"]=new Array("CLK");
+            
+              rst["running1"]=new Array("FB1_5");
+              prld["running1"]="GND";
+          d1["count5_SPECSIG"]=new Array("FB1_49");
+          
+              gblclk["count5_SPECSIG"]=new Array("CLK");
+            
+              rst["count5_SPECSIG"]=new Array("FB1_5");
+              prld["count5_SPECSIG"]="GND";
+          d1["count6_SPECSIG"]=new Array("FB1_52");
+          
+              gblclk["count6_SPECSIG"]=new Array("CLK");
+            
+              rst["count6_SPECSIG"]=new Array("FB1_5");
+              prld["count6_SPECSIG"]="GND";
+          d1["count7_SPECSIG"]=new Array("FB1_55");
+          
+              gblclk["count7_SPECSIG"]=new Array("CLK");
+            
+              rst["count7_SPECSIG"]=new Array("FB1_5");
+              prld["count7_SPECSIG"]="GND";
+          d1["LED3"]=new Array("FB2_22");
+          
+          d1["LED2"]=new Array("FB2_25");
+          
+          d1["LED1"]=new Array("FB2_28");
+          
+              gblclk["LED1"]=new Array("CLK");
+            
+              rst["LED1"]=new Array("FB2_5");
+              prld["LED1"]="GND";
+          d1["TCK"]=new Array("FB3_10");
+          
+              gblclk["running"]=new Array("CLK");
+            
+              rst["running"]=new Array("FB4_5");
+              prld["running"]="GND";
+          inreg["running"]=new Array("SYSSTART33");
+        
+          d1["TDO33"]=new Array("FB4_28");
+          
+          d1["FREE1"]=new Array("FB4_46");
+          
+          d2["FREE2"]=new Array("FB4_0","FB4_1");
+          
+
+      uimSignals = new Array();
+
+      uimSigNegs = new Array();
+
+      uimPterms = new Array();
+      
+
+      
+        function getEqnList() {
+          var str = "<html><head><link type='text/css' href='style.css' rel='stylesheet'></head><body class='pgBgnd'>";
+          str += "<center><h3>Equations</h3></center>";
+          str += "<table width='90%' align='center' border='1' cellpadding='0' cellspacing='0'>";
+          for (s=0; s<uimSignals.length; s++) {
+            str += "<tr><td>";
+            str += retUimEqn(uimSignals[s]);
+            str += "</td></tr>";
+          }
+          for (s=0; s<signals.length; s++) {
+            str += "<tr><td>";
+            str += retEqn(signals[s]);
+            str += "</td></tr>";
+          }
+
+          var legend = retLegend();
+		      if (legend != "") {
+		        str += "<tr><td>" + legend + "</td></tr>";
+		      }
+
+          str += "</table>";
+          str += "<form><span class='pgRef'>";
+
+          if (!parent.leftnav.IsNS()) {
+            str += "<table width='90%' align='center'>";
+            str += "<tr><td align='left'><input type='button' value='back to top' ";
+            str += "onclick='javascript:parent.leftnav.showEqnAll()' ";
+            str += "onmouseover=\"window.status='goto top of page'; return true;\" ";
+            str += "onmouseout=\"window.status=''\">";
+            str += "</td>";
+            str += "<td align='right'>";
+            str += "<input type='button' value='print page' ";
+            str += "onclick='javascript:window.print()' ";
+            str += "onmouseover=\"window.status='print page'; return true;\" ";
+            str += "onmouseout=\"window.status=''\">";
+            str += "</td>";
+            str += "</tr></table>";
+          }
+          else {
+            str += "<table width='90%' align='center'>";
+            str += "<tr><td align='left'><a href='javascript:parent.leftnav.showEqnAll()'>back to top</a>";
+            str += "</td>";
+            str += "<td align='right'>";
+            str += "<a href='javascript:window.print()'>";
+            str += "print page</a>";
+            str += "</td>";
+            str += "</tr></table>";
+          }
+
+          str += "</span></form>";
+          str += "</body></html>";
+          return str;
+        }
+      
+    </script>
+</head></html>

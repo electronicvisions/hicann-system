@@ -1,0 +1,47 @@
+#reset hicann and set all voltages
+#enviroment variable BUSMODE must be set according to board configuration
+cat <<EOF >key
+1
+2
+3
+8
+4ff
+b
+6
+5
+b
+5
+5
+b
+4
+2.5
+b
+6
+10.5
+b
+2
+0.9
+b
+1
+0.7
+b
+3
+1.2
+g
+0
+1
+g
+1
+1
+x
+EOF
+./tests2 $BUSMODE -m tm_iboardv2 < key
+cat <<EOF >key
+Z
+3
+2
+1
+x
+EOF
+./tests2 $BUSMODE -m tmag_l2onrep < key
+

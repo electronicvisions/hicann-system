@@ -1,0 +1,38 @@
+Pin Freeze File:  version M.53d
+
+2C64A44VQ XC2C64A-5-VQ44
+ARESET_L33 S:PIN1
+CLK S:PIN44
+SYSSTART33 S:PIN5
+TCK33 S:PIN2
+TDI33 S:PIN3
+TDO S:PIN30
+TMS33 S:PIN6
+ARESET_L S:PIN32
+FREE1 S:PIN13
+FREE2 S:PIN14
+LED1 S:PIN43
+LED2 S:PIN42
+LED3 S:PIN41
+TCK S:PIN29
+TDI S:PIN33
+TDO33 S:PIN8
+TMS_SYSSTART S:PIN31
+
+
+;The remaining section of the .gyd file is for documentation purposes only.
+;It shows where your internal equations were placed in the last successful fit.
+
+PARTITION FB1_4 count<0> count<1> count<2> count<3>
+		 count<4>
+PARTITION FB1_10 TDI ARESET_L TMS_SYSSTART running1
+		 count<5> count<6> count<7>
+PARTITION FB2_5 LED3 LED2 LED1
+
+PARTITION FB3_1 TCK
+
+PARTITION FB4_1 running
+PARTITION FB4_7 TDO33
+PARTITION FB4_13 FREE1 FREE2
+
+

@@ -1,0 +1,65 @@
+#!/usr/bin/env python
+import sys, os, inspect
+from waflib import Options
+
+hicannsystem = os.path.realpath(os.path.join(os.path.dirname(inspect.getframeinfo(inspect.currentframe()).filename), '../../..'))
+dependencies = [
+    hicannsystem,
+]
+recurse = lambda ctx : map(lambda dep : ctx.recurse(dep), dependencies)
+
+def options(opt):
+    opt.load('compiler_cxx')
+    opt.load('boost')
+    opt.load('python')
+    opt.load('pypp')
+    #opt.load('pytest')
+
+    recurse(opt)
+
+
+def configure(cfg):
+    cfg.check_waf_version(mini='1.6.10') # ECM: bleeding EDGE!!1!
+
+    cfg.load('compiler_cxx')
+    cfg.load('gtest')
+    cfg.load('boost')
+    cfg.load('python')
+    cfg.load('pypp')
+    #cfg.load('pytest')
+
+    recurse(cfg)
+
+    cfg.check_python_version(minver=(2,6))
+    cfg.check_python_headers()
+    cfg.check_python_module('xmlrunner')
+    # keep asserts!
+    cfg.env.DEFINES_PYEMBED.remove('NDEBUG')
+    cfg.env.DEFINES_PYEXT.remove('NDEBUG')
+
+    cfg.check_boost(lib='python', uselib_store='BOOST4PYS2HAL')
+
+    try:
+        from numpy.distutils.misc_util import get_numpy_include_dirs
+    except ImportError:
+        cfg.fatal("Numpy is required")
+
+
+def build(bld):
+    recurse(bld)
+
+    from numpy.distutils.misc_util import get_numpy_include_dirs
+    includes = get_numpy_include_dirs() + [hicannsystem]
+    USES = [ 'config', 'systemc_config', 'arq_inc', 'logger_obj', 'jtag_lib_inc', 's2conf_inc', 's2hal_inc', 'BOOST4PYS2HAL' ]
+
+    bld(
+            target      = 'pyhal_s2',
+            features    = 'cxx pypp pyembed',
+            script      = 'bin/generate.py',
+            output_dir  = 'generated',
+            gen_defines = 'PYPLUSPLUS __STRICT_ANSI__',
+            headers     = 'source/bindings.h',
+            module      = 'pyhal_s2',
+            use         =  USES,
+        includes=includes
+    )
