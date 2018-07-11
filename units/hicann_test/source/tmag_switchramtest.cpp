@@ -57,9 +57,6 @@ public:
 
 	bool test() 
     {
-
-        std::cout << "Starting tmag_switchramtest" << std::endl;
-
 		uint startaddr = 0;
 		uint maxaddr   = 111;
 		uint datawidth = 16;
