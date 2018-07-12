@@ -1071,7 +1071,9 @@ uint16_t jtag_lib_v2::jtag_ethernet::receiveData(const uint16_t uiLength)
 			return actual_length;
 		} else {
 			// at this point we expect to not receive HICANN config or spikes yet
-			throw std::runtime_error("Received ARQ packet of non-JTAG type.");
+			std::stringstream ss;
+			ss << std::hex << curr_pck.pid;
+			throw std::runtime_error("Received ARQ packet of non-JTAG type: " + ss.str());
 		}
 	} else {
 		throw std::runtime_error("receiving data without open session");
