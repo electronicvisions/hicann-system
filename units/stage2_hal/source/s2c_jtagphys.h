@@ -46,7 +46,7 @@ public:
 
 	virtual Commstate Init(std::bitset<8> hicann, bool silent=false, bool force_highspeed_init=false, bool return_on_error=false); //configures HICANN for jtag_multi communication
 	virtual Commstate Init(int hicann_jtag_nr, bool silent=false, bool force_highspeed_init=false, bool return_on_error=false); //configures HICANN for jtag_multi communication
-	
+	Commstate reset_hicann_arq(std::bitset<8> hicann, bool release_reset = false);
 };
 
 } // facets
