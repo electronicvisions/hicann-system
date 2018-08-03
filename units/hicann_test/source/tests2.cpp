@@ -529,12 +529,18 @@ int main(int argc, char* argv[])
 				exit(EXIT_FAILURE);
 			}
 
-			log(Logger::INFO) << "setting JTAG frequency to " << jtag_speed << "kHz" << flush;
-			if (!jtf->initJtagV2(
-					jtf->ip_number(fpga_ip[0], fpga_ip[1], fpga_ip[2], fpga_ip[3]), jtag_port,
-					jtag_speed)) {
-				log(Logger::ERROR) << "JTAG init failed!" << flush;
-				exit(EXIT_FAILURE);
+			FPGAConnectionId::IPv4 tmp(fpga_ip);
+#ifdef FPGA_BOARD_BS_K7
+			std::shared_ptr<sctrltp::ARQStream> p_hostarq(new sctrltp::ARQStream(
+				tmp.to_string(), "192.168.0.128", /*listen port*/ 1234, "192.168.0.1",
+				/*target port*/ 1234)); // TODO: set correct host IP
+#else
+			std::shared_ptr<sctrltp::ARQStream> p_hostarq(new sctrltp::ARQStream(
+				tmp.to_string(), "192.168.1.2", /*listen port*/ 1234, tmp.to_string().c_str(),
+				/*target port*/ 1234));
+#endif
+			if (!jtf->initJtagV2(p_hostarq, /*speed*/ 10000)) {
+				throw std::runtime_error("JTAG init failed!");
 			}
 		} break;
 
