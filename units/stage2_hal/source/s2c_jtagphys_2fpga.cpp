@@ -208,7 +208,7 @@ S2C_JtagPhys2Fpga::Commstate S2C_JtagPhys2Fpga::Init(std::bitset<8> hicann, bool
 		return S2C_JtagPhys2Fpga::initfailed;
 
 	// disable FPGA ARQ since JTAG - software ARQ is used: (is re-enabled by hostal-based init.)
-	log(Logger::INFO) << "S2C_JtagPhys2Fpga: Disabling hardware ARQ";
+	log(Logger::INFO) << "S2C_JtagPhys2Fpga::Init: Disabling HICANN-ARQ in FPGA";
 	set_fpga_reset(jtag->get_ip(), false, false, false, false, /*ARQ:*/true);
 
 	//initialize JTAG read access

@@ -56,6 +56,7 @@ S2C_JtagPhys2FpgaArq::Commstate S2C_JtagPhys2FpgaArq::Init(
 		S2C_JtagPhys2Fpga::Init(hicann_jtag_nr, silent, force_highspeed_init, return_on_error);
 
 	// enable FPGA ARQ (has been disabled during above init):
+	log(Logger::INFO) << "S2C_JtagPhys2FpgaArq::Init: Enabling HICANN-ARQ in FPGA";
 	set_fpga_reset(jtag->get_ip(), false, false, false, false, /*ARQ:*/ false);
 
 	// FIXME: make configurable
@@ -75,6 +76,7 @@ S2C_JtagPhys2FpgaArq::Commstate S2C_JtagPhys2FpgaArq::Init(
 		S2C_JtagPhys2Fpga::Init(hicann, silent, force_highspeed_init, return_on_error);
 
 	// enable FPGA ARQ (has been disabled during above init):
+	log(Logger::INFO) << "S2C_JtagPhys2FpgaArq::Init: Enabling HICANN-ARQ in FPGA";
 	set_fpga_reset(jtag->get_ip(), false, false, false, false, /*ARQ:*/ false);
 
 	// FIXME: make configurable
