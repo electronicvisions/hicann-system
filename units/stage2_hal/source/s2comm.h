@@ -136,6 +136,8 @@ public:
 	/// set/unset FPGA reset
 	static void set_fpga_reset(unsigned int fpga_ip, bool enable_core, bool enable_fpgadnc, bool enable_ddr2onboard, bool enable_ddr2sodimm, bool enable_arq=true, uint reset_port=1801);
 
+	Commstate reset_hicann_arq(std::bitset<8> hicann, bool release_reset = false);
+
 	/// reprogram FGPA (requires correctly flashed design!)
 	void reprog_fpga(unsigned int fpga_ip, uint reset_port=1801);
 

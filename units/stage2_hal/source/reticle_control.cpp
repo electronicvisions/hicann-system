@@ -233,7 +233,7 @@ ReticleControl::ReticleControl(
 ReticleControl::~ReticleControl()
 {
 	LOG4CXX_INFO(logger, "Deleting ReticleControl instance for reticle (" << x << "," << y << ")");
-	jtag_p->reset_hicann_arq(available_hicanns);
+	comm->reset_hicann_arq(available_hicanns);
 	if (!(instantiated().erase(s_number))) {
 		LOG4CXX_ERROR(
 			logger,

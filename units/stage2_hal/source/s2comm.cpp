@@ -274,6 +274,40 @@ void Stage2Comm::set_fpga_reset(unsigned int fpga_ip, bool enable_core, bool ena
 #endif
 }
 
+Stage2Comm::Commstate Stage2Comm::reset_hicann_arq(std::bitset<8> hicann, bool release_reset)
+{
+	// pull HICANN ARQ reset in FPGA
+	set_fpga_reset(jtag->get_ip(), false, false, false, false, true);
+
+	// Reset software ARQ
+	for (uint i = 0; i < link_layers.size(); i++) {
+		for (uint j = 0; j < link_layers[i].size(); j++) {
+			link_layers[i][j].arq.Reset();
+		}
+	}
+
+	// pull HICANN ARQ reset in HICANNs
+	for (size_t hicann_nr = 0; hicann_nr < hicann.size(); hicann_nr++) {
+		if (!hicann[hicann_nr]) {
+			continue;
+		}
+
+		jtag->set_hicann_pos(dnc2jtag(hicann_nr));
+
+		jtag->HICANN_arq_write_ctrl(jtag->CMD3_ARQ_CTRL_RESET, jtag->CMD3_ARQ_CTRL_RESET);
+		if (release_reset) {
+			jtag->HICANN_arq_write_ctrl(0x0, 0x0);
+		}
+	}
+
+	if (release_reset) {
+		// release HICANN ARQ reset in FPGA
+		set_fpga_reset(jtag->get_ip(), false, false, false, false, false);
+	}
+
+	return Stage2Comm::ok;
+}
+
 // FIXME: reads iboard adc... wrong position!!!
 Stage2Comm::Commstate Stage2Comm::readAdc(SBData& result) {
 	double vref   = 3.3;  // adc reference voltage
