@@ -34,7 +34,7 @@ S2C_JtagPhys2Fpga::S2C_JtagPhys2Fpga(CommAccess const & access, myjtag_full *j, 
 {
 	hicann_ack_timeout[0] = 15;
 	hicann_ack_timeout[1] = 20;
-	hicann_resend_timeout[0] = 200;
+	hicann_resend_timeout[0] = 70;
 	hicann_resend_timeout[1] = 100;
 	init_s2comm();
 	fpga_dnc_inited    = false;
