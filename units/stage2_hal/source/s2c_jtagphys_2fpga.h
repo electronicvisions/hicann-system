@@ -42,6 +42,8 @@ private:
 	bool test_transmissions_done;
 
 public:
+	// FPGA has 8 HICANNs at most
+	std::bitset<8> link_states;
 	size_t trans_count;
 
 	S2C_JtagPhys2Fpga(CommAccess const & access, myjtag_full* j, bool on_reticle=false, bool use_k7fpga=false);
@@ -59,6 +61,7 @@ public:
 	//         Old behavior: in the case of an error, the initialization process is repeated up to 10 times. However, this includes a hicann reset, which destroys
 	//         the sync of the systime counters on the HICANN and the FPGA.
 	virtual Commstate Init(std::bitset<8> hicann, bool silent=false, bool force_highspeed_init=false, bool return_on_error=false); //configures HICANN for jtag_multi communication
+	virtual Commstate Init(std::bitset<8> hicann, std::bitset<8> highspeed_hicann, bool silent=false, bool force_highspeed_init=false, bool return_on_error=false);
 	virtual Commstate Init(int hicann_jtag_nr, bool silent=false, bool force_highspeed_init=false, bool return_on_error=false); //configures HICANN for jtag_multi communication
 	
 	// ----------------------------------
@@ -94,7 +97,7 @@ public:
 	unsigned int initAllConnections(bool silent);
 	unsigned int initAllConnections(bool silent, std::vector<unsigned char> delays);
 
-	bool fpga_hicann_init(std::bitset<8> hicann);
+	std::bitset<8> fpga_hicann_init(std::bitset<8> hicann);
 
 	uint16_t hicann_ack_timeout[2], hicann_resend_timeout[2]; // tag 0, tag 1
 	bool disable_multiple_test_transmissions;

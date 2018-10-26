@@ -198,13 +198,14 @@ private:
 	std::bitset<8> physically_available_hicanns; // set of flags to indicate which hicanns are
 	                                             // available (HS numbering!)
 	std::bitset<8> used_hicanns; //set of flags to indicate HICANNs in use (JTAG numbering!)
+	std::bitset<8> highspeed_hicanns; //set of flags to indicate which hicanns are available via high-speed (HS numbering!)
 	reticle reticle_info;    //reticle information in struct form
 
 	uint x, y, p_number, s_number, jtag_port, aoutput, pic_num;
 	FPGAConnectionId::IPv4::bytes_type fpga_ip;
 	FPGAConnectionId::IPv4 pmu_ip;
 	commodels model;
-	bool gigabit_on, on_wafer, arq_mode, kintex;
+	bool on_wafer, arq_mode, kintex;
 	boost::scoped_ptr<CommAccess> access;
 
 public:
@@ -226,7 +227,7 @@ public:
 	    uint16_t port,
 	    FPGAConnectionId::IPv4 const _pmu_ip,
 	    std::bitset<8> physically_available_hicanns,
-	    bool gigabit_on,
+	    std::bitset<8> highspeed_hicanns,
 	    bool on_wafer,
 	    bool _arq_mode = true,
 	    bool _kintex = true);
@@ -261,10 +262,12 @@ public:
 
 	/// Initialization of several HICANNs, DNC numbering, false if failed. Silent=true => less detailed info on the screen
 	/// Used from HALBE.
-	/// by setting return_on_error to true, the initialization returns directly without a reset of the hicanns.
+	/// @hicann denotes the set of hicanns available in the JTAG chain.
+	/// @highspeed_hicann denotes the set of highspeed links to initialize (obv. less or equal than hicann).
+	/// By setting return_on_error to true, the initialization returns directly without a reset of the hicanns.
 	/// In the other case, the initialization process is repeated for several times, including hicann resets,
 	/// which entails the loss of the sync of the systime counters on the FPGA and the HICANNs
-	bool hicannInit(std::bitset<8> hicann, bool silent=false, bool return_on_error=false);
+	bool hicannInit(std::bitset<8> hicann, std::bitset<8> highspeed_hicann, bool silent=false, bool return_on_error=false);
 
 	///label HICANNs of this reticle as used (DNC numbering!)
 	void set_used_hicann(uint hicann_number, bool state);

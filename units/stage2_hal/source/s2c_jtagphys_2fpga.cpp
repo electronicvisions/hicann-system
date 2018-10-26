@@ -29,6 +29,7 @@ using namespace std;
 S2C_JtagPhys2Fpga::S2C_JtagPhys2Fpga(CommAccess const & access, myjtag_full *j, bool on_reticle, bool use_k7fpga) :
 	Stage2Comm(access, j, on_reticle, use_k7fpga),
 	test_transmissions_done(false),
+	link_states(0),
 	trans_count(100),
 	disable_multiple_test_transmissions(false)
 {
@@ -94,28 +95,40 @@ S2C_JtagPhys2Fpga::Commstate S2C_JtagPhys2Fpga::Receive(IData &d)
 
 S2C_JtagPhys2Fpga::Commstate S2C_JtagPhys2Fpga::Init(int hicann_jtag_nr, bool silent, bool force_highspeed_init, bool return_on_error){
 	// ECM: old testmodes often forget to specify the hicann_nr -- if your code breaks here... check this!
-	assert(hicann_jtag_nr >= 0 && "Init called with wrong hicann_nr");
-	assert(hicann_jtag_nr < 8 && "Init called with wrong hicann_nr");
+	if ((hicann_jtag_nr < 0) || (hicann_jtag_nr > 7)) {
+		throw std::runtime_error("Init called with wrong hicann_nr");
+	}
 	std::bitset<8> hicann;
 	hicann[jtag2dnc(hicann_jtag_nr)] = true;
 	return S2C_JtagPhys2Fpga::Init(hicann, silent, force_highspeed_init, return_on_error);
 }
 
+S2C_JtagPhys2Fpga::Commstate S2C_JtagPhys2Fpga::Init(std::bitset<8> hicann, bool silent, bool force_highspeed_init, bool return_on_error){
+	return Init(hicann, hicann, silent, force_highspeed_init, return_on_error);
+}
 
 // initializes jtag_multi. if "silent==true" => put no info on screen except errors to increase readability
 // variable hicann contains DNC highspeed channel numbers
-S2C_JtagPhys2Fpga::Commstate S2C_JtagPhys2Fpga::Init(std::bitset<8> hicann, bool silent, bool force_highspeed_init, bool return_on_error){
+S2C_JtagPhys2Fpga::Commstate S2C_JtagPhys2Fpga::Init(std::bitset<8> hicann, std::bitset<8> highspeed_hicann, bool silent, bool force_highspeed_init, bool return_on_error){
+	if ((~hicann & highspeed_hicann).any()) {
+		throw std::runtime_error(
+		    "S2C_JtagPhys2Fpga::Init: Required highspeed HICANNs " + highspeed_hicann.to_string() +
+		    " are not a subset of available HICANNs " + hicann.to_string());
+	}
 
-	if(!silent) log(Logger::INFO) << "S2C_JtagPhys2Fpga::Init: Initializing HICANNs " << hicann.to_string() << flush;
-	if(hicann.none()){
-		log(Logger::ERROR) << "S2C_JtagPhys2Fpga::Init: MUST provide HICANNs to initialize!" << flush;
-		exit(EXIT_FAILURE);
+	if(!silent) {
+		log(Logger::INFO) << "S2C_JtagPhys2Fpga::Init: Initializing HICANNs " << hicann.to_string()
+		                  << " with highspeed links: " << highspeed_hicann.to_string() << flush;
 	}
 
 	if (disable_multiple_test_transmissions && test_transmissions_done)
 		return S2C_JtagPhys2Fpga::ok;
 
-	log(Logger::DEBUG0) << "S2C_JtagPhys2Fpga::Init: initializing high speed communication..." << flush;
+	if (highspeed_hicann.none()) {
+		log(Logger::INFO) << "S2C_JtagPhys2Fpga::Init: No HICANNs provided for highspeed initialization!" << flush;
+	} else {
+		log(Logger::DEBUG0) << "S2C_JtagPhys2Fpga::Init: initializing high speed communication on " << highspeed_hicann.to_string() << flush;
+	}
 
 	size_t nrep, max_init_tries=10 ;
 	for (nrep=0; nrep < max_init_tries; ++nrep) // try initialization 10 times
@@ -123,19 +136,20 @@ S2C_JtagPhys2Fpga::Commstate S2C_JtagPhys2Fpga::Init(std::bitset<8> hicann, bool
     	
         if (k7fpga)
         {
-        	bool init_success = this->fpga_hicann_init(hicann);
-	        if (!init_success)
-	        {
-	        	log(Logger::WARNING) << "Highspeed link initialization failed.";
-	        	if (return_on_error) {
-	        		return S2C_JtagPhys2Fpga::initfailed;
-	        	}
-	        	else {
-	        		continue; // try again on failed initialization
-	        	}
-	        }
+			std::bitset<8> init_success = this->fpga_hicann_init(highspeed_hicann);
+			// check if all requested hicanns were inited successfully
+			if ((init_success.to_ulong() & highspeed_hicann.to_ulong()) != highspeed_hicann.to_ulong()) {
+				log(Logger::WARNING) << "Highspeed link initialization failed."
+					<< "Requested " << highspeed_hicann.to_string()
+					<< " successful " << init_success.to_string();
+				if (return_on_error) {
+					return S2C_JtagPhys2Fpga::initfailed;
+				} else {
+					continue; // try again on failed initialization
+				}
+			}
 		}
-		else
+	else // non Kintex-7
 		{
 			// The following ensures backward compatibility:
 	        // reset hicanns
@@ -153,7 +167,7 @@ S2C_JtagPhys2Fpga::Commstate S2C_JtagPhys2Fpga::Init(std::bitset<8> hicann, bool
 
 	        log(Logger::DEBUG0) << "S2C_JtagPhys2Fpga::Init: result of highspeed init: " << ret.to_string() << flush;
 
-	        std::bitset<9> tmp = 1<<8 | hicann.to_ulong(); // 1 dnc init bit, 8 hicann init bits
+	        std::bitset<9> tmp = 1<<8 | highspeed_hicann.to_ulong(); // 1 dnc init bit, 8 hicann init bits
 
 	        if ((ret & tmp) != tmp)
 	        {
@@ -175,7 +189,8 @@ S2C_JtagPhys2Fpga::Commstate S2C_JtagPhys2Fpga::Init(std::bitset<8> hicann, bool
 		bool trans_succ = true;
 		for (size_t hicann_nr = 0; hicann_nr < hicann.size(); hicann_nr++)
 		{
-			if (!hicann[hicann_nr]) continue;
+			// skip test transmissions for non-highspeed-link hicanns
+			if (!highspeed_hicann[hicann_nr]) continue;
 			
 			unsigned int trans_errors = test_transmission(hicann_nr, trans_count);
 			if (trans_errors)
@@ -192,7 +207,9 @@ S2C_JtagPhys2Fpga::Commstate S2C_JtagPhys2Fpga::Init(std::bitset<8> hicann, bool
 		
 		if (trans_succ)
 		{
-			log(Logger::INFO) << "Test transmissions (count: " << trans_count << ") on all requested HICANNs successful";
+			log(Logger::INFO) << "Test transmissions (count: " << trans_count
+			                  << ") on all requested HICANNs (" << highspeed_hicann.count()
+			                  << ") successful.";
 			test_transmissions_done = true;
 			break;
 		}
@@ -215,15 +232,30 @@ S2C_JtagPhys2Fpga::Commstate S2C_JtagPhys2Fpga::Init(std::bitset<8> hicann, bool
 	Clear(); // re-sets jtag position...
 
 	// Reset software ARQ
+	log(Logger::INFO) << "S2C_JtagPhys2Fpga: Resetting Software HICANN-ARQ";
 	for(uint i=0; i<link_layers.size(); i++)
 		for(uint j=0; j<link_layers[i].size(); j++)
 			link_layers[i][j].arq.Reset();
 
 	for (size_t hicann_nr = 0; hicann_nr < hicann.size(); hicann_nr++) {
-		if (!hicann[hicann_nr]) continue;
-		// jtag stuff below this line
+		// disable forwarding of data to ARQ in FPGA for JTAG-only and/or unavailable HICANNs
+		if (!link_states[hicann_nr]) {
+			log(Logger::WARNING) << "Disabling forwarding of highspeed data in FPGA for channel: " << hicann_nr;
+			jtag->K7FPGA_set_hicannif(hicann_nr);
+			jtag->K7FPGA_disable_hicannif_config_output();
+		}
+
+		// proceed only on available HICANNs (relevant e.g. on Cube setup!)
+		if (!hicann[hicann_nr])
+			continue;
+
 		log(Logger::DEBUG0) << "S2C_JtagPhys::Init: set hicann_pos to " << hicann_nr;
 		jtag->set_hicann_pos(dnc2jtag(hicann_nr));
+
+		if (!link_states[hicann_nr]) {
+			log(Logger::WARNING) << "Disabling DNC interface of HICANN on channel: " << hicann_nr;
+			jtag->HICANN_set_reset(0);
+		}
 
 		// set timeouts
 		log(Logger::DEBUG0) << "S2C_JtagPhys2Fpga::Init: Setting timeout values for HICANN no. " << hicann_nr << " via JTAG..." << flush;
@@ -653,9 +685,9 @@ void S2C_JtagPhys2Fpga::trigger_experiment(unsigned int const fpga_ip, bool cons
 }
 
 // Kintex7-specific functions
-bool S2C_JtagPhys2Fpga::fpga_hicann_init(std::bitset<8> hicann)
+std::bitset<8> S2C_JtagPhys2Fpga::fpga_hicann_init(std::bitset<8> hicann)
 {
-	log(Logger::INFO) << "Called S2C_JtagPhys2Fpga::fpga_hicann_init" << flush;
+	log(Logger::INFO) << "S2C_JtagPhys2Fpga::fpga_hicann_init(" << hicann.to_string() << ")" << flush;
 
 	uint64_t jtagid;
 	jtag->read_id(jtagid, jtag->pos_fpga);
@@ -721,18 +753,14 @@ bool S2C_JtagPhys2Fpga::fpga_hicann_init(std::bitset<8> hicann)
           ++k;
         }
 
-        if (k==10)
-        {
-            log(Logger::WARNING) << "Highspeed init for HICANN " << hicannnr << " (highspeed-ID) failed.";
-            return false;
-        }
+		if (k==10) {
+			log(Logger::WARNING) << "Highspeed init for HICANN " << hicannnr << " (highspeed-ID) failed.";
+			link_states[hicannnr] = false;
+		} else {
+			log(Logger::INFO) << "Highspeed init for HICANN " << hicannnr << " successful";
+			link_states[hicannnr] = true;
+		}
+    }
 
-        log(Logger::INFO) << "Highspeed init for HICANN " << hicannnr << " successful";
-
-	}
-
-	return true;
+	return link_states;
 }
-
-
-

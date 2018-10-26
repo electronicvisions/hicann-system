@@ -9,6 +9,8 @@
 using namespace facets;
 using namespace std;
 
+static log4cxx::LoggerPtr logger = log4cxx::Logger::getLogger("hicann-system.S2C_JtagPhys2FpgaArq");
+
 
 S2C_JtagPhys2FpgaArq::S2C_JtagPhys2FpgaArq(
 	CommAccess const& access,
@@ -55,6 +57,10 @@ S2C_JtagPhys2FpgaArq::Commstate S2C_JtagPhys2FpgaArq::Init(
 	S2C_JtagPhys2FpgaArq::Commstate returnval =
 		S2C_JtagPhys2Fpga::Init(hicann_jtag_nr, silent, force_highspeed_init, return_on_error);
 
+	if (link_states.none()) {
+		log(Logger::ERROR) << "Untested code path if no highspeed links are used." << endl;
+		throw std::runtime_error(std::string(__PRETTY_FUNCTION__) + ": Not implemented/untested code path.");
+	}
 	// enable FPGA ARQ (has been disabled during above init):
 	log(Logger::INFO) << "S2C_JtagPhys2FpgaArq::Init: Enabling HICANN-ARQ in FPGA";
 	set_fpga_reset(jtag->get_ip(), false, false, false, false, /*ARQ:*/ false);
@@ -68,22 +74,32 @@ S2C_JtagPhys2FpgaArq::Commstate S2C_JtagPhys2FpgaArq::Init(
 	return returnval;
 }
 
-
 S2C_JtagPhys2FpgaArq::Commstate S2C_JtagPhys2FpgaArq::Init(
 	std::bitset<8> hicann, bool silent, bool force_highspeed_init, bool return_on_error)
 {
+	return Init(hicann, hicann, silent, force_highspeed_init, return_on_error);
+}
+
+S2C_JtagPhys2FpgaArq::Commstate S2C_JtagPhys2FpgaArq::Init(
+	std::bitset<8> hicann, std::bitset<8> highspeed_hicann,
+	bool silent, bool force_highspeed_init, bool return_on_error)
+{
 	S2C_JtagPhys2FpgaArq::Commstate returnval =
-		S2C_JtagPhys2Fpga::Init(hicann, silent, force_highspeed_init, return_on_error);
+		S2C_JtagPhys2Fpga::Init(hicann, highspeed_hicann, silent, force_highspeed_init, return_on_error);
 
-	// enable FPGA ARQ (has been disabled during above init):
-	log(Logger::INFO) << "S2C_JtagPhys2FpgaArq::Init: Enabling HICANN-ARQ in FPGA";
-	set_fpga_reset(jtag->get_ip(), false, false, false, false, /*ARQ:*/ false);
-
-	// FIXME: make configurable
-	if (k7fpga)
-		jtag->K7FPGA_SetARQTimings(0xff, 0x0c8, 0x032);
-	else
-		jtag->SetARQTimings(0xff, 0x0c8, 0x032);
+	// maybe enable FPGA ARQ (has been disabled during above init):
+	if (link_states.none()) {
+		log(Logger::INFO) << "Not reenabling FPGAs HICANN-ARQ because we do not use highspeed links." << endl;
+	} else {
+		// FIXME: Here be per-chip reset toggeling...
+		log(Logger::INFO) << "Reenabling FPGAs HICANN-ARQ." << endl;
+		set_fpga_reset(jtag->get_ip(), false, false, false, false, /*ARQ:*/ false);
+		// FIXME: make configurable
+		if (k7fpga)
+			jtag->K7FPGA_SetARQTimings(0xff, 0x0c8, 0x032);
+		else
+			jtag->SetARQTimings(0xff, 0x0c8, 0x032);
+	}
 
 	return returnval;
 }
@@ -129,8 +145,13 @@ void S2C_JtagPhys2FpgaArq::trigger_experiment(
 }
 
 
-int S2C_JtagPhys2FpgaArq::issueCommand(uint hicann_nr, uint tagid, ci_payload* data, uint /*del*/)
+int S2C_JtagPhys2FpgaArq::issueCommand(uint hicann_nr, uint tagid, ci_payload* data, uint del)
 {
+	if (!link_states[jtag2dnc(hicann_nr)]) {
+		LOG4CXX_DEBUG(logger, "diverting issueCommand to JTAG-based HICANN-ARQ");
+		return S2C_JtagPhys2Fpga::issueCommand(hicann_nr, tagid, data, del);
+	}
+
 	// clang-format off
 	hostalctrl.addHICANNConfigBulk(
 		/* 64 bit "payload": */
@@ -154,6 +175,11 @@ int S2C_JtagPhys2FpgaArq::issueCommand(uint hicann_nr, uint tagid, ci_payload* d
 
 int S2C_JtagPhys2FpgaArq::recvData(uint hicann_nr, uint tagid, ci_payload* data)
 {
+	if (!link_states[jtag2dnc(hicann_nr)]) {
+		LOG4CXX_DEBUG(logger, "diverting recvData to JTAG-based HICANN-ARQ");
+		return S2C_JtagPhys2Fpga::recvData(hicann_nr, tagid, data);
+	}
+
 	// we have to flush all the write commands first
 	Flush();
 	uint64_t tmp = 0;
@@ -166,22 +192,6 @@ int S2C_JtagPhys2FpgaArq::recvData(uint hicann_nr, uint tagid, ci_payload* data)
 	data->addr = (tmp >> 32) & 0xffff;
 	data->data = static_cast<ci_data_t>(tmp);
 	return 1; // FIXME l1switch_control.cpp seems to be fubar?
-}
-
-
-S2C_JtagPhys2FpgaArq::Commstate S2C_JtagPhys2FpgaArq::Send(IData /*d*/, uint /*del*/)
-{
-	throw std::runtime_error(
-		std::string(__PRETTY_FUNCTION__) +
-		"User called software-arq stuff but this is ARQ-based comm");
-}
-
-
-S2C_JtagPhys2FpgaArq::Commstate S2C_JtagPhys2FpgaArq::Receive(IData& /*d*/)
-{
-	throw std::runtime_error(
-		std::string(__PRETTY_FUNCTION__) +
-		"User called software-arq stuff but this is ARQ-based comm");
 }
 
 namespace facets {

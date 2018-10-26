@@ -72,19 +72,11 @@ void ReticleControl::init(bool on_wafer = true)
 	access.reset(new CommAccess(connid, pmu_ip));
 
 	if (arq_mode) {
-		LOG4CXX_INFO(logger, "Activating HostARQ communication mode");
+		LOG4CXX_INFO(logger, "Activating HICANN-ARQ communication mode");
 		model = jtag_eth_fpga_arq;
-	} else { // very ugly too
-		LOG4CXX_ERROR(logger, "Non HostARQ communication not supported!");
-		if (gigabit_on)
-			model = jtag_wafer_fpga;
-		else
-			model = jtag_wafer;
+	} else {
+		throw std::runtime_error("The non-ARQ communication mode is not compatible with ReticleControl");
 	}
-	assert(
-		(model == jtag_eth_fpga_arq) &&
-		"The communication mode is not compatible with ReticleControl");
-
 
 	jtag.reset(new myjtag_full(true, /*dnc?*/ !kintex, physically_available_hicanns, 0, kintex));
 	if (!jtag->initJtag(jtag_lib_v2::JTAG_ETHERNET))
@@ -124,8 +116,8 @@ void ReticleControl::init(bool on_wafer = true)
 		if (!jtag->initJtagV2(p_hostarq, jtag_frequency_in_kHz)) {
 			throw std::runtime_error("JTAG init failed!");
 		}
+		LOG4CXX_INFO(logger, "Initialized JTAG (over Host-ARQ) communication");
 
-		LOG4CXX_INFO(logger, "Initialized JTAG over ARQ communication");
 		jtag_p2f.reset(new S2C_JtagPhys2FpgaArq(
 			*access.get(), jtag.get(), on_wafer, jtag_port - 1700, p_hostarq, kintex));
 		comm = jtag_p2f.get();
@@ -151,14 +143,14 @@ ReticleControl::ReticleControl(
     uint16_t port,
     FPGAConnectionId::IPv4 const pmu_ip,
     std::bitset<8> physically_available_hicanns,
-    bool gigabit_on,
+    std::bitset<8> highspeed_hicanns,
     bool on_wafer,
     bool _arq_mode,
     bool _kintex)
     : Stage2Ctrl(NULL, 0),
       physically_available_hicanns(physically_available_hicanns),
+      highspeed_hicanns(highspeed_hicanns),
       pmu_ip(pmu_ip),
-      gigabit_on(gigabit_on),
       on_wafer(on_wafer),
       arq_mode(_arq_mode),
       kintex(_kintex)
@@ -303,20 +295,21 @@ bool ReticleControl::hicannInit(uint hicann_nr, bool silent, bool return_on_erro
 	return success;
 }
 
-bool ReticleControl::hicannInit(std::bitset<8> hicann, bool silent, bool return_on_error)
+bool ReticleControl::hicannInit(std::bitset<8> hicann, std::bitset<8> highspeed_hicann, bool silent, bool return_on_error)
 {
 	bool success = true;
 
-	if (comm->Init(hicann, /*silent*/ silent, /*force_highspeed_init*/ false, return_on_error) !=
+	if (comm->Init(hicann, highspeed_hicann, /*silent*/ silent, /*force_highspeed_init*/ false, return_on_error) !=
 		Stage2Comm::ok) {
 		LOG4CXX_WARN(
-			logger, "Reticle (" << x << "," << y << ")::HICANNs " << hicann.to_string()
-								<< " Init Failed. ");
+			logger, "Reticle (" << x << "," << y << ")::HICANNs " << hicann.to_string() <<
+			" (HS: " << highspeed_hicanns.to_string() << ") Init Failed. ");
 		success = false;
 	} else {
 		LOG4CXX_INFO(
 			logger,
-			"Reticle (" << x << "," << y << ")::HICANNs " << hicann.to_string() << " Init OK. ");
+			"Reticle (" << x << "," << y << ")::HICANNs " << hicann.to_string() <<
+			" (HS: " << highspeed_hicanns.to_string() << ") Init OK. ");
 		for (size_t i = 0; i < hicann.size(); ++i) {
 			if (hicann[i])
 				set_used_hicann(i, true);

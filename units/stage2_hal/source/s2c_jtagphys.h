@@ -45,6 +45,7 @@ public:
 	virtual Commstate Receive(IData &data); 
 
 	virtual Commstate Init(std::bitset<8> hicann, bool silent=false, bool force_highspeed_init=false, bool return_on_error=false); //configures HICANN for jtag_multi communication
+	virtual Commstate Init(std::bitset<8> hicann, std::bitset<8> highspeed_hicann, bool silent=false, bool force_highspeed_init=false, bool return_on_error=false);
 	virtual Commstate Init(int hicann_jtag_nr, bool silent=false, bool force_highspeed_init=false, bool return_on_error=false); //configures HICANN for jtag_multi communication
 };
 

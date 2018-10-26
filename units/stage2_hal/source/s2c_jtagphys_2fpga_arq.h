@@ -37,12 +37,16 @@ public:
 		bool force_highspeed_init = false,
 		bool return_on_error = false); // added hostal init
 	Commstate Init(
+		std::bitset<8> hicann,
+		std::bitset<8> highspeed_hicann,
+		bool silent = false,
+		bool force_highspeed_init = false,
+		bool return_on_error = false);
+	Commstate Init(
 		int hicann_nr,
 		bool silent = false,
 		bool force_highspeed_init = false,
 		bool return_on_error = false);                    // deprecated stuff
-	Commstate Send(IData data = emptydata, uint del = 0); // disabled (sw-arq stuff)
-	Commstate Receive(IData& data);                       // disabled  (sw-arq stuff)
 	Commstate Flush(void);
 	Commstate Clear(void);
 

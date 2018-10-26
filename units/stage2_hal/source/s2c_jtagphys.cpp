@@ -66,7 +66,19 @@ S2C_JtagPhys::Commstate S2C_JtagPhys::Init(int hicann_jtag_nr, bool silent, bool
 	return S2C_JtagPhys::Init(hicann, silent, force_highspeed_init, return_on_error);
 }
 
-
+S2C_JtagPhys::Commstate S2C_JtagPhys::Init(
+    std::bitset<8> hicann,
+    std::bitset<8> /*highspeed_hicann*/,
+    bool silent,
+    bool force_highspeed_init,
+    bool return_on_error)
+{
+	if (!silent) {
+		log(Logger::INFO)
+		    << "S2C_JtagPhys::Init: Called with highspeed_hicann parameter... ignoring." << flush;
+	}
+	return Init(hicann, silent, force_highspeed_init, return_on_error);
+}
 
 // initializes jtag_multi, but no high-speed. if "silent==true" => put no info on screen except errors to increase readability
 // variable hicann contains DNC highspeed channel numbers

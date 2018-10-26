@@ -122,6 +122,8 @@ public:
 
 	// initialize communication subsystem, set up all hardware in the comm chain
 	virtual Commstate Init(std::bitset<8> hicann, bool silent=false, bool force_highspeed_init=false, bool return_on_error=false) = 0; //configures HICANN for jtag_multi communication
+	// initialize communication subsystem, set up all hardware in the comm chain, only use a selection of highspeed links
+	virtual Commstate Init(std::bitset<8> hicann, std::bitset<8> highspeed_hicann, bool silent=false, bool force_highspeed_init=false, bool return_on_error=false) = 0;
 	virtual Commstate Init(int hicann_nr=-1, bool silent=false, bool force_highspeed_init=false, bool return_on_error=false) = 0; //can be used to add bus-dependent initializations
 	
 	/// set DAC
