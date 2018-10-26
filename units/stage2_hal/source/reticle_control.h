@@ -195,7 +195,8 @@ private:
 
 
 	//internal attributes of this instance
-	std::bitset<8> available_hicanns; //set of flags to indicate which hicanns are available (HS numbering!)
+	std::bitset<8> physically_available_hicanns; // set of flags to indicate which hicanns are
+	                                             // available (HS numbering!)
 	std::bitset<8> used_hicanns; //set of flags to indicate HICANNs in use (JTAG numbering!)
 	reticle reticle_info;    //reticle information in struct form
 
@@ -203,7 +204,7 @@ private:
 	FPGAConnectionId::IPv4::bytes_type fpga_ip;
 	FPGAConnectionId::IPv4 pmu_ip;
 	commodels model;
-	bool gigabit_on, arq_mode, kintex;
+	bool gigabit_on, on_wafer, arq_mode, kintex;
 	boost::scoped_ptr<CommAccess> access;
 
 public:
@@ -218,12 +219,17 @@ public:
 	boost::scoped_ptr<DNCControl>  dc;
 	boost::scoped_ptr<HicannCtrl>  hicann[8]; //array of max. 8 HICANN objects, JTAG Numbering
 
-	///constructor for the vertical setup: takes IP, number of HICANNs, whether highspeed should be on and if kintex or virtex fpga
-	ReticleControl(bool gigabit_on, ip_t _ip, std::bitset<8> available_hicann, bool _arq_mode=true, bool _kintex=false);
-
-	///constructor for single fpga on wafer: takes IP, and whether highspeed and arq should be on
-	ReticleControl(size_t seq_number, size_t pow_number, ip_t _ip, uint16_t port, FPGAConnectionId::IPv4 const _pmu_ip, bool gigabit_on, bool _arq_mode=true, bool _kintex=false);
-	// TODO: (shortterm) merge vertical RC + wafer RC for FPGA/PORT-based creation (add bool wafer parameter)
+	ReticleControl(
+	    size_t seq_number,
+	    size_t pow_number,
+	    ip_t _ip,
+	    uint16_t port,
+	    FPGAConnectionId::IPv4 const _pmu_ip,
+	    std::bitset<8> physically_available_hicanns,
+	    bool gigabit_on,
+	    bool on_wafer,
+	    bool _arq_mode = true,
+	    bool _kintex = true);
 
 	///destructor
 	~ReticleControl();

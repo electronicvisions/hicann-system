@@ -86,7 +86,7 @@ void ReticleControl::init(bool on_wafer = true)
 		"The communication mode is not compatible with ReticleControl");
 
 
-	jtag.reset(new myjtag_full(true, /*dnc?*/ !kintex, available_hicanns, 0, kintex));
+	jtag.reset(new myjtag_full(true, /*dnc?*/ !kintex, physically_available_hicanns, 0, kintex));
 	if (!jtag->initJtag(jtag_lib_v2::JTAG_ETHERNET))
 		throw std::runtime_error("JTAG open failed!");
 
@@ -135,67 +135,29 @@ void ReticleControl::init(bool on_wafer = true)
 	// available_hicanns represents the physical availabel hicanns in hs-channel numbering
 	// because JTAG address space is contiguous (indexing of hicann bitset) we use .count() (number
 	// of 1s)
-	for (uint i = 0; i < available_hicanns.count(); i++)
+	for (uint i = 0; i < physically_available_hicanns.count(); i++)
 		hicann[i].reset(new HicannCtrl(comm, i));
 	used_hicanns.reset(); // no HICANNs are in use
 }
 
-/// Used by VerticalSetupPowerBackend::SetupReticle
 ReticleControl::ReticleControl(
-	bool gigabit_on, ip_t _ip, std::bitset<8> available_hicann, bool _arq_mode, bool _kintex)
-	: Stage2Ctrl(NULL, 0),
-	  available_hicanns(available_hicann),
-	  gigabit_on(gigabit_on),
-	  arq_mode(_arq_mode),
-	  kintex(_kintex)
-{
-	LOG4CXX_INFO(
-		logger, "Creating ReticleControl instance for reticle " << _ip << " (vertical setup)");
-
-	// create fake reticle to comply with other functionality, set jtag port wether kintex (i.e.
-	// CubeSetup) is used
-	reticle temp = reticle(0, 0, cartesian_t(0, 0), _ip, (kintex ? 1700 : 1701), 0, 0);
-
-	bool already_existing = isInstantiated(temp.seq_number);
-	if (already_existing)
-		LOG4CXX_FATAL(logger, "Multiple instances for the same reticle are not allowed :P");
-
-	instantiated().insert(temp.seq_number);
-
-	// initializing all reticle-specific variables
-	jtag_port = temp.port;
-	x = temp.coord.x;
-	y = temp.coord.y;
-	fpga_ip[0] = _ip.a;
-	fpga_ip[1] = _ip.b;
-	fpga_ip[2] = _ip.c;
-	fpga_ip[3] = _ip.d;
-	s_number = temp.seq_number;
-	aoutput = temp.aout;
-	pic_num = temp.pic;
-
-	// initializing reticle info for the reticleIDclass
-	reticle_info = temp;
-
-	if (!already_existing)
-		init(/*on_wafer*/ false);
-}
-
-/// Used by WaferPowerBackend::SetupReticle
-ReticleControl::ReticleControl(
-	size_t seq_number,
-	size_t pow_number,
-	ip_t _ip,
-	uint16_t port,
-	FPGAConnectionId::IPv4 const pmu_ip,
-	bool gigabit_on,
-	bool _arq_mode,
-	bool _kintex)
-	: Stage2Ctrl(NULL, 0),
-	  pmu_ip(pmu_ip),
-	  gigabit_on(gigabit_on),
-	  arq_mode(_arq_mode),
-	  kintex(_kintex)
+    size_t seq_number,
+    size_t pow_number,
+    ip_t _ip,
+    uint16_t port,
+    FPGAConnectionId::IPv4 const pmu_ip,
+    std::bitset<8> physically_available_hicanns,
+    bool gigabit_on,
+    bool on_wafer,
+    bool _arq_mode,
+    bool _kintex)
+    : Stage2Ctrl(NULL, 0),
+      physically_available_hicanns(physically_available_hicanns),
+      pmu_ip(pmu_ip),
+      gigabit_on(gigabit_on),
+      on_wafer(on_wafer),
+      arq_mode(_arq_mode),
+      kintex(_kintex)
 {
 	LOG4CXX_INFO(
 		logger, "Creating ReticleControl instance for reticle IP/FPGA "
@@ -210,7 +172,6 @@ ReticleControl::ReticleControl(
 		LOG4CXX_FATAL(logger, "Multiple instances for the same reticle are not allowed :P");
 
 	instantiated().insert(temp.seq_number);
-	available_hicanns.set();
 	// initializing all reticle-specific variables
 	x = temp.coord.x;
 	y = temp.coord.y;
@@ -227,13 +188,13 @@ ReticleControl::ReticleControl(
 	reticle_info = temp;
 
 	if (!already_existing)
-		init(/*on_wafer*/ true);
+		init(on_wafer);
 }
 
 ReticleControl::~ReticleControl()
 {
 	LOG4CXX_INFO(logger, "Deleting ReticleControl instance for reticle (" << x << "," << y << ")");
-	comm->reset_hicann_arq(available_hicanns);
+	comm->reset_hicann_arq(physically_available_hicanns);
 	if (!(instantiated().erase(s_number))) {
 		LOG4CXX_ERROR(
 			logger,
@@ -372,7 +333,7 @@ bitset<8> ReticleControl::get_used_hicanns()
 
 uint8_t ReticleControl::hicann_number()
 {
-	return available_hicanns.count();
+	return physically_available_hicanns.count();
 }
 
 FPGAConnectionId::IPv4::bytes_type const ReticleControl::get_fpga_ip() const
