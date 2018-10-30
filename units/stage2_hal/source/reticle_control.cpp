@@ -90,12 +90,16 @@ void ReticleControl::init(bool on_wafer = true)
 	if (!jtag->initJtag(jtag_lib_v2::JTAG_ETHERNET))
 		throw std::runtime_error("JTAG open failed!");
 
-	mLog(Logger::INFO) << "Setting JTAG frequency to 10000 kHz" << Logger::flush;
+	// Connectors on cube setup are not as robust as elastomeric connectors on wafer systems
+	// -> reduced JTag frequency for cube setups
+	size_t const jtag_frequency_in_kHz = on_wafer ? 10000 : 750;
+
+	LOG4CXX_DEBUG(logger, "Setting JTAG frequency to " << jtag_frequency_in_kHz << " kHz");
 
 	if (model == jtag_wafer_fpga) {
 		if (!jtag->initJtagV2(
-				jtag->ip_number(fpga_ip[0], fpga_ip[1], fpga_ip[2], fpga_ip[3]), jtag_port,
-				/* speed */ 10000)) {
+		        jtag->ip_number(fpga_ip[0], fpga_ip[1], fpga_ip[2], fpga_ip[3]), jtag_port,
+		        jtag_frequency_in_kHz)) {
 			throw std::runtime_error("JTAG init failed!");
 		}
 
@@ -117,7 +121,7 @@ void ReticleControl::init(bool on_wafer = true)
 			tmp.to_string(), "192.168.1.2", /*listen port*/ 1234, tmp.to_string().c_str(),
 			/*target port*/ 1234));
 #endif
-		if (!jtag->initJtagV2(p_hostarq, /*speed*/ 10000)) {
+		if (!jtag->initJtagV2(p_hostarq, jtag_frequency_in_kHz)) {
 			throw std::runtime_error("JTAG init failed!");
 		}
 
