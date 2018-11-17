@@ -1030,8 +1030,9 @@ uint16_t jtag_lib_v2::jtag_ethernet::receiveData(const uint16_t uiLength)
 		std::chrono::duration<int, std::micro> timeout(ARQ_JTAG_TIMEOUT);
 		while (!m_pARQStream->received_packet_available()) {
 			if ((std::chrono::steady_clock::now() - start_wait) > timeout) {
-				std::stringstream debug_msg;
-				throw std::runtime_error("No JTAG response received.");
+				throw std::runtime_error(
+				    "No JTAG response received after timeout of " +
+				    std::to_string(timeout.count()) + " us: " + m_pARQStream->get_remote_ip());
 			}
 
 
