@@ -797,21 +797,21 @@ uint64_t HostALController::getReceivedHICANNConfig(
 			if (accumulated_sleep > 100000) { // previous max wait time
 				// Ensure to log this in syslog by using error
 				LOG4CXX_ERROR(
-					logger, "HostALController::getReceivedHICANNConfig() ["
-								<< target_ip << ":" << target_port
-								<< "]: "
-								   "No data in receive buffer "
-								<< curr_id << " after waiting " << accumulated_sleep << "us.");
+				    logger, "HostALController::getReceivedHICANNConfig() ["
+				                << arq_ptr->get_remote_ip() << ":" << target_port
+				                << "]: "
+				                   "No data in receive buffer "
+				                << curr_id << " after waiting " << accumulated_sleep << " us.");
 			}
 			break;
 		}
 
 		if (accumulated_sleep > timeout * 1000) {
 			LOG4CXX_ERROR(
-				logger,
-				"HostALController::getReceivedHICANNConfig: No config packet received for DNC "
-					<< dnc << ", HICANN " << hicann << " after waiting " << accumulated_sleep
-					<< ". Return 0.");
+			    logger, "HostALController::getReceivedHICANNConfig ["
+			                << arq_ptr->get_remote_ip() << ":" << target_port
+			                << "]: No config packet received for DNC " << dnc << ", HICANN "
+			                << hicann << " after waiting " << accumulated_sleep << " us.");
 #ifndef NCSIM
 			LOG4CXX_FATAL(
 				logger, "HostALController::getReceivedHICANNConfig() ["
