@@ -19,13 +19,6 @@
 
 #include "logger.h"      // global logging class
 
-// no logging during simulation
-#ifndef NCSIM
-#include "traffic_logger.h"
-// object to log traffic
-static CtrlModTrafficLogger ethbuffer;
-#endif
-
 using namespace facets;
 using namespace std;
 
@@ -63,9 +56,6 @@ int CtrlModule::write_cmd(ci_addr_t a, ci_data_t d, uint del){
 	senddata.write = 1;
 	senddata.addr  = a+startaddr();
 	senddata.data  = d;
-#ifndef NCSIM
-	ethbuffer.update(sizeof(senddata));
-#endif
 	return s2c->issueCommand(&senddata, _tagid, del);
 }
 
@@ -74,9 +64,6 @@ int CtrlModule::read_cmd(ci_addr_t a, uint del){
 	senddata.write = 0;
 	senddata.addr  = a+startaddr();
 	senddata.data  = 0x1 << 31; // encode read command as documented in "Ansteuerung des HICANN chips via JTAG/DNC" by Stefan Philipp
-#ifndef NCSIM
-	ethbuffer.update(sizeof(senddata));
-#endif
 	return s2c->issueCommand(&senddata, _tagid, del);
 }
 

@@ -39,10 +39,6 @@ extern "C" {
 #ifndef NCSIM
 #include <chrono>
 static log4cxx::LoggerPtr logger = log4cxx::Logger::getLogger("hicann-system.HostAL");
-// no logging during simulation
-#include "traffic_logger.h"
-// object to log traffic
-static CtrlModTrafficLogger ethbuffer;
 #endif
 
 HostALController::HostALController()
@@ -218,7 +214,6 @@ bool HostALController::sendSingleFrame(
 	}
 
 #ifndef NCSIM
-	ethbuffer.update(curr_pck.size());
 	// JP: Not needed for simulation, as trigger_send is called in separate thread
 	this->arq_ptr->trigger_send();
 #endif
@@ -968,9 +963,6 @@ void HostALController::fill_receive_buffer(bool /*with_jtag*/)
 	static size_t pck_count = 0;
 	sctrltp::packet curr_pck;
 	while (arq_ptr->receive(curr_pck)) {
-#ifndef NCSIM
-		ethbuffer.update(curr_pck.size());
-#endif
 		pck_count++;
 
 		LOG4CXX_DEBUG(
