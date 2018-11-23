@@ -754,8 +754,8 @@ uint64_t HostALController::getReceivedHICANNConfig(
 	size_t accumulated_sleep = 0;
 
 	// sleep timings in us (back-off to longer times; don't use >= 1s!)
-	std::tr1::array<size_t, 9> const sleep_intervals = {5,    10,    100,    500,   1000,
-														5000, 10000, 100000, 500000};
+	std::tr1::array<size_t, 10> const sleep_intervals = {5,    10,    100,   500,    1000,
+	                                                     5000, 10000, 50000, 100000, 500000};
 
 	// sleep if nothing received
 	for (size_t sleep_interval_idx = 0; hiconf_receive_buffer.at(curr_id).size() == 0;) {
@@ -796,7 +796,8 @@ uint64_t HostALController::getReceivedHICANNConfig(
 				                << arq_ptr->get_remote_ip() << ":" << target_port
 				                << "]: "
 				                   "No data in receive buffer "
-				                << curr_id << " after waiting " << accumulated_sleep << " us.");
+				                << curr_id << " after waiting " << accumulated_sleep
+				                << " us. Cf. #2354");
 			}
 			break;
 		}
