@@ -34,7 +34,6 @@
 
 
 /** Class for reticle management: power control, neighbor reticle communication,
- *  coordinate system conversion: power coordinates / wafer x,y coordinates etc,
  *  ressources management and so on...
  */
 
@@ -47,31 +46,6 @@ class DNCControl;
 
 class ReticleControl: public Stage2Ctrl {
 public:
-	enum IDtype {sequentialnumber, powernumber, cartesiancoord, fpgaip, udpport, analogoutput, picnumber, all};
-
-	struct cartesian_t{ //(x,y) cartesian coordinates type
-		uint x, y;
-
-		cartesian_t(uint _x=0, uint _y=0): x(_x), y(_y) {}
-
-		friend std::ostream& operator<<(std::ostream& os, const cartesian_t& coord){
-			os << "(" << coord.x << "," << coord.y << ")";
-			return os;
-		}
-
-		bool operator==(const cartesian_t& comp) const { return (x==comp.x && y==comp.y); }
-		// temporary? return !(*this==comp);
-		bool operator!=(const cartesian_t& comp) const { return !(cartesian_t(x,y)==comp); }
-		// why not without branching? return (x < comp.x) || ((x==comp.x) && (y < comp.y));
-		bool operator<(const cartesian_t& comp)  const { if (x==comp.x) return (y<comp.y); else return (x<comp.x); }
-		// return (*this != comp) && !(*this < comp);
-		bool operator>(const cartesian_t& comp)  const { if (x==comp.x) return (y>comp.y); else return (x>comp.x); }
-		// return (*this == comp) || (*this < comp);
-		bool operator<=(const cartesian_t& comp) const { if (x==comp.x) return (y<=comp.y); else return (x<=comp.x); }
-		// return (*this == comp) || (*this > comp);
-		bool operator>=(const cartesian_t& comp) const { if (x==comp.x) return (y>=comp.y); else return (x>=comp.x); }
-	};
-	
 	struct ip_t{ //IP type
 		uint a, b, c, d;
 
@@ -123,30 +97,6 @@ public:
 		}
 	};
 
-	struct reticle {        ///info container for a reticle
-		uint seq_number;    //sequential number: only existing reticles are in the list (left->right, top->bottom)
-		uint pow_number;    //number of the power distribution unit (system PCB)
-		cartesian_t coord;  //cartesian coordinates of the reticle (x,y)=(left->right, top->bottom)
-		ip_t ip;            //IP address of the FPGA board
-		uint port;          //UDP port for ETH<->JTAG communication
-		uint aout;          //analog output number (ADC address) - to be implemented
-		uint pic;           //PIC number for power controlling
-
-		reticle(uint _seq_number=0, uint _pow_number=0, cartesian_t _coord=cartesian_t(0,0), ip_t _ip=ip_t(0,0,0,0), uint _port=0, uint _aout=0, uint _pic=0) :
-			seq_number(_seq_number), pow_number(_pow_number), coord(_coord), ip(_ip), port(_port), aout(_aout), pic(_pic) {}
-
-		friend std::ostream& operator<<(std::ostream& os, const reticle& r) { //output operator
-			 os << "Sequential number: " << r.seq_number << ", \tPower number: " << r.pow_number <<
-				", \tCartesian coordinates: " << r.coord << ", \tAout number: " << r.aout <<
-				", \tFPGA IP: " << r.ip << ":" << r.port << ", \tPIC number: " << r.pic << std::endl;
-			return os;
-		}
-
-		operator bool(){ //enables reticle to be evaluated as a bool type. True if any coordinate is !=0
-			return (seq_number || pow_number || coord.x || coord.y || aout || ip.a || ip.b || ip.c || ip.d || port || pic);
-		}
-	};
-
 private:
 	/// common initialization stuff (called from all ctors)
 	void init(bool on_wafer);
@@ -154,54 +104,13 @@ private:
 
 	static std::multiset<uint> & instantiated();    //stores info if an instance is already created for a reticle
 
-	//class for return-type overloading using cast operator: returns a coordinate in desired format
-	class reticleIDclass{
-	public:
-		reticleIDclass(ReticleControl::reticle ret, ReticleControl::IDtype _id){
-			id=_id;
-			this_reticle=ret;
-
-			switch (_id){
-				case ReticleControl::sequentialnumber: {returnvalue_uint = this_reticle.seq_number;} break;
-				case ReticleControl::powernumber:      {returnvalue_uint = this_reticle.pow_number;} break;
-				case ReticleControl::udpport:          {returnvalue_uint = this_reticle.port;} break;
-				case ReticleControl::analogoutput:     {returnvalue_uint = this_reticle.aout;} break;
-				case ReticleControl::picnumber:        {returnvalue_uint = this_reticle.pic;} break;
-				case ReticleControl::cartesiancoord:   {returnvalue_cart = this_reticle.coord;} break;
-				case ReticleControl::fpgaip:           {returnvalue_ip   = this_reticle.ip;} break;
-				case ReticleControl::all:              break;
-			}
-		}
-
-		operator uint(){
-			return returnvalue_uint;
-		}
-
-		operator ReticleControl::cartesian_t(){
-			return returnvalue_cart;
-		}
-
-		operator ReticleControl::ip_t(){
-			return returnvalue_ip;
-		}
-
-	private:
-		ReticleControl::reticle this_reticle;
-		ReticleControl::IDtype id;
-		uint returnvalue_uint;
-		ReticleControl::cartesian_t returnvalue_cart;
-		ReticleControl::ip_t returnvalue_ip;
-	};
-
-
 	//internal attributes of this instance
 	std::bitset<8> physically_available_hicanns; // set of flags to indicate which hicanns are
 	                                             // available (HS numbering!)
 	std::bitset<8> used_hicanns; //set of flags to indicate HICANNs in use (JTAG numbering!)
 	std::bitset<8> highspeed_hicanns; //set of flags to indicate which hicanns are available via high-speed (HS numbering!)
-	reticle reticle_info;    //reticle information in struct form
 
-	uint x, y, p_number, s_number, jtag_port, aoutput, pic_num;
+	uint s_number, jtag_port;
 	FPGAConnectionId::IPv4::bytes_type fpga_ip;
 	FPGAConnectionId::IPv4 pmu_ip;
 	commodels model;
@@ -222,7 +131,6 @@ public:
 
 	ReticleControl(
 	    size_t seq_number,
-	    size_t pow_number,
 	    ip_t _ip,
 	    uint16_t port,
 	    FPGAConnectionId::IPv4 const _pmu_ip,
@@ -246,10 +154,6 @@ public:
 
 	///prints out attributes of this instance
 	void printThisReticle();
-
-	///returns IDtype of this reticle in the right type, REUQUIRES EXPLICIT CASTING to the desired type!
-	///e.g. cartesian_t example=reticleID(id)
-	reticleIDclass reticleID(IDtype id) const;
 
 	///prints the sequence numbers of already instantiated reticles
 	static void printInstantiated();
@@ -279,9 +183,5 @@ public:
 	uint8_t hicann_number();
 
 	FPGAConnectionId::IPv4::bytes_type const get_fpga_ip() const;
-
-	/// get the id of DNC with respect to its fpga, to which this reticle connects (range: 0-3)
-	/// currently this is detected from the jtag port
-	uint8_t get_fpga_dnc_channel_id() const;
 };
 }  //end of namespace facets

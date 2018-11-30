@@ -138,7 +138,6 @@ void ReticleControl::init(bool on_wafer = true)
 
 ReticleControl::ReticleControl(
     size_t seq_number,
-    size_t pow_number,
     ip_t _ip,
     uint16_t port,
     FPGAConnectionId::IPv4 const pmu_ip,
@@ -161,27 +160,19 @@ ReticleControl::ReticleControl(
 					<< _ip.c << ") port " << port);
 
 	// create fake reticle to comply with other functionality
-	reticle temp = reticle(seq_number, pow_number, cartesian_t(0, 0), _ip, port, 0, 0);
 
-	bool already_existing = isInstantiated(temp.seq_number);
+	bool already_existing = isInstantiated(seq_number);
 	if (already_existing)
 		LOG4CXX_FATAL(logger, "Multiple instances for the same reticle are not allowed :P");
 
-	instantiated().insert(temp.seq_number);
+	instantiated().insert(seq_number);
 	// initializing all reticle-specific variables
-	x = temp.coord.x;
-	y = temp.coord.y;
 	fpga_ip[0] = _ip.a;
 	fpga_ip[1] = _ip.b;
 	fpga_ip[2] = _ip.c;
 	fpga_ip[3] = _ip.d;
 	jtag_port = port;
-	s_number = temp.seq_number;
-	aoutput = temp.aout;
-	pic_num = temp.pic;
-
-	// initializing reticle info for the reticleIDclass
-	reticle_info = temp;
+	s_number = seq_number;
 
 	if (!already_existing)
 		init(on_wafer);
@@ -189,12 +180,12 @@ ReticleControl::ReticleControl(
 
 ReticleControl::~ReticleControl()
 {
-	LOG4CXX_INFO(logger, "Deleting ReticleControl instance for reticle (" << x << "," << y << ")");
+	LOG4CXX_INFO(logger, "Deleting ReticleControl instance for reticle (" << s_number << ")");
 	comm->reset_hicann_arq(physically_available_hicanns);
 	if (!(instantiated().erase(s_number))) {
 		LOG4CXX_ERROR(
 			logger,
-			"There was a collision with reticle instances (" << x << "," << y << ") at destructor");
+			"There was a collision with reticle instances (" << s_number << ") at destructor");
 		LOG4CXX_WARN(logger, "Active reticle instances:");
 		if (instantiated().empty()) {
 			LOG4CXX_WARN(logger, "No reticles have been instantiated so far")
@@ -207,7 +198,7 @@ ReticleControl::~ReticleControl()
 			LOG4CXX_WARN(logger, msg.str());
 		}
 	}
-	LOG4CXX_DEBUG(logger, "Deleted ReticleControl instance for reticle (" << x << "," << y << ")");
+	LOG4CXX_DEBUG(logger, "Deleted ReticleControl instance for reticle (" << s_number << ")");
 }
 
 void ReticleControl::switchVerticalPower(bool state){
@@ -248,15 +239,9 @@ void ReticleControl::setVoh(float voh)
 
 void ReticleControl::printThisReticle(){
 	cout << "Attributes of this reticle:" << endl;
-	cout << "Sequential number: " << s_number << ", \tPower number: " << p_number
-		 << ", \tCartesian coordinates: (" << x << "," << y << "), \tAout number: " << aoutput
+	cout << "Sequential number: " << s_number
 		 << ", \tFPGA IP: " << fpga_ip[0] << "." << fpga_ip[1] << "." << fpga_ip[2] << "."
-		 << fpga_ip[3] << ":" << jtag_port << ", \tPIC: " << pic_num << endl;
-}
-
-ReticleControl::reticleIDclass ReticleControl::reticleID(ReticleControl::IDtype id) const
-{
-	return reticleIDclass(reticle_info, id);
+		 << fpga_ip[3] << ":" << jtag_port << endl;
 }
 
 void ReticleControl::printInstantiated()
@@ -284,11 +269,11 @@ bool ReticleControl::hicannInit(uint hicann_nr, bool silent, bool return_on_erro
 			comm->dnc2jtag(hicann[hicann_nr]->addr()), /*silent*/ silent,
 			/*force_highspeed_init*/ false, return_on_error) != Stage2Comm::ok) {
 		LOG4CXX_WARN(
-			logger, "Reticle (" << x << "," << y << ")::HICANN " << hicann_nr << " Init Failed. ");
+			logger, "Reticle (" << s_number << ")::HICANN " << hicann_nr << " Init Failed. ");
 		success = false;
 	} else {
 		LOG4CXX_INFO(
-			logger, "Reticle (" << x << "," << y << ")::HICANN " << hicann_nr << " Init OK. ");
+			logger, "Reticle (" << s_number << ")::HICANN " << hicann_nr << " Init OK. ");
 		set_used_hicann(hicann_nr, true);
 	}
 
@@ -302,13 +287,13 @@ bool ReticleControl::hicannInit(std::bitset<8> hicann, std::bitset<8> highspeed_
 	if (comm->Init(hicann, highspeed_hicann, /*silent*/ silent, /*force_highspeed_init*/ false, return_on_error) !=
 		Stage2Comm::ok) {
 		LOG4CXX_WARN(
-			logger, "Reticle (" << x << "," << y << ")::HICANNs " << hicann.to_string() <<
+			logger, "Reticle (" << s_number << ")::HICANNs " << hicann.to_string() <<
 			" (HS: " << highspeed_hicanns.to_string() << ") Init Failed. ");
 		success = false;
 	} else {
 		LOG4CXX_INFO(
 			logger,
-			"Reticle (" << x << "," << y << ")::HICANNs " << hicann.to_string() <<
+			"Reticle (" << s_number << ")::HICANNs " << hicann.to_string() <<
 			" (HS: " << highspeed_hicanns.to_string() << ") Init OK. ");
 		for (size_t i = 0; i < hicann.size(); ++i) {
 			if (hicann[i])
@@ -336,13 +321,4 @@ uint8_t ReticleControl::hicann_number()
 FPGAConnectionId::IPv4::bytes_type const ReticleControl::get_fpga_ip() const
 {
 	return fpga_ip;
-}
-
-uint8_t ReticleControl::get_fpga_dnc_channel_id() const
-{
-	uint8_t tmp = jtag_port - 1700;
-	if (tmp > 3)
-		throw logic_error("ReticleControl::get_fpga_dnc_channel_id(): jtag_port is not in range "
-						  "[1700, 1703]. Unable to detect FPGA-DNC channel");
-	return tmp;
 }
