@@ -25,10 +25,6 @@ S2C_TcpIp->Stage2Comm)
 
 #include <boost/program_options.hpp>
 
-#ifdef MPIMODE
-#include <boost/mpi/environment.hpp>
-#endif
-
 #include "common.h" // common library includes etc.
 #include "s2_types.h"
 #include "s2c_jtagphys.h"
@@ -105,9 +101,6 @@ uint randomseed = 42;
 
 int main(int argc, char* argv[])
 {
-#ifdef MPIMODE
-	boost::mpi::environment env(argc, argv);
-#endif
 
 	enum options
 	{

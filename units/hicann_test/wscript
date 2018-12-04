@@ -24,10 +24,6 @@ def options(ctx):
             action='store_true', default=False, dest='experiment',
             help='Enable build of RCF tests2/experiment starter')
 
-    hopts.add_option('--with-mpi',
-            action='store_true', default=False, dest='mpimode',
-            help='Enable build of MPI stuff')
-
     ctx.load('compiler_cxx')
     ctx.load('boost')
     ctx.load('gtest')
@@ -42,11 +38,8 @@ def configure(ctx):
 
     ctx.env.tests2     = Options.options.tests2
     ctx.env.experiment = Options.options.experiment
-    ctx.env.mpimode    = Options.options.mpimode
 
     ctx.check_boost(lib='system program_options', uselib_store='BOOST4TESTS2')
-    if ctx.env.mpimode:
-        ctx.check_boost(lib='mpi', uselib_store='BOOST4S2HALMPI')
 
     ctx.check_cfg(package='libusb-1.0', args=['--cflags', '--libs'], uselib_store='USB')
 
@@ -66,8 +59,6 @@ def build(ctx):
         tmecm_pbmemtraceloop.cpp tmecm_hicannreads.cpp tm_arq_burnin_parallel.cpp tmcm_hostarq_loopback.cpp tm_empty.cpp \
         tm_neuronctrlv2.cpp tmsubm2_stdpctrl.cpp tm_hicann_sram_reset.cpp tmcm_fpgastats.cpp tmcm_perftest.cpp
     '''.split()
-
-    MPISOURCES = ['tm_sysbench.cpp', 'tmss_jtagidreadout.cpp']
 
     ctx(
         # uh, ugly shit - global namespace but very unglobal name here...
@@ -105,16 +96,6 @@ def build(ctx):
             use             = [ 'test_inc', 'hicann_cfg_inc', 'BOOST4TESTS2', 's2hal_obj', 'measure_obj', 'rcf-boost-only', 'git_version.h' , 'sctrl_inc', 'arqstream_obj' ],
         )
 
-    if ctx.env.mpimode:
-        ctx.objects (
-            target          = 'tests2mpi_obj',
-            source          = [ 'source/tests2.cpp' ] + \
-                    [ ctx.path.find_resource('source/%s' % x) for x in MPISOURCES ],
-            cxxflags        = ['-fPIC', '-w'],
-            defines         = ['MPIMODE', ],
-            use             = [ 'test_inc', 'hicann_cfg_inc', 'BOOST4S2HALMPI', 's2hal_obj', 'measure_obj', 'rcf-boost-only' ],
-        )
-
     ctx.objects (
         target          = 'getch_obj',
         source          = 'source/getch.c',
@@ -129,14 +110,6 @@ def build(ctx):
             use             = [ 'tests2_obj', 'TESTS2USE', 'USB', 'sctrl', 'jtag_lib_inc' ],
             install_path    = 'bin',
         )
-
-        if ctx.env.mpimode:
-            ctx(
-                target          = 'tests2mpi',
-                features        = 'cxx cxxprogram',
-                use             = [ 'tests2mpi_obj', 'BOOST4S2HALMPI', 'TESTS2USE', 'USB'],
-                install_path    = 'bin',
-            )
 
     if ctx.env.experiment:
         # build experiment executable

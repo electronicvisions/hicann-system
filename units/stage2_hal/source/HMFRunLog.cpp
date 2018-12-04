@@ -134,8 +134,6 @@ HMFRunLog::HMFRunLog(FPGAConnectionId const & cid) :
 	msg << "requests " << connid.get_fpga_ip();
 	log(msg.str());
 
-	// TODO: after testing, remove MPIMODE thing here
-#ifndef MPIMODE
 	// check for and create lockfile
 	int status = mkdir(lockdir, 0777); // world (un-)lockable hardware
 	if (! ((status == 0) || (errno == EEXIST))) {
@@ -186,7 +184,6 @@ HMFRunLog::HMFRunLog(FPGAConnectionId const & cid) :
 	}
 	if (!own_lock && lockfile_create(lockfilename.c_str(), 0, L_PID) != L_SUCCESS)
 		throw std::runtime_error("Could not create lockfile (needed for HW access)!");
-#endif // MPIMODE
 #endif
 }
 

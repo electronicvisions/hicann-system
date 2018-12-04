@@ -21,14 +21,6 @@
 #ifndef _TESTMODE_H
 #define _TESTMODE_H
 
-#ifdef MPIMODE
-#include <boost/mpi/communicator.hpp>
-#include <boost/mpi/collectives.hpp>
-namespace mpi = boost::mpi;
-#define MPIMASTER (world.rank() == 0)
-#else
-#define MPIMASTER (true)
-#endif
 #include <boost/program_options.hpp>
 
 #include "common.h"
@@ -44,9 +36,6 @@ protected:
 	virtual std::string ClassName() {std::stringstream ss; ss << __FILE__; return ss.str();}
 	int debug_level;	
 	std::ostream & dbg(int l) { if (debug_level>= l) return std::cout<<ClassName()<<": "; else return NULLOS; }
-#ifdef MPIMODE
-	mpi::communicator world;
-#endif
 
 public:	
     std::vector<facets::Stage2Ctrl *> chip;
