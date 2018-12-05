@@ -247,7 +247,7 @@ bool jtag_lib_v2::jtag_targets::insertTarget()
 		pTargetInfo = new jtag_targets::target_info_t;
 		::memcpy(pTargetInfo, &this->m_targetInfo, sizeof(target_info_t));
 		this->m_tempJtagTargets.push_back(pTargetInfo);
-	} catch (std::bad_alloc) {
+	} catch (std::bad_alloc&) {
 		jtag_logger::sendMessage(
 			MSG_ERROR, "Not enough memory store "
 					   "target infos.\n");

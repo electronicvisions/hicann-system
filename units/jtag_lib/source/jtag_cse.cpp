@@ -332,7 +332,7 @@ bool jtag_lib_v2::jtag_cse::enumCables(uint8_t& uiCablesFound, const bool bEnumO
 							szESN = 0;
 						}
 					}
-				} catch (std::bad_alloc) {
+				} catch (std::bad_alloc&) {
 				}
 
 				jtag_cse::m_bDisableOutput = false;
@@ -369,7 +369,7 @@ bool jtag_lib_v2::jtag_cse::enumCables(uint8_t& uiCablesFound, const bool bEnumO
 				cable_info* pCable = 0;
 				try {
 					pCable = new cable_info();
-				} catch (std::bad_alloc) {
+				} catch (std::bad_alloc&) {
 					jtag_cse::m_bDisableOutput = false;
 					return false;
 				}

@@ -147,7 +147,7 @@ bool jtag_lib_v2::jtag_ethernet::createSession(const char* szAddr, const uint16_
 		else
 #endif
 			this->m_pEthSocket = new eth_socket_host();
-	} catch (std::bad_alloc) {
+	} catch (std::bad_alloc&) {
 		jtag_logger::sendMessage(
 			MSG_ERROR, "createSession: Failed to create Ethernet "
 					   "socket instance.\n");
@@ -337,7 +337,7 @@ bool jtag_lib_v2::jtag_ethernet::enumCables(uint8_t& uiCablesFound, const bool /
 	cable_info* pCable;
 	try {
 		pCable = new cable_info();
-	} catch (std::bad_alloc) {
+	} catch (std::bad_alloc&) {
 		return false;
 	}
 

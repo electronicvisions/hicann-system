@@ -126,7 +126,7 @@ bool jtag_lib_v2::jtag_digilent::enumCables(uint8_t& uiCablesFound, const bool /
 		cable_info* pCable;
 		try {
 			pCable = new cable_info();
-		} catch (std::bad_alloc) {
+		} catch (std::bad_alloc&) {
 			digilent_wrapper::getInstance().DmgrFreeDvcEnum();
 			return false;
 		}

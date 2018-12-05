@@ -302,7 +302,7 @@ bool jtag_lib_v2::jtag_access::getJtagData(
 
 		try {
 			puiTDOData = new uint8_t[(uiDataLength + 7) >> 3];
-		} catch (std::bad_alloc) {
+		} catch (std::bad_alloc&) {
 			return false;
 		}
 
@@ -315,7 +315,7 @@ bool jtag_lib_v2::jtag_access::getJtagData(
 			puiTDIData = new uint8_t[(uiLength + 7) >> 3];
 #endif
 			puiTDOData = new uint8_t[(uiLength + 7) >> 3];
-		} catch (std::bad_alloc) {
+		} catch (std::bad_alloc&) {
 			if (puiTDIData)
 				delete[] puiTDIData;
 			return false;
@@ -361,7 +361,7 @@ bool jtag_lib_v2::jtag_access::setGetJtagData(
 
 		try {
 			puiDataOut = new uint8_t[(uiDataLength + 7) >> 3];
-		} catch (std::bad_alloc) {
+		} catch (std::bad_alloc&) {
 			return false;
 		}
 
@@ -374,7 +374,7 @@ bool jtag_lib_v2::jtag_access::setGetJtagData(
 
 		try {
 			puiDataOut = new uint8_t[(uiLength + 7) >> 3];
-		} catch (std::bad_alloc) {
+		} catch (std::bad_alloc&) {
 			return false;
 		}
 
@@ -793,7 +793,7 @@ bool jtag_lib_v2::jtag_access::addDeviceData(const char* szFile)
 	char* pBuffer;
 	try {
 		pBuffer = new char[MAX_DEVICE_DATA_SIZE];
-	} catch (std::bad_alloc) {
+	} catch (std::bad_alloc&) {
 		jtag_logger::sendMessage(
 			MSG_ERROR, "addDeviceData: Not enough memory to "
 					   "read device data file.\n");

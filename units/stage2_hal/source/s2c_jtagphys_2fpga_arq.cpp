@@ -185,7 +185,7 @@ int S2C_JtagPhys2FpgaArq::recvData(uint hicann_nr, uint tagid, ci_payload* data)
 	uint64_t tmp = 0;
 	try {
 		tmp = hostalctrl.getReceivedHICANNConfig(dncid, jtag2dnc(hicann_nr), tagid);
-	} catch (std::underflow_error e) {
+	} catch (std::underflow_error const& e) {
 		log(Logger::ERROR) << *this << endl;
 		throw e;
 	}

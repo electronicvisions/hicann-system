@@ -97,7 +97,7 @@ bool jtag_lib_v2::jtag_if::getCableInfo(const uint8_t uiCableIndex, cable_info& 
 	try {
 		cable_info cableInfoFromList(*this->m_connectedCables[uiCableIndex - 1]);
 		cableInfo = cableInfoFromList;
-	} catch (std::bad_alloc) {
+	} catch (std::bad_alloc&) {
 		return false;
 	}
 
@@ -229,7 +229,7 @@ bool jtag_lib_v2::cable_info::setSerial(const char* szSerial)
 
 	try {
 		this->m_szSerial = new char[strlen(szSerial) + 1];
-	} catch (std::bad_alloc) {
+	} catch (std::bad_alloc&) {
 		this->m_szSerial = 0;
 		return false;
 	}
@@ -248,7 +248,7 @@ bool jtag_lib_v2::cable_info::setPlugin(const char* szPlugin)
 
 	try {
 		this->m_szPlugin = new char[strlen(szPlugin) + 1];
-	} catch (std::bad_alloc) {
+	} catch (std::bad_alloc&) {
 		this->m_szPlugin = 0;
 		return false;
 	}
@@ -267,7 +267,7 @@ bool jtag_lib_v2::cable_info::setPort(const char* szPort)
 
 	try {
 		this->m_szPort = new char[strlen(szPort) + 1];
-	} catch (std::bad_alloc) {
+	} catch (std::bad_alloc&) {
 		this->m_szPort = 0;
 		return false;
 	}
