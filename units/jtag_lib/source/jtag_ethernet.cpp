@@ -218,7 +218,7 @@ bool jtag_lib_v2::jtag_ethernet::createSession(const char* szAddr, const uint16_
 
 		::memset(&sockAddr, 0, sizeof(struct sockaddr_un));
 		sockAddr.sun_family = AF_UNIX;
-		::strncpy(sockAddr.sun_path, szAddr, UNIX_PATH_MAX);
+		::memcpy(sockAddr.sun_path, szAddr, UNIX_PATH_MAX);
 		iResult =
 			this->m_pEthSocket->connect((struct sockaddr*) &sockAddr, sizeof(struct sockaddr_un));
 	} else {
