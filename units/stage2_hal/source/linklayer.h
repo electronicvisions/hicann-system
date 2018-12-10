@@ -37,15 +37,25 @@ private:
 	static const uint SEQ_SIZE = 64;
 	static const uint WND_SIZE = 16;
 
-// time until packet resent if no ack
-	static const uint SEND_TIMEOUT = 10;
+	// time (in "ticks" for simulation) until packet resent if no ack
+	// defaulting to 2*WND_SIZE for minimum amount of resends during JTAG operation
+	// (x2 because we tick twice in Exec())
+	static const uint SEND_TIMEOUT = WND_SIZE*2;
 
-// time until ack is sent on packet receive
+	// time until ack is sent on packet receive
+	// defaulting to "ack immediately" DO NOT CHANGE THIS - WOULD BREAK JTAG OPERATION!
+	// This software linklayer ist only used for JTAG -> should be ok like this.
 	static const uint RECV_TIMEOUT = 0;
 
-	uint tagid; // link layer "address"
+	// max number of issued commands without receive
+	static const size_t max_issued_cmds = WND_SIZE;
+
+	uint const tagid; // link layer "address"
 	uint hcnr;  // associated HICANN JTAG "address"
-        
+
+	// number of issued commands (cf. max_issued_cmds) since last receive
+	size_t issued_cmds;
+
 	virtual std::string ClassName() { return "LinkLayer"; };
 	virtual std::ostream & dbg() { return std::cout << ClassName() << ": "; }
 	virtual std::ostream & dbg(int level) { if (this->debug_level>=level) return dbg(); else return NULLOS; }
@@ -64,28 +74,27 @@ public:
 		conc_ll = ll;
 	};
 	
-	// variable to evaluate concurrent LinkLayer usage
-	bool cmd_issued;
-	bool get_cmd_issued(void){
-		bool tmp = cmd_issued;
-		cmd_issued = false; // reset after read
-		return tmp;
-	};
-
-	void Exec()
+	void Exec(bool callback=false)
 	{
 		if (HasSendData())
 		{
 			// check if other LinkLayer needs another Exec()
-			if(conc_ll->get_cmd_issued())
-				conc_ll->Exec();
+			while(conc_ll->HasSendData() && !callback)
+				conc_ll->Exec(true);
 			
 			packet_t p;
 			packet_t* pp = &p;
 			GetSendData(&pp);	
 			if ((this->lower) && this->lower->CanSend()){
 				this->lower->Send(pp, hcnr);
-				cmd_issued = true;
+				if (p.Payload().write) {
+					// number of pending write requests
+					issued_cmds++;
+				} else {
+					// non-write (i.e. read) requests enforce response handling below;
+					// set to "above threshold"
+					issued_cmds = max_issued_cmds + 1;
+				}
 			}
 		}
 		arq.Tick(); // no mutex needed
@@ -106,8 +115,11 @@ public:
 			}
 		}*/
 
-		if ((this->lower) && this->lower->HasReadData(hcnr, tagid))
+		// when the number of issued non-write commands exceeds the threshold (or we issued a read command)
+		// and we already received a response => call ARQ's receive method to perform protocol handling
+		if ((issued_cmds >= max_issued_cmds) && this->lower && this->lower->HasReadData(hcnr, tagid))
 		{
+			issued_cmds = 0;
 			packet_t p;
 			if (this->lower->Read(p, hcnr, tagid)) 
 			{
@@ -120,13 +132,14 @@ public:
 	LinkLayer(uint h, uint t): 
 		tagid(t),
 		hcnr(h),
-		arq(t, SEQ_SIZE, WND_SIZE, SEND_TIMEOUT, RECV_TIMEOUT) 
+		issued_cmds(0),
+		arq(t, SEQ_SIZE, WND_SIZE, SEND_TIMEOUT, RECV_TIMEOUT)
 	{
+		assert(max_issued_cmds <= WND_SIZE);
 		
 		Logger& log = Logger::instance("hicann-system.LinkLayer", 99, "");
 		arq.SetDebugLevel(log.getLevel());
 		conc_ll = NULL;
-		cmd_issued = false;
 	};
 
 	virtual ~LinkLayer() { }; 
@@ -137,7 +150,6 @@ public:
 	}
 
 	uint tag() {return tagid;}
-	void setTag(uint t) {tagid = t;}
 		
 
 	// -----------------------------------------------

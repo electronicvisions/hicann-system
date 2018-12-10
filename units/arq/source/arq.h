@@ -107,7 +107,7 @@ class ARQ : public PacketLayer<payload_t, packet_t>
 
 		//virtual std::ostream & dbg(int level) { return std::cout;/*return this->dbg(level); */}
 			
-		std::ostream & dbg() { return std::cout << ClassName() << ": "; }
+		std::ostream & dbg() { return std::cout << ClassName() << tagid << ": "; }
 		std::ostream & dbg(int level) { if (this->debug_level>=level) return dbg(); else return NULLOS; }
 
 		// statistics

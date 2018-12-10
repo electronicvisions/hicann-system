@@ -181,7 +181,9 @@ int Stage2Comm::recvData(uint hicann_nr, uint tagid, ci_payload *data){
 		rxdata[hicann_nr][tagid].pop();
 		return 1;
 	} else {
-		throw std::runtime_error("Stage2Comm::recvData: receive queue empty!");
+		std::stringstream message;
+		message << "Stage2Comm::recvData(hicann " << hicann_nr << ", tag " << tagid << "): receive queue empty!";
+		throw std::runtime_error(message.str().c_str());
 	}
 }
 
