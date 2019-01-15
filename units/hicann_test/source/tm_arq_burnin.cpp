@@ -552,7 +552,7 @@ cout << "test0" << endl << flush;
  				case 6:hicann_hs[exp_read_results[i].hc]->getSC(0).get_data(&res); rcvaddr = res.addr&0xf; rcvdata = res.data; break;
  				case 7:hicann_hs[exp_read_results[i].hc]->getSC(1).get_data(&res); rcvaddr = res.addr&0xf; rcvdata = res.data; break;
  			}
-			} catch (std::underflow_error e) {
+			} catch (std::underflow_error& e) {
 				log(Logger::ERROR) << " got underflow error" << endl;
 				break;
 			}

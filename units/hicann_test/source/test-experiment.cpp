@@ -19,7 +19,7 @@ int main(int argc, char const * argv[])
 
 	try {
 		client.stop(); // may throw ;p
-	} catch (RCF::RemoteException e) {
+	} catch (RCF::RemoteException& e) {
 		std::cout << "catched RCF::RemoteException, rethrowing!" << std::endl;
 		throw;
 	}

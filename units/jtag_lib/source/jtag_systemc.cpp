@@ -107,7 +107,7 @@ bool jtag_lib_v2::jtag_systemc::enumCables(uint8_t &uiCablesFound,
         {
           pCable = new cable_info();
         }
-      catch ( std::bad_alloc )
+      catch ( std::bad_alloc& )
         {
           return false;
         }

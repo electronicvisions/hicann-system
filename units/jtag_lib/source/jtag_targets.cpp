@@ -383,12 +383,12 @@ bool jtag_lib_v2::jtag_targets::addDeviceData(
 
 	try {
 		this->m_jtagTargets.reserve(this->m_jtagTargets.size() + this->m_tempJtagTargets.size());
-	} catch (std::bad_alloc) {
+	} catch (std::bad_alloc&) {
 		jtag_logger::sendMessage(
 			MSG_ERROR, "Not enough memory store "
 					   "target infos.\n");
 		return false;
-	} catch (std::length_error) {
+	} catch (std::length_error&) {
 		jtag_logger::sendMessage(MSG_ERROR, "Maximum number of targets reached.\n");
 		return false;
 	}
