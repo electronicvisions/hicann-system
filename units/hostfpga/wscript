@@ -10,7 +10,7 @@ except ImportError:
     recurse = lambda ctx: recurse_depends(depends, ctx)
 
 def depends(ctx):
-    ctx('lib-rcf', branch='v2')
+    ctx('lib-rcf')
 
 def options(ctx):
     ctx.load('compiler_cxx')

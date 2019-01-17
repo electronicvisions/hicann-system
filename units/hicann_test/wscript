@@ -5,7 +5,7 @@ from waflib.extras.symwaf2ic import SYMWAF2IC_VERSION
 from waflib import Options
 
 def depends(ctx):
-    ctx('lib-rcf', branch='v2')
+    ctx('lib-rcf')
     ctx('hicann-system', 'units/stage2_hal')
     ctx('hicann-system', 'units/measure')
     ctx('hicann-system', 'units/hicann_cfg')

@@ -8,7 +8,7 @@ from waflib.extras.symwaf2ic import SYMWAF2IC_VERSION
 hicann_test_dir = '/tmp/test' # Some bogus path
 
 def depends(ctx):
-    ctx('lib-rcf', branch='v2'),
+    ctx('lib-rcf'),
     ctx('logger')
     ctx('hicann-system', 'units/config'),
     ctx('hicann-system', 'units/arq'),
