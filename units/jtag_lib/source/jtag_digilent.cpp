@@ -53,6 +53,11 @@
 #endif
 #endif
 
+#if __GNUC__ >= 8
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wcast-function-type"
+#endif
+
 jtag_lib_v2::jtag_digilent::jtag_digilent()
 	: m_cableHandle(0),
 	  m_uiDelay(0),
@@ -934,3 +939,7 @@ jtag_lib_v2::digilent_wrapper::~digilent_wrapper()
 	this->m_hDjtgModule = 0;
 	this->m_hDmgrModule = 0;
 }
+
+#if __GNUC__ >= 8
+#pragma GCC diagnostic pop
+#endif

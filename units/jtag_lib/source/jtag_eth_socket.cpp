@@ -68,6 +68,11 @@
 #endif
 #endif
 
+#if __GNUC__ >= 8
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wcast-function-type"
+#endif
+
 #ifndef _WIN32
 
 bool jtag_lib_v2::eth_socket_sc::m_bInitialized = false;
@@ -218,7 +223,6 @@ bool jtag_lib_v2::eth_socket_sc::loadEthSocket()
 		::getProcFunction(RTLD_DEFAULT, "getBufferBytesEthSocket"));
 	eth_socket_sc::waitEthSocket =
 		reinterpret_cast<waitEthSocket_t>(::getProcFunction(RTLD_DEFAULT, "waitEthSocket"));
-
 	if (!eth_socket_sc::createEthSocket || !eth_socket_sc::destroyEthSocket ||
 		!eth_socket_sc::openEthSocket || !eth_socket_sc::closeEthSocket ||
 		!eth_socket_sc::bindEthSocket || !eth_socket_sc::sendToEthSocket ||
@@ -576,3 +580,7 @@ char* jtag_lib_v2::eth_socket_base::strerror(const int iError)
 	return ::strerror(iError);
 #endif // ifdef _WIN32
 }
+
+#if __GNUC__ >= 8
+#pragma GCC diagnostic pop
+#endif

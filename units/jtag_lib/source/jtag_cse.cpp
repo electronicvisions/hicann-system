@@ -81,6 +81,11 @@
 #pragma warning(disable : 4996)
 #endif
 
+#if __GNUC__ >= 8
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wcast-function-type"
+#endif
+
 bool jtag_lib_v2::jtag_cse::m_bDisableOutput = false;
 
 void CALLBACK
@@ -1637,3 +1642,7 @@ jtag_lib_v2::cse_wrapper::~cse_wrapper()
 	this->m_hJtagModule = 0;
 	this->m_hFpgaModule = 0;
 }
+
+#if __GNUC__ >= 8
+#pragma GCC diagnostic pop
+#endif
