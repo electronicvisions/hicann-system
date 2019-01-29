@@ -76,8 +76,6 @@ static void *sending(void *param) {
 
 	printf ("sending: thread up\n");
 
-	std::cout << "checking arq registers" << std::endl;
-	check_arq_registers(g_comm);
 
 	//uint64_t min_cmd = 0x3800e00000000000ull;
 	//uint64_t max_cmd = 0x3800e06f00000000ull;
@@ -150,11 +148,8 @@ static void *sending(void *param) {
 		usleep(1000); // 1ms
 	double stop = mytime();
 
-	size_t bytes_sent = no_cmds *8.0/1024/1024;
-	printf("sending: %lld (%.2f MB) cmds took %.6fs = %.3fMB/s\n", no_cmds, bytes_sent, stop-start, 1.0*bytes_sent/(stop-start));
-
-	std::cout << "sending: checking arq registers" << std::endl;
-	check_arq_registers(g_comm);
+	double bytes_sent = no_cmds *8.0/1024/1024;
+	printf("sending: %lld cmds (%.2f MiB) took %.6fs = %.3fMiB/s\n", no_cmds, bytes_sent, stop-start, 1.0*bytes_sent/(stop-start));
 
 	send_finished = true;
 
@@ -268,6 +263,10 @@ public:
 			printf ("Error: make sure Core and testbench are up\n");
 			return 1;
 		}
+
+		std::cout << "checking arq registers" << std::endl;
+		check_arq_registers(g_comm);
+
 		pthread_t threadvar;
 
 		// start sending thread
@@ -323,6 +322,9 @@ public:
 			log(Logger::INFO) << "Done " << recvd_cmds << " cmds in " << frame_cnt << " frames.";
 			log(Logger::INFO) << (recvd_cmds*8.0) << "bytes took " << stop-start << "s => " << (recvd_cmds*8.0/1024/1024)/(stop-start) << "MB/s";
 		}
+
+		std::cout << "sending: checking arq registers" << std::endl;
+		check_arq_registers(g_comm);
 
 		size_t i = 0, ret = 0;
 		size_t const expected_time = no_cmds / (10*1024*1024) + 3;
