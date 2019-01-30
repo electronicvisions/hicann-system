@@ -58,6 +58,7 @@ public:
 		comm=NULL;
 		jtag=NULL;
 		commodel=facets::dryrun;
+		argv_options = nullptr;
 	};
 	virtual ~Testmode(){};
 	virtual bool test()=0; //performs test, return true if passed

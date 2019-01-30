@@ -419,11 +419,6 @@ int main(int argc, char* argv[])
 		exit(EXIT_FAILURE);
 	}
 
-	// parse rest of options
-	bpo::options_description desc;
-	bpo::parsed_options opts =
-		bpo::command_line_parser(argc - j, argv + j).options(desc).allow_unregistered().run();
-
 	// initialize logger
 	Logger& log = Logger::instance("hicann-system.tests2", log_level, "");
 
@@ -677,6 +672,7 @@ int main(int argc, char* argv[])
 	bool result = false; // by default: fail
 	// ***** start testmodes ****
 	// testmodes are executed in main thread
+
 	for (vector<string>::iterator mode = modes.begin(); mode != modes.end(); mode++) {
 		Testmode* t = Listee<Testmode>::first->createNew(*mode); // try to create testmode
 		if (t == NULL) {
@@ -693,7 +689,16 @@ int main(int argc, char* argv[])
 		t->label = label;
 		t->keys = keysequence;
 		t->commodel = commodel;
-		t->argv_options = &opts;
+		if (argc > j) {
+			// parse rest of options
+			bpo::parsed_options opts = bpo::command_line_parser(argc - j, argv + j)
+			                               .options(bpo::options_description())
+			                               .allow_unregistered()
+			                               .run();
+			t->argv_options = new bpo::parsed_options(opts);
+		} else {
+			t->argv_options = nullptr;
+		}
 		log(Logger::INFO) << "Starting testmode " << *mode << flush;
 		result = t->test(); // perform tests
 		log(Logger::INFO) << "Testmode: " << *mode << " result:" << result << flush;
