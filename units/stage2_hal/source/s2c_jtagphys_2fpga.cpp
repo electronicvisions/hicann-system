@@ -737,6 +737,7 @@ std::bitset<8> S2C_JtagPhys2Fpga::fpga_hicann_init(std::bitset<8> hicann)
         //Start init
         usleep(20);
         jtag->HICANN_set_link_ctrl(0x061);
+        jtag->K7FPGA_set_hicannif_config(0x00c);
         jtag->HICANN_lvds_pads_en(0);
         jtag->HICANN_start_link();
         jtag->K7FPGA_start_fpga_link();
