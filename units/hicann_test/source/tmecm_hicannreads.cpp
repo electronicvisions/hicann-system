@@ -240,7 +240,7 @@ public:
 			used_hicanns.set();
 			if (dynamic_cast<S2C_JtagPhys2Fpga*>(comm)->Init(used_hicanns) != Stage2Comm::ok) {
 				log(Logger::ERROR) << "ERROR: Init failed, abort";
-				return 0;
+				return false;
 			}
 		} else {
 			std::bitset<8> used_hicanns;
@@ -248,7 +248,7 @@ public:
             	used_hicanns[nhicann] = true;
 			if (dynamic_cast<S2C_JtagPhys2Fpga*>(comm)->Init(used_hicanns) != Stage2Comm::ok) {
 				log(Logger::ERROR) << "ERROR: HICANN Init on vertical setup failed, abort";
-				return 0;
+				return false;
 			}
 		}
 		log(Logger::INFO) << "Init() ok";
@@ -261,7 +261,7 @@ public:
 		struct sctp_descr *desc = open_conn(shm_name.c_str());
 		if (!desc) {
 			printf ("Error: make sure Core and testbench are up\n");
-			return 1;
+			return false;
 		}
 
 		std::cout << "checking arq registers" << std::endl;
@@ -313,7 +313,7 @@ public:
 						if (rx_queues_empty(desc)) {
 							/*no packets to recieve and sending is finish, test is done*/
 							printf("Data underflow: cmds sent: %d cmds recvd: %d\n", no_cmds, recvd_cmds);
-							return EXIT_FAILURE;
+							return false;
 						}
 					}
 				}
@@ -340,7 +340,7 @@ public:
 			log(Logger::ERROR) << "Could not join sending thread";
 
 		// FIXME: add check for data validity
-		return EXIT_SUCCESS;
+		return true;
 	}
 };
 
