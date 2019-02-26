@@ -162,7 +162,11 @@ void Stage2Comm::init_s2comm(void) {
 
 int Stage2Comm::issueCommand(uint hicann_nr, uint tagid, ci_payload *data, uint /*del*/){
 	if (link_layers[hicann_nr][tagid].Send(data) != 1) {
-		throw std::runtime_error("link layer (software arq) failed to transmit data?!?");
+		auto const fpga_ip = boost::asio::ip::address_v4(jtag->get_ip());
+		throw std::runtime_error(
+		    "link layer (software arq) failed to transmit data for HICANN " +
+		    std::to_string(hicann_nr) + " on tag " + std::to_string(tagid) +
+		    " on FPGA with IP: " + fpga_ip.to_string());
 	}
 	// store potential read data locally to hide the atomic JTAG accesses to the user...
 	if(link_layers[hicann_nr][tagid].HasReadData()) {
