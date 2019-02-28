@@ -528,10 +528,13 @@ void HostALController::addPlaybackPulse(
 		full_fpga_time_t curr_fpga_time = fpga_time;
 		if (curr_fpga_time < last_playback_reltime + min_reltime_distance_clks) {
 			curr_fpga_time = last_playback_reltime + min_reltime_distance_clks;
+			full_fpga_time_t const delta_fpga_time = curr_fpga_time - fpga_time;
+			double const delta_wallclock_time_in_s = delta_fpga_time * fpga_clk_cycle_in_s;
 			LOG4CXX_WARN(
-				logger, "HostALController::addPlaybackPulse: Had to shift pulse by "
-							<< std::dec << (curr_fpga_time - fpga_time)
-							<< "FPGA clock cycles because of too high rate.");
+			    logger, "HostALController::addPlaybackPulse: Had to shift pulse by "
+			                << std::dec << delta_fpga_time << " ("
+			                << delta_wallclock_time_in_s * 1e9 << ") FPGA clock cycles (ns) "
+			                << "because of too high rate.");
 		}
 
 		this->playback_entry_buffer.push_back((1 << 18) | ((curr_fpga_time & 0x3fff) << 1));
