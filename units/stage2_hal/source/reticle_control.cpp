@@ -16,6 +16,7 @@
 #include "hicann_ctrl.h"
 #include "iboardv2_ctrl.h"
 #include "reticle_control.h"
+#include "s2comm.h"
 #include "stage2_conf.h"
 
 #include "HandleCommFreezeError.h"
@@ -78,6 +79,40 @@ void ReticleControl::init(bool on_wafer = true)
 		throw std::runtime_error("The non-ARQ communication mode is not compatible with ReticleControl");
 	}
 
+	std::shared_ptr<sctrltp::ARQStream> p_hostarq;
+	if (model == jtag_eth_fpga_arq) {
+		FPGAConnectionId::IPv4 tmp((fpga_ip));
+		// FIXME: add option for kintex-based access
+		// FIXME: get dnc id nicer!
+#ifdef FPGA_BOARD_BS_K7
+		p_hostarq.reset(new sctrltp::ARQStream(
+			tmp.to_string(), "192.168.0.128", /*listen port*/ 1234, "192.168.0.1",
+			/*target port*/ 1234)); // TODO: set correct host IP
+#else
+		p_hostarq.reset(new sctrltp::ARQStream(
+			tmp.to_string(), "192.168.1.2", /*listen port*/ 1234, tmp.to_string().c_str(),
+			/*target port*/ 1234));
+#endif
+
+		// shut up the HICANN-ARQ
+		Stage2Comm::set_fpga_reset(tmp.to_uint(),
+			/*enable_core*/ false,
+			/*enable_fpgadnc*/ false,
+			/*enable_ddr2onboard*/ false,
+			/*enable_ddr2sodimm*/ false,
+			/*enable_arq*/ true);
+
+		// HICANNs seem to send garbage config packets during reset, drop them (issue #2889)
+		size_t dropped_packets = p_hostarq->drop_receive_queue();
+		while (dropped_packets != 0) {
+			LOG4CXX_ERROR(
+				logger, "ReticleControl::init() on FPGA " << tmp.to_string() << " dropped"
+				<< dropped_packets << " packet(s) after HostARQ reset (cf. #2889)");
+			usleep(100*1000); // 100ms
+			dropped_packets = p_hostarq->drop_receive_queue();
+		}
+	}
+
 	jtag.reset(new myjtag_full(true, /*dnc?*/ !kintex, physically_available_hicanns, 0, kintex));
 	if (!jtag->initJtag(jtag_lib_v2::JTAG_ETHERNET))
 		throw std::runtime_error("JTAG open failed!");
@@ -101,18 +136,6 @@ void ReticleControl::init(bool on_wafer = true)
 		jtag_p2f.reset(new S2C_JtagPhys2Fpga(*access.get(), jtag.get(), on_wafer));
 		comm = jtag_p2f.get();
 	} else if (model == jtag_eth_fpga_arq) {
-		FPGAConnectionId::IPv4 tmp((fpga_ip));
-// FIXME: add option for kintex-based access
-// FIXME: get dnc id nicer!
-#ifdef FPGA_BOARD_BS_K7
-		std::shared_ptr<sctrltp::ARQStream> p_hostarq(new sctrltp::ARQStream(
-			tmp.to_string(), "192.168.0.128", /*listen port*/ 1234, "192.168.0.1",
-			/*target port*/ 1234)); // TODO: set correct host IP
-#else
-		std::shared_ptr<sctrltp::ARQStream> p_hostarq(new sctrltp::ARQStream(
-			tmp.to_string(), "192.168.1.2", /*listen port*/ 1234, tmp.to_string().c_str(),
-			/*target port*/ 1234));
-#endif
 		if (!jtag->initJtagV2(p_hostarq, jtag_frequency_in_kHz)) {
 			throw std::runtime_error("JTAG init failed!");
 		}
