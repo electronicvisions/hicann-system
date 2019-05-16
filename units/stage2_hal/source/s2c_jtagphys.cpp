@@ -39,7 +39,6 @@ Stage2Comm::Commstate S2C_JtagPhys::Send(IData d, uint /*del*/)
 	jtag->HICANN_set_tx_data(d.cmd().to_uint64());
 	jtag->HICANN_start_cfg_pkg();
 	jtag->HICANN_set_test(0x0);
-	//cout << "S2C_JtagPhys: Sent data 0x" << hex << d.cmd().to_uint64() << endl;
 	return ok;
 }
 

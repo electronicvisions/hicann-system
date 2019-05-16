@@ -346,10 +346,10 @@ uint SynapseControl::read_decoder(uint trow, uint tcol){
 
 void SynapseControl::write_decoder(uint bot_row_adr, vector<uint> data_bot, vector<uint> data_top){
 	if (data_bot.size()!=32 || data_top.size()!=32) {
-		log(Logger::ERROR) << "SynapseControl::write_decoder: Data vector has wrong length"<< endl;
+		log(Logger::ERROR) << "SynapseControl::write_decoder: Data vector has wrong length";
 	}
 	else if (bot_row_adr > 222) {
-		log(Logger::ERROR) << "SynapseControl::write_decoder: Specified row does not exist"<< endl;
+		log(Logger::ERROR) << "SynapseControl::write_decoder: Specified row does not exist";
 	}
 	else{
 		//swap the bits between vectors to make everything right
@@ -380,8 +380,8 @@ void SynapseControl::write_decoder(uint bot_row_adr, vector<uint> data_bot, vect
 }
 
 void SynapseControl::read_decoder(uint bot_row_adr, vector<uint> &data_bot, vector<uint> &data_top){
-	if (data_bot.size()!=32 || data_top.size()!=32) log(Logger::ERROR) << "SynapseControl::read_decoder: Data vector has wrong length"<< endl;
-	else if (bot_row_adr > 222) log(Logger::ERROR) << "SynapseControl::read_decoder: Specified row does not exist"<< endl;
+	if (data_bot.size()!=32 || data_top.size()!=32) log(Logger::ERROR) << "SynapseControl::read_decoder: Data vector has wrong length";
+	else if (bot_row_adr > 222) log(Logger::ERROR) << "SynapseControl::read_decoder: Specified row does not exist";
 	else{
 #if HICANN_V >= 2
 		read_row(bot_row_adr, data_bot, 1); //bottom row
@@ -411,21 +411,21 @@ void SynapseControl::read_decoder(uint bot_row_adr, vector<uint> &data_bot, vect
 }
 
 void SynapseControl::write_weight(uint row, vector<uint> data){
-	if (data.size()!=32) log(Logger::ERROR) << "SynapseControl::write_weight: Data vector has wrong length"<< endl;
-	else if (row > 224) log(Logger::ERROR) << "SynapseControl::write_weight: Specified row does not exist"<< endl;
+	if (data.size()!=32) log(Logger::ERROR) << "SynapseControl::write_weight: Data vector has wrong length";
+	else if (row > 224) log(Logger::ERROR) << "SynapseControl::write_weight: Specified row does not exist";
 	else write_row(row, data, 0);
 }
 
 void SynapseControl::read_weight(uint row, vector<uint> &data){
-	if (data.size()!=32) log(Logger::ERROR) << "SynapseControl::read_weight: Data vector has wrong length"<< endl;
+	if (data.size()!=32) log(Logger::ERROR) << "SynapseControl::read_weight: Data vector has wrong length";
 	else if (row > 224) log(Logger::ERROR) << "SynapseControl::read_weight: Specified row does not exist";
 	else read_row(row, data, false);
 }
 
 void SynapseControl::write_row(uint row, vector<uint> data, bool decoder){
 	// vector "data" mapping: bits [3..0] of data[0] contain bits [3..0] of synapse 0 and so on...
-	if (data.size()!=32) log(Logger::ERROR) << "SynapseControl::write_row: Data vector has wrong length"<< endl;
-	else if (row > 223) log(Logger::ERROR) << "SynapseControl::write_row: Specified row does not exist"<< endl;
+	if (data.size()!=32) log(Logger::ERROR) << "SynapseControl::write_row: Data vector has wrong length";
+	else if (row > 223) log(Logger::ERROR) << "SynapseControl::write_row: Specified row does not exist";
 	else{
 #if HICANN_V >= 2
 		for(int w=0; w<32; w++){

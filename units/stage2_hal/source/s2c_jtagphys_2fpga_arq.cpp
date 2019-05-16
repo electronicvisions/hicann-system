@@ -40,8 +40,7 @@ S2C_JtagPhys2FpgaArq::S2C_JtagPhys2FpgaArq(
 	log(Logger::INFO) << "Initialisation start: " << /*sc_simulation_time() <<*/ endl;
 	if (hostalctrl.initFPGAConnection(0x112)) {
 		log(Logger::INFO) << "TUD_TESTBENCH:NOTE:TESTPASS: Transport Layer initialisation sequence "
-							 "performed successfully."
-						  << endl;
+							 "performed successfully.";
 	}
 #endif
 }
@@ -58,7 +57,7 @@ S2C_JtagPhys2FpgaArq::Commstate S2C_JtagPhys2FpgaArq::Init(
 		S2C_JtagPhys2Fpga::Init(hicann_jtag_nr, silent, force_highspeed_init, return_on_error);
 
 	if (link_states.none()) {
-		log(Logger::ERROR) << "Untested code path if no highspeed links are used." << endl;
+		log(Logger::ERROR) << "Untested code path if no highspeed links are used.";
 		throw std::runtime_error(std::string(__PRETTY_FUNCTION__) + ": Not implemented/untested code path.");
 	}
 	// enable FPGA ARQ (has been disabled during above init):
@@ -89,10 +88,10 @@ S2C_JtagPhys2FpgaArq::Commstate S2C_JtagPhys2FpgaArq::Init(
 
 	// maybe enable FPGA ARQ (has been disabled during above init):
 	if (link_states.none()) {
-		log(Logger::INFO) << "Not reenabling FPGAs HICANN-ARQ because we do not use highspeed links." << endl;
+		log(Logger::INFO) << "Not reenabling FPGAs HICANN-ARQ because we do not use highspeed links.";
 	} else {
 		// FIXME: Here be per-chip reset toggeling...
-		log(Logger::INFO) << "Reenabling FPGAs HICANN-ARQ." << endl;
+		log(Logger::INFO) << "Reenabling FPGAs HICANN-ARQ.";
 		set_fpga_reset(jtag->get_ip(), false, false, false, false, /*ARQ:*/ false);
 		// FIXME: make configurable
 		if (k7fpga)
@@ -167,7 +166,7 @@ int S2C_JtagPhys2FpgaArq::issueCommand(uint hicann_nr, uint tagid, ci_payload* d
 
 	// explicit flush if ethernet frame is full
 	if ((++bulk % max_bulk) == 0) {
-		log(Logger::DEBUG0) << "flushing frame, was full " << bulk << endl;
+		log(Logger::DEBUG0) << "flushing frame, was full " << bulk;
 		Flush();
 	}
 	return 1; // same as in s2comm::issueCommand()
@@ -186,7 +185,7 @@ int S2C_JtagPhys2FpgaArq::recvData(uint hicann_nr, uint tagid, ci_payload* data)
 	try {
 		tmp = hostalctrl.getReceivedHICANNConfig(dncid, jtag2dnc(hicann_nr), tagid);
 	} catch (std::underflow_error const& e) {
-		log(Logger::ERROR) << *this << endl;
+		log(Logger::ERROR) << *this;
 		throw e;
 	}
 	data->addr = (tmp >> 32) & 0xffff;

@@ -78,7 +78,7 @@ int NeuronBuilderControl::write_data(uint rowaddr, std::vector<bool> cfg){
 
 	ci_data_t data = 0;
 	for(uint l=0;l<cfg.size();l++) data += cfg[l] << l;  // shift config bits into data payload
-	log(Logger::DEBUG1)<<"NeuronBuilderControl::Writing vector " << hex << data  << endl;
+	log(Logger::DEBUG1)<<"NeuronBuilderControl::Writing vector " << hex << data;
 	return write_cmd(addr, data, del);        // ...send
 }
 

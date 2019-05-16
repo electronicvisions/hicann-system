@@ -48,8 +48,7 @@ S2C_JtagPhys2Fpga::~S2C_JtagPhys2Fpga(){}
 
 S2C_JtagPhys2Fpga::Commstate S2C_JtagPhys2Fpga::Send(IData d, uint /*del*/)
 {
-	log(Logger::DEBUG1) << "S2C_JtagPhys2Fpga: Send packet " << hex << d.cmd() << " to HICANN " << d.addr() << endl;
-	//log(Logger::DEBUG1) << "S2C_JtagPhys2Fpga: Sent data 0x" << hex << d.cmd().to_uint64() << endl;
+	log(Logger::DEBUG1) << "S2C_JtagPhys2Fpga: Send packet " << hex << d.cmd() << " to HICANN " << d.addr();
 	#if DNC_V == 2
 		if ((l2_link_state&0x49) == 0x41) {
 			log(Logger::DEBUG1) << "S2C_JtagPhys2Fpga::Send: using FPGA connection";
@@ -88,7 +87,7 @@ S2C_JtagPhys2Fpga::Commstate S2C_JtagPhys2Fpga::Receive(IData &d)
 		
 		d.setCmd() = rxdata; 
 	#endif
- 	log(Logger::DEBUG1) << "S2C_JtagPhys2Fpga: Received packet " << hex << d.cmd() << ", data: 0x" << rxdata << endl;
+	log(Logger::DEBUG1) << "S2C_JtagPhys2Fpga: Received packet " << hex << d.cmd() << ", data: 0x" << rxdata;
 	return ok;
 }
 
