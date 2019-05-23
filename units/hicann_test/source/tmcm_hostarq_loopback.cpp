@@ -278,7 +278,7 @@ public:
 	// check parsing inputs
 	if(testmode != "const" && testmode != "rand" && testmode != "randarray" && testmode != "array" && testmode != "ascend" && testmode != "descend") {
 		std::cerr << "unkown test mode, exiting ..." << std::endl;
-		return EXIT_FAILURE;
+		return TESTS2_FAILURE;
 	}
 	if((testmode.compare("const") == 0 || testmode.compare("array") == 0 || testmode.compare("randarray") == 0) && frame_value.size() == 0)
 		frame_value.push_back(MAX_PDUWORDS);
@@ -320,7 +320,7 @@ public:
 	descargs.do_dummy = do_dummy;
 	if (!descargs.desc) {
 		std::cerr << "Error: make sure Core and testbench are up\n";
-		return 1;
+		return TESTS2_FAILURE;
 	}
 
 	pthread_t threadvar;
@@ -367,7 +367,7 @@ public:
 
 				if (loop_errs > no_cmds*0.05) {
 					printf("Errorlimit reached, exiting...\n");
-					exit(EXIT_FAILURE);
+					return TESTS2_FAILURE;
 				} else {
 					now = mytime();
 					if (now - last_print > 1.0) {
@@ -411,10 +411,10 @@ public:
 	if (ret != 0)
 		std::cerr << "Could not join sending thread";
 	if (sent_loop_cmds > 0 && sent_loop_cmds == recvd_loop_cmds) {
-		printf("Testrun OK\n");
-		return EXIT_SUCCESS;
+		return TESTS2_SUCCESS;
+	} else {
+		return TESTS2_FAILURE;
 	}
-	return EXIT_FAILURE;
 
 	}
 };

@@ -29,6 +29,9 @@
 #include "s2comm.h"
 #include "s2_types.h"
 
+#define TESTS2_SUCCESS true
+#define TESTS2_FAILURE false
+
 
 class Testmode {
 protected:
