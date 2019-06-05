@@ -726,6 +726,14 @@ std::bitset<8> S2C_JtagPhys2Fpga::fpga_hicann_init(std::bitset<8> hicann)
         jtag->HICANN_stop_link();
         // jtag->HICANN_lvds_pads_en(1);
 
+		// P/N signals of RX Data line from HighSpeed-HICANN-Ch 3 to FPGA are swapped on mainPCB
+		// enable inversion of deserialized data for this channel, when running on wafer.
+		if (running_on_reticle && hicannnr == 3) {
+			log(Logger::DEBUG0) << "Inverting deserialized data of HICANN with HighSpeed channel 3 "
+				                   "to cancel P/N swap on mainPCB.";
+			jtag->K7FPGA_invert_rx_data(true);
+		}
+
 		uint64_t status = 0;
         jtag->K7FPGA_get_hicannif_status(status);
         unsigned int link_state = (status >> 0) & 0xff;

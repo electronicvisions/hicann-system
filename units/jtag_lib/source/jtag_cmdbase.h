@@ -264,7 +264,7 @@ protected:
 
 		hicannif_nr = 0;
 		for (unsigned int nif = 0; nif < 8; ++nif)
-			hicannif_conf[nif] = 0x004000c;
+			hicannif_conf[nif] = 0x0004000c;
 	}
 
 public:
@@ -2075,12 +2075,13 @@ public:
 	// bit  15: 8: heap_mode / l1 direction
 	// bit  26:16: limit
 	// bit     27: dc_coding
+	// bit     28: invert rx_data (8Bit deserialized data)
 	template <typename T>
 	bool K7FPGA_set_hicannif_config(T config)
 	{
 		hicannif_conf[hicannif_nr] = config;
 		set_jtag_instr_chain(K7CMD_DNCIF_CONFIG, pos_fpga);
-		set_jtag_data_chain(config, 28, pos_fpga);
+		set_jtag_data_chain(config, 29, pos_fpga);
 		return true;
 	}
 
@@ -2116,16 +2117,24 @@ public:
 		return true;
 	}
 
+	bool K7FPGA_invert_rx_data(bool invert)
+	{
+		hicannif_conf[hicannif_nr] = hicannif_conf[hicannif_nr] & ~(0x1<<28);
+		hicannif_conf[hicannif_nr] = hicannif_conf[hicannif_nr] | ((unsigned int)invert<<28);
+		K7FPGA_set_hicannif_config(hicannif_conf[hicannif_nr]);
+		return true;
+	}
+
 	bool K7FPGA_start_fpga_link()
 	{
-		hicannif_conf[hicannif_nr] = hicannif_conf[hicannif_nr] | 0x0000001;
+		hicannif_conf[hicannif_nr] = hicannif_conf[hicannif_nr] | 0x1;
 		K7FPGA_set_hicannif_config(hicannif_conf[hicannif_nr]);
 		return true;
 	}
 
 	bool K7FPGA_stop_fpga_link()
 	{
-		hicannif_conf[hicannif_nr] = hicannif_conf[hicannif_nr] & 0xFFFFFFE;
+		hicannif_conf[hicannif_nr] = hicannif_conf[hicannif_nr] & ~((unsigned int)0x1);
 		K7FPGA_set_hicannif_config(hicannif_conf[hicannif_nr]);
 		return true;
 	}

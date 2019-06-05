@@ -1127,6 +1127,7 @@ public:
 					jtag->K7FPGA_set_hicannif_config(
 						0x008); // stop link, manual init, master enabled
 //						0x00c); // stop link, auto init, master enabled
+					jtag->K7FPGA_invert_rx_data(jtag->get_hicann_pos() == 4);
 				} else {
 					jtag->DNC_stop_link(0x1ff);
 					// jtag->DNC_lvds_pads_en(~(0x100+(1<<hicann_nr)));

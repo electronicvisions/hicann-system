@@ -57,7 +57,7 @@ def build(ctx):
         tmag_jtagchainrnd.cpp tmcapo_net.cpp tm_l2bench.cpp tm_hardwaretest.cpp tmbv_l1addressflip.cpp tm_nmsampling.cpp \
         tm_arq_burnin.cpp tmjenkins_switchramtest_arq.cpp tmvk_arqperftest.cpp tmjp_playback_srtest.cpp \
         tmecm_pbmemtraceloop.cpp tmecm_hicannreads.cpp tm_arq_burnin_parallel.cpp tmcm_hostarq_loopback.cpp tm_empty.cpp \
-        tm_neuronctrlv2.cpp tmsubm2_stdpctrl.cpp tm_hicann_sram_reset.cpp tmcm_fpgastats.cpp tmcm_perftest.cpp
+        tm_neuronctrlv2.cpp tmsubm2_stdpctrl.cpp tm_hicann_sram_reset.cpp tmcm_fpgastats.cpp tmcm_perftest.cpp tm_hs_eye_mini.cpp tmag_swram_jtagtest.cpp
     '''.split()
 
     ctx(
