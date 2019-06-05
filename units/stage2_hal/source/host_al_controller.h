@@ -22,9 +22,7 @@ extern "C" {
 #include "ethernet_if_base.h"
 #include "pulse_float.h"
 
-#ifndef HOSTAL_WITHOUT_JTAG
-#include "common.h" // for myjtag_full
-#endif
+#include "common.h"
 
 // ncsim-based compilation uses custom Makefile...
 // => don't add path to units/communcation/
@@ -68,58 +66,6 @@ static const uint32_t c_uiRemoteIP = 0xC0A80111;
 #endif
 
 static const unsigned int min_reltime_distance_clks = 6;
-
-
-template<typename T, size_t offset_msb = 0, size_t offset_lsb = 0>
-struct fpga_data_field
-{
-	T get() const
-	{
-		return sanitize(data);
-	}
-
-	void set(T value)
-	{
-		sanitize(value);
-		data = (get_high() << (size() + offset_lsb)) | get_low() | (value << offset_lsb);
-	}
-
-	T get_high() const
-	{
-		// drop all data + lower bits
-		size_t const cnt_nonhigh_bits = size() - offset_msb;
-		return data >> cnt_nonhigh_bits;
-	}
-
-	T get_low() const
-	{
-		// drop all data + higher bits
-		size_t const cnt_nonlow_bits = size() - offset_lsb;
-		return (data << cnt_nonlow_bits) >> cnt_nonlow_bits;
-	}
-
-	size_t size() const
-	{
-		STATIC_ASSERT(sizeof(T) == 2);
-		return sizeof(T);
-	}
-
-	size_t bitsize() const
-	{
-		return size() - offset_msb - offset_lsb;
-	}
-
-private:
-	T data;
-
-	T sanitize(T value)
-	{
-		return (
-			((data << offset_msb) // remove upper bits
-			 >> offset_lsb)       // move back
-			>> offset_lsb);       // and drop lower bits
-	}
-} __attribute__((packed));
 
 
 class HostALController

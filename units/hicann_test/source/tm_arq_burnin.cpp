@@ -111,7 +111,6 @@ cout << "test0" << endl << flush;
 
 #ifdef NCSIM
       std::cout << "Starting testcase tm_arq_burnin at time " << int(sc_simulation_time()) << "ns" << std::endl;
-      Logger::AlterLevel al(Logger::DEBUG0);
 /*
       eth_dbg::setDbgLevel(ETH_COMPONENT_MAC, 10);
       eth_dbg::setDbgLevel(ETH_COMPONENT_ARP, 10);

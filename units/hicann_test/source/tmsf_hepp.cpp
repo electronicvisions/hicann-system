@@ -213,7 +213,6 @@ public:
 
     bool test() 
     {
-        Logger::AlterLevel log_level_alter(Logger::DEBUG0);
         std::stringstream msg;
 
         if ((chip.size()<FPGA_COUNT+DNC_COUNT) || !chip[FPGA_COUNT+DNC_COUNT]) {

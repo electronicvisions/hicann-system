@@ -1,5 +1,8 @@
 #include "s2c_jtagphys_2fpga_arq.h"
 
+#include "logger.h"
+#include "logger_ncsim_compat.h"
+
 // for JTAG: named socket
 #include <sys/socket.h>
 #include <sys/types.h>
@@ -9,8 +12,9 @@
 using namespace facets;
 using namespace std;
 
+#ifndef NCSIM
 static log4cxx::LoggerPtr logger = log4cxx::Logger::getLogger("hicann-system.S2C_JtagPhys2FpgaArq");
-
+#endif
 
 S2C_JtagPhys2FpgaArq::S2C_JtagPhys2FpgaArq(
 	CommAccess const& access,

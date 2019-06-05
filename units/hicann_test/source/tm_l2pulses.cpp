@@ -54,10 +54,6 @@ class TmL2Pulses : public Testmode{
       this->clkperiod_bio_fpga = 8.0e-9*1.0e4*1.0e3; // in ms
       this->playback_begin_offset = 5.0; // in ms
 
-#ifdef NCSIM
-      Logger::AlterLevel al(Logger::DEBUG0);
-#endif
-
       hc = (HicannCtrl*) chip[FPGA_COUNT+DNC_COUNT+0];
       nc  = &hc->getNC();
       spc = &hc->getSPL1Control();

@@ -84,10 +84,6 @@ public:
 
 		bool result = true;
 
-#ifdef NCSIM
-      Logger::AlterLevel al(Logger::DEBUG0);
-#endif
-
 		if (!jtag) {
 		 	dbg(0) << "ERROR: object 'jtag' in testmode not set, abort" << endl;
 			return 0;
