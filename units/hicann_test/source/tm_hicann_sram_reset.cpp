@@ -80,7 +80,20 @@ public:
 
 		for(uint i = HicannCtrl::SYNAPSE_TOP ; i != HicannCtrl::SYNAPSE_BOTTOM+1 ; i++) {
 			// set SRAM controller timings, first:
+
+			uint rd = 0;
+			uint sp = 0;
+			uint wd = 0;
+			
 			hc->getSC(i).set_sram_timings(read_delay, setup_precharge, write_delay);
+			hc->getSC(i).get_sram_timings(rd, sp, wd);
+
+			if (rd != read_delay || sp != setup_precharge || wd != write_delay) {
+				std::cerr << "set: " << read_delay << " " << setup_precharge << " " << write_delay << '\n';
+				std::cerr << "get: " << rd << " " << sp << " " << wd << '\n';
+				throw std::runtime_error("set != get synapse controller timings");
+			}
+			
 			hc->getSC(i).reset_drivers();
 		}
 
