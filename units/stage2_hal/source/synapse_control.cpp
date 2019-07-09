@@ -808,6 +808,7 @@ void SynapseControl::set_sram_timings(uint read_delay, uint setup_precharge, uin
 	if (setup_precharge >= (1<<4)) throw runtime_error("setup_precharge parameter too large (size is 4 bit in hardware). Fail.");
 	if (write_delay >= (1<<4)) throw runtime_error("write_delay parameter too large (size is 4 bit in hardware). Fail.");
 
+	while(driverbusy()) {}
 	write_data((1<<addrmsb_syndrvctrl) + (1<<cnfgadr_syndrvctrl)     , (read_delay&0xff));
 	write_data((1<<addrmsb_syndrvctrl) + (1<<cnfgadr_syndrvctrl) + 1 , (((setup_precharge&0xf)<<4) + (write_delay&0xf)));
 }
@@ -816,9 +817,11 @@ void SynapseControl::get_sram_timings(uint& read_delay, uint& setup_precharge, u
 	uint addr0 = (1<<addrmsb_syndrvctrl) + (1<<cnfgadr_syndrvctrl);
 	uint addr1 = (1<<addrmsb_syndrvctrl) + (1<<cnfgadr_syndrvctrl) + 1;
 
-	uint rd_data = read_data(addr0);
+	uint rd_data = read_data(addr0); //dummy read cycle
+	rd_data = read_data(addr0);
 	read_delay = rd_data&0xff;
 
+	rd_data = read_data(addr1); //dummy read cycle
 	rd_data = read_data(addr1);
 	setup_precharge = (rd_data>>4)&0xf;
 	write_delay     = rd_data&0xf;
