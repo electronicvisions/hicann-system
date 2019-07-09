@@ -111,6 +111,7 @@ private:
 	std::bitset<8> highspeed_hicanns; //set of flags to indicate which hicanns are available via high-speed (HS numbering!)
 
 	uint s_number, jtag_port;
+	size_t jtag_frequency; //TCK Frequency in kHz
 	FPGAConnectionId::IPv4::bytes_type fpga_ip;
 	FPGAConnectionId::IPv4 pmu_ip;
 	commodels model;
@@ -138,7 +139,8 @@ public:
 	    std::bitset<8> highspeed_hicanns,
 	    bool on_wafer,
 	    bool _arq_mode = true,
-	    bool _kintex = true);
+	    bool _kintex = true,
+	    size_t _jtagfrequency = 10000);
 
 	///destructor
 	~ReticleControl();

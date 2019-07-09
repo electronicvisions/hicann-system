@@ -117,16 +117,18 @@ void ReticleControl::init(bool on_wafer = true)
 	if (!jtag->initJtag(jtag_lib_v2::JTAG_ETHERNET))
 		throw std::runtime_error("JTAG open failed!");
 
-	// Connectors on cube setup are not as robust as elastomeric connectors on wafer systems
-	// -> reduced JTag frequency for cube setups
-	size_t const jtag_frequency_in_kHz = on_wafer ? 10000 : 750;
-
-	LOG4CXX_DEBUG(logger, "Setting JTAG frequency to " << jtag_frequency_in_kHz << " kHz");
+	if ((!on_wafer) && (jtag_frequency > 750)) {
+		// Connectors on cube setup are not as robust as elastomeric connectors on wafer systems
+		// -> reduced JTag frequency for cube setups
+		LOG4CXX_WARN(logger, "JTAG frequency of " + std::to_string(jtag_frequency) + "kHz could lead to"
+		                     "errors on non-wafer setups");
+	}
+	LOG4CXX_DEBUG(logger, "Setting JTAG frequency to " << jtag_frequency << "kHz");
 
 	if (model == jtag_wafer_fpga) {
 		if (!jtag->initJtagV2(
 		        jtag->ip_number(fpga_ip[0], fpga_ip[1], fpga_ip[2], fpga_ip[3]), jtag_port,
-		        jtag_frequency_in_kHz)) {
+		        jtag_frequency)) {
 			throw std::runtime_error("JTAG init failed!");
 		}
 
@@ -136,7 +138,7 @@ void ReticleControl::init(bool on_wafer = true)
 		jtag_p2f.reset(new S2C_JtagPhys2Fpga(*access.get(), jtag.get(), on_wafer));
 		comm = jtag_p2f.get();
 	} else if (model == jtag_eth_fpga_arq) {
-		if (!jtag->initJtagV2(p_hostarq, jtag_frequency_in_kHz)) {
+		if (!jtag->initJtagV2(p_hostarq, jtag_frequency)) {
 			throw std::runtime_error("JTAG init failed!");
 		}
 		LOG4CXX_INFO(logger, "Initialized JTAG (over Host-ARQ) communication");
@@ -168,7 +170,8 @@ ReticleControl::ReticleControl(
     std::bitset<8> highspeed_hicanns,
     bool on_wafer,
     bool _arq_mode,
-    bool _kintex)
+    bool _kintex,
+    size_t _jtagfrequency)
     : Stage2Ctrl(NULL, 0),
       physically_available_hicanns(physically_available_hicanns),
       highspeed_hicanns(highspeed_hicanns),
@@ -196,6 +199,7 @@ ReticleControl::ReticleControl(
 	fpga_ip[3] = _ip.d;
 	jtag_port = port;
 	s_number = seq_number;
+	jtag_frequency = _jtagfrequency;
 
 	if (!already_existing)
 		init(on_wafer);
