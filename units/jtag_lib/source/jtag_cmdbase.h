@@ -135,6 +135,7 @@ public:
 	static const int K7CMD_ARQ_READ_DOUT = 0xa;
 	static const int K7CMD_ARQ_READ_COUNT = 0xb;
 	static const int K7CMD_ARQ_NETWORK_DEBUG = 0xc;
+	static const int K7CMD_HICANNIF_NRNFILTER = 0xd;
 
 	// ************ HICANN STATES ******************* //
 	static const int CMD3_READID = 0x00;
@@ -2161,6 +2162,20 @@ public:
 	}
 
 	unsigned char K7FPGA_get_hicannif() { return hicannif_nr; }
+
+	// configure neuron address filter, located behind each HICANN interface in FPGA.
+	// affects all pulses delivered by that hicann_if (9bit)
+	// (set with K7FPGA_set_hicannif before using this command)
+	// masked means the corresponding bit has a 0 in the filter mask
+	// pos. filter mask: all pulses with at least one masked address bit active are filtered
+	// neg. filter mask: all pulses with all masked address bits unset
+	// example: all pulses with addr 0 on all SPL1 channels are filtered with neg. mask 9'b111000000
+	void K7FPGA_set_neuron_addr_filter(unsigned int pos_filter_mask, unsigned int neg_filter_mask)
+	{
+		set_jtag_instr_chain(K7CMD_HICANNIF_NRNFILTER, pos_fpga);
+		set_jtag_data_chain(
+		    (((pos_filter_mask & 0x1ff) << 9) + (neg_filter_mask & 0x1ff)), 18, pos_fpga);
+	}
 };
 
 #endif //__JTAG_CMDBASE__

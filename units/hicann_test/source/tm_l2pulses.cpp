@@ -64,7 +64,10 @@ class TmL2Pulses : public Testmode{
       dc = (DNCControl*) chip[FPGA_COUNT]; // use DNC
 
       bool hicann_loop = false;
-      bool use_ddr2_pbtrace = false;
+	  bool nrnaddr_filter = false;
+	  unsigned int pos_filter_mask = 0x1ff; // filter effectively disabled. reset value
+	  unsigned int neg_filter_mask = 0x1ff; // filter effectively disabled. reset value
+	  bool use_ddr2_pbtrace = false;
       bool use_pulse_gen = false;
       unsigned int pulse_gen_isi = 1000;
       unsigned int experiment_count = 1;
@@ -85,7 +88,17 @@ class TmL2Pulses : public Testmode{
         cout << "Use HICANN loopback (1/0)? "; cin >> hicann_loop;
         use_ddr2_pbtrace = true;
         use_pulse_gen = false;
-      }
+		cout << "Use neuron address filter (1/0)? ";
+		cin >> nrnaddr_filter;
+		if (nrnaddr_filter) {
+			cout << "pos. filter mask (9bit hex, pulse filtered if at least one masked address bit "
+				    "(0) is set: 0x";
+			cin >> hex >> pos_filter_mask;
+			cout << "neg. filter mask (9bit hex, pulse filtered if all masked address bits (0) are "
+				    "unset: 0x";
+			cin >> hex >> neg_filter_mask;
+		}
+	  }
       else
       {
       cout << "Use DDR2 playback/trace (1/0)? "; cin >> use_ddr2_pbtrace;
@@ -225,7 +238,9 @@ class TmL2Pulses : public Testmode{
 	  // debug: replace timestamps from playback memory by current systime
 	  hostal->setPlaybackSystimeReplacing(true);
 
-	  this->executeExperiment(hicann_loop, use_pulse_gen, pulse_gen_isi, exp_time_s, hostal);
+	  this->executeExperiment(
+		  hicann_loop, use_pulse_gen, pulse_gen_isi, exp_time_s, pos_filter_mask, neg_filter_mask,
+		  hostal);
 
 	  // wait for experiment to finish (not really necessary, just to avoid read attempts that would fail anyway)
 	  #ifdef NCSIM
@@ -319,7 +334,8 @@ class TmL2Pulses : public Testmode{
 
 	log(Logger::INFO) << "Sent " << send_pulses.size() << " pulses";
 
-	this->executeExperiment(hicann_loop, use_pulse_gen, pulse_gen_isi, 1.0);
+	this->executeExperiment(
+		hicann_loop, use_pulse_gen, pulse_gen_isi, 1.0, pos_filter_mask, neg_filter_mask);
 
 	this->getTracePulses(rec_pulses);
       }
@@ -422,14 +438,24 @@ class TmL2Pulses : public Testmode{
       }
     }
 
-    void executeExperiment(bool hicann_loop, bool use_pulse_gen, unsigned int pulse_gen_isi, double exp_time_s, HostALController *hostal = NULL)
-    {
+	void executeExperiment(
+	    bool hicann_loop,
+	    bool use_pulse_gen,
+	    unsigned int pulse_gen_isi,
+	    double exp_time_s,
+	    unsigned int pos_filter_mask,
+	    unsigned int neg_filter_mask,
+	    HostALController* hostal = NULL)
+	{
       log(Logger::INFO) << "Starting experiment method";
 
       S2C_JtagPhys2Fpga *local_comm_hs = dynamic_cast<S2C_JtagPhys2Fpga*>(comm);
       assert(local_comm_hs);
 
-      // settings for HICANN loopback without timestamp handling
+	  jtag->K7FPGA_set_hicannif(comm->jtag2dnc(hc->addr())); // highspeed interface number
+	  jtag->K7FPGA_set_neuron_addr_filter(pos_filter_mask, neg_filter_mask);
+
+	  // settings for HICANN loopback without timestamp handling
       if (hicann_loop)
       {
 	nc->dnc_enable_set(1,1,1,1,1,1,1,1);
