@@ -654,16 +654,21 @@ void SynapseControl::drv_set_pdrv(uint drv_nr, uint pdrvbot, uint pdrvtop){
 
 void SynapseControl::reset_drivers(){
 	log(Logger::DEBUG0) << "SynapseControl::reset_drivers: Resetting synapse drivers";
+	while(driverbusy()) {} //wait until not busy
 	for (uint r=0; r<224; r++){
 		write_data(sc_encfg+r, todriver(0, sc_encfg+r));
+		while(driverbusy()) {}
 		write_data(sc_endrv+r, todriver(0, sc_endrv+r));
+		while(driverbusy()) {}
 		write_data(sc_engmax+r, todriver(0, sc_engmax+r));
+		while(driverbusy()) {}
 	}
 }
 
 void SynapseControl::reset_all(){
 	log(Logger::DEBUG0) << "SynapseControl::reset_all: Resetting synapse arrays and drivers, stand by...";
 	vector<uint> zeros(32,0); //one row, all weights 0, decoder 0
+	while(arraybusy()) {} //wait until not busy
 	for (uint r=0; r<224; r++){
 		write_weight(r, zeros); //reset weights
 #if HICANN_V >= 2
@@ -673,10 +678,8 @@ void SynapseControl::reset_all(){
 #else
 	#error Missing code for this HICANN revision.
 #endif
-		write_data(sc_encfg+r, todriver(0, sc_encfg+r));
-		write_data(sc_endrv+r, todriver(0, sc_endrv+r));
-		write_data(sc_engmax+r, todriver(0, sc_engmax+r));
 	}
+	reset_drivers();
 }
 
 void SynapseControl::preout_set(uint drv_nr, uint pout0, uint pout1, uint pout2, uint pout3){
