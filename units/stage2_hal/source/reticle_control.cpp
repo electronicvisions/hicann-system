@@ -82,7 +82,6 @@ void ReticleControl::init(bool on_wafer = true)
 	std::shared_ptr<sctrltp::ARQStream> p_hostarq;
 	if (model == jtag_eth_fpga_arq) {
 		FPGAConnectionId::IPv4 tmp((fpga_ip));
-		// FIXME: add option for kintex-based access
 		// FIXME: get dnc id nicer!
 #ifdef FPGA_BOARD_BS_K7
 		p_hostarq.reset(new sctrltp::ARQStream(
@@ -113,7 +112,7 @@ void ReticleControl::init(bool on_wafer = true)
 		}
 	}
 
-	jtag.reset(new myjtag_full(true, /*dnc?*/ !kintex, physically_available_hicanns, 0, kintex));
+	jtag.reset(new myjtag_full(true, /*dnc?*/ false, physically_available_hicanns, 0, /*kintex*/ true));
 	if (!jtag->initJtag(jtag_lib_v2::JTAG_ETHERNET))
 		throw std::runtime_error("JTAG open failed!");
 
@@ -144,7 +143,7 @@ void ReticleControl::init(bool on_wafer = true)
 		LOG4CXX_INFO(logger, "Initialized JTAG (over Host-ARQ) communication");
 
 		jtag_p2f.reset(new S2C_JtagPhys2FpgaArq(
-			*access.get(), jtag.get(), on_wafer, jtag_port - 1700, p_hostarq, kintex));
+			*access.get(), jtag.get(), on_wafer, jtag_port - 1700, p_hostarq, /*kintex*/ true));
 		comm = jtag_p2f.get();
 	} else {
 		jtag_p.reset(new S2C_JtagPhys(*access.get(), jtag.get(), on_wafer));
@@ -170,15 +169,13 @@ ReticleControl::ReticleControl(
     std::bitset<8> highspeed_hicanns,
     bool on_wafer,
     bool _arq_mode,
-    bool _kintex,
     size_t _jtagfrequency)
     : Stage2Ctrl(NULL, 0),
       physically_available_hicanns(physically_available_hicanns),
       highspeed_hicanns(highspeed_hicanns),
       pmu_ip(pmu_ip),
       on_wafer(on_wafer),
-      arq_mode(_arq_mode),
-      kintex(_kintex)
+      arq_mode(_arq_mode)
 {
 	LOG4CXX_INFO(
 		logger, "Creating ReticleControl instance for reticle IP/FPGA "

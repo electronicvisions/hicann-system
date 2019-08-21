@@ -115,7 +115,7 @@ private:
 	FPGAConnectionId::IPv4::bytes_type fpga_ip;
 	FPGAConnectionId::IPv4 pmu_ip;
 	commodels model;
-	bool on_wafer, arq_mode, kintex;
+	bool on_wafer, arq_mode;
 	boost::scoped_ptr<CommAccess> access;
 
 public:
@@ -139,7 +139,6 @@ public:
 	    std::bitset<8> highspeed_hicanns,
 	    bool on_wafer,
 	    bool _arq_mode = true,
-	    bool _kintex = true,
 	    size_t _jtagfrequency = 10000);
 
 	///destructor
