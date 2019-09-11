@@ -51,7 +51,7 @@ struct switchdata {
 };
 
 /*mutex controlled variables*/
-static pthread_mutex_t mutex;
+static pthread_mutex_t our_mutex;
 static bool send_finished = false;
 static queue<switchdata> exp_read_results;
 
@@ -98,13 +98,13 @@ static void *sending(void *param) {
 			if(testl1c < 2){
 				testaddr = rand() % 64;
 				if(read){
-					pthread_mutex_lock (&mutex);
+					pthread_mutex_lock (&our_mutex);
 					switch(testl1c){
 						case 0:args->hicann_hs[testhc]->getLC_cl().read_cfg(testaddr);break;
 						case 1:args->hicann_hs[testhc]->getLC_cr().read_cfg(testaddr);break;
 					}
 					exp_read_results.push(switchdata(testhc, testl1c, testaddr, args->switches[testhc][testl1c][testaddr]));
-					pthread_mutex_unlock (&mutex);
+					pthread_mutex_unlock (&our_mutex);
 //				cout << "Read answer " << dec << exp_read_results.size()-1 << " produced at packet " << w << " for "
 //						<< "HICANN " << exp_read_results.back().hc
 //						<< ", L1 " << exp_read_results.back().lc
@@ -113,19 +113,19 @@ static void *sending(void *param) {
 				} else {
 					while(testdata == 0)  // avoid testing against reset value
 						testdata = rand()%(1<<4); // 4 entries per address
-					pthread_mutex_lock (&mutex);
+					pthread_mutex_lock (&our_mutex);
 					switch(testl1c){
 						case 0:args->hicann_hs[testhc]->getLC_cl().write_cfg(testaddr, testdata);break;
 						case 1:args->hicann_hs[testhc]->getLC_cr().write_cfg(testaddr, testdata);break;
 					}
 					args->switches[testhc][testl1c][testaddr] = testdata;
-					pthread_mutex_unlock (&mutex);
+					pthread_mutex_unlock (&our_mutex);
 //					cout << "write: HICANN " << testhc << " L1 " << testl1c << " text 0x" << hex << testaddr << " 0x" << args->switches[testhc][testl1c][testaddr] << endl;
 				}
 			} else {
 				testaddr = rand() % 112;
 				if(read){
-					pthread_mutex_lock (&mutex);
+					pthread_mutex_lock (&our_mutex);
 					switch(testl1c){
 						case 2:args->hicann_hs[testhc]->getLC_tl().read_cfg(testaddr);break;
 						case 3:args->hicann_hs[testhc]->getLC_bl().read_cfg(testaddr);break;
@@ -133,7 +133,7 @@ static void *sending(void *param) {
 						case 5:args->hicann_hs[testhc]->getLC_br().read_cfg(testaddr);break;
 					}
 					exp_read_results.push(switchdata(testhc, testl1c, testaddr, args->switches[testhc][testl1c][testaddr]));
-					pthread_mutex_unlock (&mutex);
+					pthread_mutex_unlock (&our_mutex);
 //					cout << "Read answer " << dec << exp_read_results.size()-1 << " produced at packet " << w << " for "
 //						<< "HICANN " << exp_read_results.back().hc
 //						<< ", L1 " << exp_read_results.back().lc
@@ -142,7 +142,7 @@ static void *sending(void *param) {
 				} else {
 					while(testdata == 0)  // avoid testing against reset value
 						testdata = rand()%(1<<16); // 16 entries per address
-					pthread_mutex_lock (&mutex);
+					pthread_mutex_lock (&our_mutex);
 					switch(testl1c){
 						case 2:args->hicann_hs[testhc]->getLC_tl().write_cfg(testaddr, testdata);break;
 						case 3:args->hicann_hs[testhc]->getLC_bl().write_cfg(testaddr, testdata);break;
@@ -150,7 +150,7 @@ static void *sending(void *param) {
 						case 5:args->hicann_hs[testhc]->getLC_br().write_cfg(testaddr, testdata);break;
 					}
 					args->switches[testhc][testl1c][testaddr] = testdata;
-					pthread_mutex_unlock (&mutex);
+					pthread_mutex_unlock (&our_mutex);
 //					cout << "write: HICANN " << testhc << " L1 " << testl1c << " test 0x" << hex << testaddr << " 0x" << args->switches[testhc][testl1c][testaddr] << endl;
 				}
 			}
@@ -158,10 +158,10 @@ static void *sending(void *param) {
 			size_t block = (rand() < RAND_MAX/2) ? 1 : 0;
 			testaddr = rand() % 6;
 			if(read){
-				pthread_mutex_lock (&mutex);
+				pthread_mutex_lock (&our_mutex);
 				args->hicann_hs[testhc]->getSC(block).read_cmd(static_cast<ci_addr_t>(SynapseControl::sc_lut+testaddr), Stage2Comm::synramdelay);
 				exp_read_results.push(switchdata(testhc, 6+block, testaddr, args->luts[testhc][block][testaddr]));
-				pthread_mutex_unlock (&mutex);
+				pthread_mutex_unlock (&our_mutex);
 //				cout << "Read answer " << dec << exp_read_results.size()-1 << " produced at packet " << w << " for "
 //					<< "HICANN " << exp_read_results.back().hc
 //					<< ", L1 " << exp_read_results.back().lc
@@ -169,10 +169,10 @@ static void *sending(void *param) {
 //					<< ", 0x" << exp_read_results.back().data;
 			} else {
 				testdata = rand(); // all lut entries are 31 bit wide (8 4-bit luts)
-				pthread_mutex_lock (&mutex);
+				pthread_mutex_lock (&our_mutex);
 				args->hicann_hs[testhc]->getSC(block).write_data(static_cast<ci_addr_t>(SynapseControl::sc_lut+testaddr), (unsigned long)testdata);
 				args->luts[testhc][block][testaddr] = testdata;
-				pthread_mutex_unlock (&mutex);
+				pthread_mutex_unlock (&our_mutex);
 //				cout << "write: HICANN " << testhc << " L1 " << 6+block << " test 0x" << hex << testaddr << " 0x" << args->luts[testhc][block][testaddr] << endl;
 			}
 		}
@@ -186,11 +186,11 @@ static void *sending(void *param) {
 		}
 	}
 	// flush remaining packets
-	pthread_mutex_lock (&mutex);
+	pthread_mutex_lock (&our_mutex);
 	args->comm->Flush();
 
 	send_finished = true;
-	pthread_mutex_unlock (&mutex);
+	pthread_mutex_unlock (&our_mutex);
 
 	std::cerr << "Finished sending..." << std::endl;
 	pthread_exit(NULL);
@@ -460,7 +460,7 @@ cout << "test0" << endl << flush;
 
 		/*start sending thread*/
 		std::cerr << "Star sending..." << std::endl;
-		pthread_mutex_init (&mutex, NULL);
+		pthread_mutex_init (&our_mutex, NULL);
 		pthread_t threadvar;
 		pthread_create(&threadvar, NULL, sending, &descargs);
 
@@ -485,10 +485,10 @@ cout << "test0" << endl << flush;
 				cout << "Recieved " << dec << i << " packets"<< endl;
 				last_print = now;
 			}
-			pthread_mutex_lock (&mutex);
+			pthread_mutex_lock (&our_mutex);
 			fifo_is_empty =  exp_read_results.empty();
 			if (fifo_is_empty) {
-				pthread_mutex_unlock (&mutex);
+				pthread_mutex_unlock (&our_mutex);
 				continue;
 			}
 			switchdata results_buffer = exp_read_results.front();
@@ -504,7 +504,7 @@ cout << "test0" << endl << flush;
 				case 6:hicann_hs[results_buffer.hc]->getSC(0).get_data(&res); rcvaddr = res.addr&0xf; rcvdata = res.data; break;
 				case 7:hicann_hs[results_buffer.hc]->getSC(1).get_data(&res); rcvaddr = res.addr&0xf; rcvdata = res.data; break;
 			}
-			pthread_mutex_unlock (&mutex);
+			pthread_mutex_unlock (&our_mutex);
 
 			stringstream message;
 			bool thisoneok = true;
@@ -604,7 +604,7 @@ cout << "test0" << endl << flush;
 
 		log(Logger::INFO) << *local_comm_hs;
 
-		pthread_mutex_destroy(&mutex);
+		pthread_mutex_destroy(&our_mutex);
 		return !result; // shell wants 0 for success
 	}
 
