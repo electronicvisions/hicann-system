@@ -296,7 +296,7 @@ public:
 
 	/// add data end marker to FPGA playback.
 	bool addPlaybackFPGAConfig(
-	    full_fpga_time_t fpga_time, bool pb_end_marker, bool stop_trace, bool start_trace_read);
+	    full_fpga_time_t fpga_time, bool pb_end_marker, bool stop_trace, bool start_trace_read, bool block_trace_recording);
 
 	/// returns memory address of last acknowledged end-of-data marker from playback (zero when no
 	/// acknowledge was received).

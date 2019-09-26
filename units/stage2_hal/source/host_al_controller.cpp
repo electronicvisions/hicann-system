@@ -584,7 +584,7 @@ bool HostALController::setSystime(
 
 
 bool HostALController::addPlaybackFPGAConfig(
-	full_fpga_time_t fpga_time, bool pb_end_marker, bool stop_trace, bool start_trace_read)
+	full_fpga_time_t fpga_time, bool pb_end_marker, bool stop_trace, bool start_trace_read, bool block_trace_recording)
 {
 	// handle overflows -> assumes that times are strictly sorted and 64bit integer value does not
 	// overflow
@@ -625,6 +625,8 @@ bool HostALController::addPlaybackFPGAConfig(
 		config_low |= 1; // bit 0: stop trace
 	if (start_trace_read)
 		config_low |= (1 << 1); // bit 1: start trace read
+	if (block_trace_recording)
+		config_low |= (1 << 2); // bit 2: block trace
 
 	uint32_t config_high = (1 << 31); // bit 63(31): FPGA config
 	if (pb_end_marker)

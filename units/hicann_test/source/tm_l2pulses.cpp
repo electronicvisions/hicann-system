@@ -69,6 +69,7 @@ class TmL2Pulses : public Testmode{
 	  unsigned int neg_filter_mask = 0x1ff; // filter effectively disabled. reset value
 	  bool use_ddr2_pbtrace = false;
       bool use_pulse_gen = false;
+	  bool block_trace_recording = false; // test for trace blocking
       unsigned int pulse_gen_isi = 1000;
       unsigned int experiment_count = 1;
       double multi_exp_timeshift_s = 5.0e-6; // shift of pulse start time between experiments
@@ -212,6 +213,9 @@ class TmL2Pulses : public Testmode{
 	      send_pulses[npulse].time += multi_exp_timeshift_s;
 	  }
 
+	  if (block_trace_recording)
+	    hostal->addPlaybackFPGAConfig(0, false, false, false, true);
+
 	  if (!use_pulse_gen)
 	  {
 	    hostal->sendPulseList(send_pulses,0.0);
@@ -220,7 +224,7 @@ class TmL2Pulses : public Testmode{
 
 	  // send end-of-data marker to playback
 	  // -> wait 100 FPGA clks after last pulse, activate trace stop and read-out
-	  hostal->addPlaybackFPGAConfig(uint64_t(send_pulses.back().time*1e9/8.0)+100, true, true, true);
+	  hostal->addPlaybackFPGAConfig(uint64_t(send_pulses.back().time*1e9/8.0)+100, true, true, true, false);
 	  hostal->flushPlaybackPulses();
 
 	  // wait for playback to acknowledge end of data
