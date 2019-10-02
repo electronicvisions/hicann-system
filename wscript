@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 import sys, os
 from waflib import Options
+from waflib import Utils
 
 APPNAME='HICANN-system'
 
@@ -107,5 +108,5 @@ def build(bld):
 
     s2ctrl = bld.install_as('bin/s2ctrl.py', 'tools/s2ctrl.py')
     if s2ctrl:
-        s2ctrl.chmod = 0755
+        s2ctrl.chmod = Utils.O755
     bld.install_as('lib/s2ctrl.py', 'tools/s2ctrl.py')
