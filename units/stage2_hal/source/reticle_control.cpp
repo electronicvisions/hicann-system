@@ -157,7 +157,6 @@ void ReticleControl::init(bool on_wafer = true)
 	// of 1s)
 	for (uint i = 0; i < physically_available_hicanns.count(); i++)
 		hicann[i].reset(new HicannCtrl(comm, i));
-	used_hicanns.reset(); // no HICANNs are in use
 }
 
 ReticleControl::ReticleControl(
@@ -298,7 +297,6 @@ bool ReticleControl::hicannInit(uint hicann_nr, bool silent, bool return_on_erro
 	} else {
 		LOG4CXX_INFO(
 			logger, "Reticle (" << s_number << ")::HICANN " << hicann_nr << " Init OK. ");
-		set_used_hicann(hicann_nr, true);
 	}
 
 	return success;
@@ -319,22 +317,9 @@ bool ReticleControl::hicannInit(std::bitset<8> hicann, std::bitset<8> highspeed_
 			logger,
 			"Reticle (" << s_number << ")::HICANNs " << hicann.to_string() <<
 			" (HS: " << highspeed_hicanns.to_string() << ") Init OK. ");
-		for (size_t i = 0; i < hicann.size(); ++i) {
-			if (hicann[i])
-				set_used_hicann(i, true);
-		}
 	}
 
 	return success;
-}
-
-void ReticleControl::set_used_hicann(uint hicann_number, bool state){
-	used_hicanns.set(hicann_number, state);
-}
-
-bitset<8> ReticleControl::get_used_hicanns()
-{
-	return used_hicanns;
 }
 
 uint8_t ReticleControl::hicann_number()

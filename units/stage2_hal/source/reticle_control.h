@@ -174,12 +174,6 @@ public:
 	/// which entails the loss of the sync of the systime counters on the FPGA and the HICANNs
 	bool hicannInit(std::bitset<8> hicann, std::bitset<8> highspeed_hicann, bool silent=false, bool return_on_error=false);
 
-	///label HICANNs of this reticle as used (DNC numbering!)
-	void set_used_hicann(uint hicann_number, bool state);
-
-	///unset used flags for HICANNs in this reticle
-	std::bitset<8> get_used_hicanns();
-
 	///get number of HICANNs on a reticle (in case vertical setup is used)
 	uint8_t hicann_number();
 
