@@ -61,5 +61,6 @@ def build(ctx):
             'logger_obj',
             's2conf_inc',
             'XERCES',
+            'jtag_lib_obj'
             ],
     )

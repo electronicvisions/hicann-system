@@ -40,6 +40,5 @@ def build(ctx):
         target          = 'hostfpga_obj',
         source          = HOSTFPGA_FILES,
         includes        = 'source',
-        export_includes = 'source',
         use             = 'rcf-sf-only hostfpga_inc',
     )

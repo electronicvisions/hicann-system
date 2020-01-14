@@ -45,6 +45,7 @@ def build(ctx):
             'arq_obj',
             'logger_obj',
             'tud_jtag',
+            'jtag_lib_obj'
             ],
         cxxflags = ['-fPIC'],
     )

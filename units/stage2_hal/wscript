@@ -41,7 +41,6 @@ def build(ctx):
     '''.split()
 
     ctx(target          = 's2hal_inc',
-        use             = ['arq_inc', 'communication_inc', 'jtag_lib_inc'],
         export_includes = 'source')
 
     # build stage2 hal objects (reused by python wrapper)
