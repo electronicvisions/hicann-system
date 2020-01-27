@@ -83,6 +83,9 @@ public:
 	cable_info();
 	cable_info(cable_info&);
 	~cable_info();
+#if __cplusplus >= 201103L
+	cable_info& operator=(cable_info const&) = default;
+#endif
 	bool setSerial(const char*);
 	bool setPort(const char*);
 	void setLocked(const bool);
