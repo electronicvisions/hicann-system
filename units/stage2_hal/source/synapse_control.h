@@ -258,6 +258,12 @@ public:
 	/// only resets the synapse drivers.
 	void reset_drivers();
 
+	/// only resets the synapse weights.
+	void reset_weights();
+
+	/// only resets the synapse decoders.
+	void reset_decoders();
+
 	/// reset synapse drivers and synapses to zero.
 	void reset_all();
 

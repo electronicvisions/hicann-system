@@ -665,12 +665,20 @@ void SynapseControl::reset_drivers(){
 	}
 }
 
-void SynapseControl::reset_all(){
-	log(Logger::DEBUG0) << "SynapseControl::reset_all: Resetting synapse arrays and drivers, stand by...";
+void SynapseControl::reset_weights(){
+	log(Logger::DEBUG0) << "SynapseControl::reset_weights: Resetting synapse weights";
 	vector<uint> zeros(32,0); //one row, all weights 0, decoder 0
 	while(arraybusy()) {} //wait until not busy
 	for (uint r=0; r<224; r++){
 		write_weight(r, zeros); //reset weights
+	}
+}
+
+void SynapseControl::reset_decoders(){
+	log(Logger::DEBUG0) << "SynapseControl::reset_decoders: Resetting synapse decoders";
+	vector<uint> zeros(32,0); //one row, all weights 0, decoder 0
+	while(arraybusy()) {} //wait until not busy
+	for (uint r=0; r<224; r++){
 #if HICANN_V >= 2
 		if ((r%4==0) || (r%4==2)) write_decoder(r, zeros, zeros); //reset decoder values
 #elif HICANN_V == 1
@@ -679,6 +687,12 @@ void SynapseControl::reset_all(){
 	#error Missing code for this HICANN revision.
 #endif
 	}
+}
+
+void SynapseControl::reset_all(){
+	log(Logger::DEBUG0) << "SynapseControl::reset_all: Resetting synapse arrays and drivers, stand by...";
+	reset_weights();
+	reset_decoders();
 	reset_drivers();
 }
 
