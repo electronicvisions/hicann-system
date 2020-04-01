@@ -13,9 +13,9 @@ Test for FPGA Stats readout
 extern "C" {
 // uintXX_t
 #include <stdint.h>
+}
 // Software ARQ
 #include "sctrltp/us_sctp_if.h"
-}
 
 using namespace facets;
 

@@ -19,9 +19,9 @@ extern "C" {
 #include <stdint.h>
 // gettimeofday()
 #include <sys/time.h>
+}
 // Software ARQ
 #include "sctrltp/us_sctp_if.h"
-}
 
 // gimme warnings
 #pragma GCC diagnostic push
