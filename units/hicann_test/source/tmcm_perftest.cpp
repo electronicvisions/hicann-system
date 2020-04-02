@@ -36,7 +36,7 @@ struct perftest_result
 };
 
 static perftest_result do_perftest(
-	sctrltp::ARQStream<>* arq, size_t no_cmds, std::bitset<16> testmask)
+	sctrltp::ARQStream<sctrltp::ParametersFcpBss1>* arq, size_t no_cmds, std::bitset<16> testmask)
 {
 	sctrltp::packet packet;
 
@@ -45,7 +45,7 @@ static perftest_result do_perftest(
 	packet.pdu[1] = no_cmds;
 	packet.pid = PTYPE_PERFTEST;
 	packet.len = 2;
-	arq->send(packet, sctrltp::ARQStream<>::NONBLOCK);
+	arq->send(packet, sctrltp::ARQStream<sctrltp::ParametersFcpBss1>::NONBLOCK);
 	arq->flush();
 
 	// wait for response from FPGA
@@ -85,7 +85,7 @@ static perftest_result do_perftest(
 			}
 		} else {
 			// packet received
-			arq->receive(packet, sctrltp::ARQStream<>::NONBLOCK);
+			arq->receive(packet, sctrltp::ARQStream<sctrltp::ParametersFcpBss1>::NONBLOCK);
 			if (packet.pid == PTYPE_PERFTEST) {
 				if (packet.len == 18) {
 					result.send_duration = packet.pdu[0];
@@ -129,7 +129,7 @@ public:
 	bool test()
 	{
 		S2C_JtagPhys2FpgaArq* my_comm = dynamic_cast<S2C_JtagPhys2FpgaArq*>(comm);
-		sctrltp::ARQStream<>* my_arq = my_comm->getHostAL()->getARQStream();
+		sctrltp::ARQStream<sctrltp::ParametersFcpBss1>* my_arq = my_comm->getHostAL()->getARQStream();
 		size_t max_command_count = 1000;
 		std::bitset<16> testmask(std::string("0000000000000001"));
 

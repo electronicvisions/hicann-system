@@ -79,16 +79,16 @@ void ReticleControl::init(bool on_wafer = true)
 		throw std::runtime_error("The non-ARQ communication mode is not compatible with ReticleControl");
 	}
 
-	std::shared_ptr<sctrltp::ARQStream<>> p_hostarq;
+	std::shared_ptr<sctrltp::ARQStream<sctrltp::ParametersFcpBss1>> p_hostarq;
 	if (model == jtag_eth_fpga_arq) {
 		FPGAConnectionId::IPv4 tmp((fpga_ip));
 		// FIXME: get dnc id nicer!
 #ifdef FPGA_BOARD_BS_K7
-		p_hostarq.reset(new sctrltp::ARQStream<>(
+		p_hostarq.reset(new sctrltp::ARQStream<sctrltp::ParametersFcpBss1>(
 			tmp.to_string(), "192.168.0.128", /*listen port*/ 1234, "192.168.0.1",
 			/*target port*/ 1234)); // TODO: set correct host IP
 #else
-		p_hostarq.reset(new sctrltp::ARQStream<>(
+		p_hostarq.reset(new sctrltp::ARQStream<sctrltp::ParametersFcpBss1>(
 			tmp.to_string(), "192.168.1.2", /*listen port*/ 1234, tmp.to_string().c_str(),
 			/*target port*/ 1234));
 #endif

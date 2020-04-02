@@ -17,14 +17,14 @@ S2C_JtagPhys2FpgaArq::S2C_JtagPhys2FpgaArq(
 	myjtag_full* j,
 	bool on_reticle,
 	dncid_t dncid,
-	std::shared_ptr<sctrltp::ARQStream<>> arq_ptr,
+	std::shared_ptr<sctrltp::ARQStream<sctrltp::ParametersFcpBss1>> arq_ptr,
 	bool use_k7fpga)
 	: S2C_JtagPhys2Fpga(access, j, on_reticle, use_k7fpga),
 	  dncid(dncid),
 	  p_ARQStream(arq_ptr),
 	  hostalctrl(access.getFPGAConnectionId().get_fpga_ip().to_ulong(), 1234),
 	  bulk(0),
-	  max_bulk(sctrltp::Parameters<>::MAX_PDUWORDS)
+	  max_bulk(sctrltp::ParametersFcpBss1::MAX_PDUWORDS)
 {
 #ifdef NCSIM
 #ifndef FPGA_BOARD_BS_K7

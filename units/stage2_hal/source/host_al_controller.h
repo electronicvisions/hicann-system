@@ -158,9 +158,9 @@ public:
 	void setJTAGInterface(myjtag_full* set_jtag);
 #endif
 
-	void setARQStream(sctrltp::ARQStream<>* set_arq);
+	void setARQStream(sctrltp::ARQStream<sctrltp::ParametersFcpBss1>* set_arq);
 
-	sctrltp::ARQStream<>* getARQStream();
+	sctrltp::ARQStream<sctrltp::ParametersFcpBss1>* getARQStream();
 
 	/// set the Ethernet interface to use.
 	/// should be a derived class of EthernetIFBase
@@ -221,7 +221,7 @@ public:
 
 	/// return next received hostARQ packet of JTAG type.
 	/// if nothing was received, an empty packet (length 0) is returned
-	sctrltp::packet<> getReceivedJTAGData();
+	sctrltp::packet<sctrltp::ParametersFcpBss1> getReceivedJTAGData();
 
 	/// send I2C packet.
 	///
@@ -398,7 +398,7 @@ private:
 	myjtag_full* jtag;
 #endif
 
-	sctrltp::ARQStream<>* arq_ptr;
+	sctrltp::ARQStream<sctrltp::ParametersFcpBss1>* arq_ptr;
 
 	std::vector<hicann_config_t> hiconf_bulk_buffer; /// buffer for hicann config bulks
 	std::vector<uint32_t> playback_entry_buffer;     /// buffer for playback entries. Is filled via
@@ -409,7 +409,7 @@ private:
 	int last_group_start_in_buffer;
 
 	// receive buffer for JTAG data
-	std::deque<sctrltp::packet<>> jtag_receive_buffer;
+	std::deque<sctrltp::packet<sctrltp::ParametersFcpBss1>> jtag_receive_buffer;
 
 	// receive buffers for HICANN config
 	std::tr1::array<std::deque<uint64_t>, 64> hiconf_receive_buffer;

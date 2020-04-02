@@ -106,7 +106,7 @@ public:
 		return true;
 	}
 
-	bool initJtagV2(std::shared_ptr<sctrltp::ARQStream<>> arq_stream, unsigned int speed)
+	bool initJtagV2(std::shared_ptr<sctrltp::ARQStream<sctrltp::ParametersFcpBss1>> arq_stream, unsigned int speed)
 	{
 		if (!this->createSession(arq_stream))
 			return false;

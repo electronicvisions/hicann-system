@@ -26,7 +26,7 @@ public:
 		myjtag_full* j,
 		bool on_reticle,
 		dncid_t dncid,
-		std::shared_ptr<sctrltp::ARQStream<>> arq_ptr,
+		std::shared_ptr<sctrltp::ARQStream<sctrltp::ParametersFcpBss1>> arq_ptr,
 		bool use_k7fpga = false);
 	~S2C_JtagPhys2FpgaArq();
 
@@ -99,7 +99,7 @@ private:
 	}
 
 	// HostAL stuff
-	std::shared_ptr<sctrltp::ARQStream<>> p_ARQStream;
+	std::shared_ptr<sctrltp::ARQStream<sctrltp::ParametersFcpBss1>> p_ARQStream;
 
 	HostALController hostalctrl;
 	unsigned int bulk;

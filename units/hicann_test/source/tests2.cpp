@@ -519,11 +519,11 @@ int main(int argc, char* argv[])
 
 			FPGAConnectionId::IPv4 tmp(fpga_ip);
 #ifdef FPGA_BOARD_BS_K7
-			std::shared_ptr<sctrltp::ARQStream<>> p_hostarq(new sctrltp::ARQStream<>(
+			std::shared_ptr<sctrltp::ARQStream<sctrltp::ParametersFcpBss1>> p_hostarq(new sctrltp::ARQStream<sctrltp::ParametersFcpBss1>(
 				tmp.to_string(), "192.168.0.128", /*listen port*/ 1234, "192.168.0.1",
 				/*target port*/ 1234)); // TODO: set correct host IP
 #else
-			std::shared_ptr<sctrltp::ARQStream<>> p_hostarq(new sctrltp::ARQStream<>(
+			std::shared_ptr<sctrltp::ARQStream<sctrltp::ParametersFcpBss1>> p_hostarq(new sctrltp::ARQStream<sctrltp::ParametersFcpBss1>(
 				tmp.to_string(), "192.168.1.2", /*listen port*/ 1234, tmp.to_string().c_str(),
 				/*target port*/ 1234));
 #endif
@@ -567,7 +567,7 @@ int main(int argc, char* argv[])
 
 			// create hostarq stream here
 			FPGAConnectionId::IPv4 tmp((fpga_ip));
-			std::shared_ptr<sctrltp::ARQStream<>> p_hostarq(new sctrltp::ARQStream<>(
+			std::shared_ptr<sctrltp::ARQStream<sctrltp::ParametersFcpBss1>> p_hostarq(new sctrltp::ARQStream<sctrltp::ParametersFcpBss1>(
 				/* shm file name */ tmp.to_string(),
 				/* unused on HW */ "192.168.1.2",
 				/* unused on HW */ 1234,

@@ -131,9 +131,9 @@ union fpgaconfigcmd_hack {
 
 static void *sending(void *param) {
 	struct sctp_descr<> *desc = (struct sctp_descr<> *)param;
-	struct buf_desc<> buffer;
+	struct buf_desc<ParametersFcpBss1> buffer;
 	fpgaconfigcmd_hack cfg;
-	__u64 data[Parameters<>::MAX_PDUWORDS];
+	__u64 data[ParametersFcpBss1::MAX_PDUWORDS];
 	__s32 ret;
 	uint16_t type = application_layer_packet_types::FPGACONFIG;
 	uint16_t last_fpga_time = 0;
@@ -182,7 +182,7 @@ static void *sending(void *param) {
 		pulse.count = 1;
 
 		size_t iii;
-		for (iii = 0; iii < Parameters<>::MAX_PDUWORDS; iii++) {
+		for (iii = 0; iii < ParametersFcpBss1::MAX_PDUWORDS; iii++) {
 			pulse.fpga_time = last_fpga_time;
 			// lower bits into label
 			pulse.label     = cmd_counter & 0xfff;
@@ -201,7 +201,7 @@ static void *sending(void *param) {
 		send_buf (desc, &buffer, 0);
 		frame_counter++;
 	}
-	send_buf (desc, (buf_desc<>*)NULL, MODE_FLUSH);
+	send_buf (desc, (buf_desc<ParametersFcpBss1>*)NULL, MODE_FLUSH);
 	double stop = mytime(); // not totally correct ;p
 	printf("done\n");
 
@@ -343,8 +343,8 @@ public:
 
 
 		printf ("Connecting to HostARQ Shmem %s", shm_name.c_str());
-		struct buf_desc<> buffer;
-		struct sctp_descr<> *desc = open_conn<Parameters<>>(shm_name.c_str());
+		struct buf_desc<ParametersFcpBss1> buffer;
+		struct sctp_descr<> *desc = open_conn<ParametersFcpBss1>(shm_name.c_str());
 		if (!desc) {
 			printf ("Error: make sure Core and testbench are up\n");
 			return 1;

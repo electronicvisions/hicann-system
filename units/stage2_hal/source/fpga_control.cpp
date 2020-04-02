@@ -58,7 +58,7 @@ void FPGAControl::reset() {
 #endif
 }
 
-uint64_t FPGAControl::readStat(sctrltp::ARQStream<>* const arq_ptr, unsigned int const stat_id)
+uint64_t FPGAControl::readStat(sctrltp::ARQStream<sctrltp::ParametersFcpBss1>* const arq_ptr, unsigned int const stat_id)
 {
 	sctrltp::packet curr_pck;
 	curr_pck.pid = PTYPE_STATS;
@@ -133,7 +133,7 @@ uint64_t FPGAControl::readStat(sctrltp::ARQStream<>* const arq_ptr, unsigned int
 	return 0;
 }
 
-uint64_t FPGAControl::get_trace_pulse_count(sctrltp::ARQStream<>* const arq_ptr)
+uint64_t FPGAControl::get_trace_pulse_count(sctrltp::ARQStream<sctrltp::ParametersFcpBss1>* const arq_ptr)
 {
 	if (!arq_ptr)
 		throw std::runtime_error("FPGAControl::get_trace_pulse_count(): arq_ptr is NULL");
@@ -141,7 +141,7 @@ uint64_t FPGAControl::get_trace_pulse_count(sctrltp::ARQStream<>* const arq_ptr)
 	return counter;
 }
 
-uint64_t FPGAControl::get_pb_pulse_count(sctrltp::ARQStream<>* const arq_ptr)
+uint64_t FPGAControl::get_pb_pulse_count(sctrltp::ARQStream<sctrltp::ParametersFcpBss1>* const arq_ptr)
 {
 	if (!arq_ptr)
 		throw std::runtime_error("FPGAControl::get_pb_pulse_count(): arq_ptr is NULL");
@@ -149,7 +149,7 @@ uint64_t FPGAControl::get_pb_pulse_count(sctrltp::ARQStream<>* const arq_ptr)
 	return counter;
 }
 
-uint64_t FPGAControl::get_network_debug_reg_rx(sctrltp::ARQStream<>* const arq_ptr)
+uint64_t FPGAControl::get_network_debug_reg_rx(sctrltp::ARQStream<sctrltp::ParametersFcpBss1>* const arq_ptr)
 {
 	if (!arq_ptr)
 		throw std::runtime_error("FPGAControl::get_network_debug_reg_rx(): arq_ptr is NULL");
@@ -157,7 +157,7 @@ uint64_t FPGAControl::get_network_debug_reg_rx(sctrltp::ARQStream<>* const arq_p
 	return counter;
 }
 
-uint64_t FPGAControl::get_network_debug_reg_tx(sctrltp::ARQStream<>* const arq_ptr)
+uint64_t FPGAControl::get_network_debug_reg_tx(sctrltp::ARQStream<sctrltp::ParametersFcpBss1>* const arq_ptr)
 {
 	if (!arq_ptr)
 		throw std::runtime_error("FPGAControl::get_network_debug_reg_tx(): arq_ptr is NULL");
@@ -165,7 +165,7 @@ uint64_t FPGAControl::get_network_debug_reg_tx(sctrltp::ARQStream<>* const arq_p
 	return counter;
 }
 
-uint64_t FPGAControl::get_ul_packet_cnt_r(sctrltp::ARQStream<>* const arq_ptr)
+uint64_t FPGAControl::get_ul_packet_cnt_r(sctrltp::ARQStream<sctrltp::ParametersFcpBss1>* const arq_ptr)
 {
 	if (!arq_ptr)
 		throw std::runtime_error("FPGAControl::get_ul_packet_cnt_r(): arq_ptr is NULL");
@@ -173,7 +173,7 @@ uint64_t FPGAControl::get_ul_packet_cnt_r(sctrltp::ARQStream<>* const arq_ptr)
 	return counter;
 }
 
-uint64_t FPGAControl::get_ul_packet_cnt_w(sctrltp::ARQStream<>* const arq_ptr)
+uint64_t FPGAControl::get_ul_packet_cnt_w(sctrltp::ARQStream<sctrltp::ParametersFcpBss1>* const arq_ptr)
 {
 	if (!arq_ptr)
 		throw std::runtime_error("FPGAControl::get_ul_packet_cnt_w(): arq_ptr is NULL");
@@ -181,7 +181,7 @@ uint64_t FPGAControl::get_ul_packet_cnt_w(sctrltp::ARQStream<>* const arq_ptr)
 	return counter;
 }
 
-bool FPGAControl::get_git_dirty_flag(sctrltp::ARQStream<>* const arq_ptr)
+bool FPGAControl::get_git_dirty_flag(sctrltp::ARQStream<sctrltp::ParametersFcpBss1>* const arq_ptr)
 {
 	if (!arq_ptr)
 		throw std::runtime_error("FPGAControl::get_git_dirty_flag(): arq_ptr is NULL");
@@ -190,14 +190,14 @@ bool FPGAControl::get_git_dirty_flag(sctrltp::ARQStream<>* const arq_ptr)
 	return stats;
 }
 
-uint32_t FPGAControl::get_bitfile_git_hash(sctrltp::ARQStream<>* const arq_ptr)
+uint32_t FPGAControl::get_bitfile_git_hash(sctrltp::ARQStream<sctrltp::ParametersFcpBss1>* const arq_ptr)
 {
 	if (!arq_ptr)
 		throw std::runtime_error("FPGAControl::get_bitfile_git_hash(): arq_ptr is NULL");
 	return readStat(arq_ptr, 6) >> 32;
 }
 
-bool FPGAControl::get_pb_release_error(sctrltp::ARQStream<>* const arq_ptr)
+bool FPGAControl::get_pb_release_error(sctrltp::ARQStream<sctrltp::ParametersFcpBss1>* const arq_ptr)
 {
 	if (!arq_ptr)
 		throw std::runtime_error("FPGAControl::get_pb_release_error(): arq_ptr is NULL");
@@ -205,7 +205,7 @@ bool FPGAControl::get_pb_release_error(sctrltp::ARQStream<>* const arq_ptr)
 	return stats & 0x1;
 }
 
-bool FPGAControl::get_pb2arq_fifo_overflow(sctrltp::ARQStream<>* const arq_ptr)
+bool FPGAControl::get_pb2arq_fifo_overflow(sctrltp::ARQStream<sctrltp::ParametersFcpBss1>* const arq_ptr)
 {
 	if (!arq_ptr)
 		throw std::runtime_error("FPGAControl::get_pb2arq_fifo_overflow(): arq_ptr is NULL");
@@ -213,7 +213,7 @@ bool FPGAControl::get_pb2arq_fifo_overflow(sctrltp::ARQStream<>* const arq_ptr)
 	return (stats & 0x2) >> 1;
 }
 
-bool FPGAControl::get_crc_counter(sctrltp::ARQStream<>* const arq_ptr)
+bool FPGAControl::get_crc_counter(sctrltp::ARQStream<sctrltp::ParametersFcpBss1>* const arq_ptr)
 {
 	if (!arq_ptr)
 		throw std::runtime_error("FPGAControl::get_crc_counter(): arq_ptr is NULL");

@@ -62,23 +62,23 @@ class FPGAControl : public Stage2Ctrl
 		void print_all_stats() const;
 
 		// static versions for direct access via arq_stream
-		static uint64_t get_trace_pulse_count(sctrltp::ARQStream<>* const);
-		static uint64_t get_pb_pulse_count(sctrltp::ARQStream<>* const);
-		static uint64_t get_network_debug_reg_rx(sctrltp::ARQStream<>* const);
-		static uint64_t get_network_debug_reg_tx(sctrltp::ARQStream<>* const);
-		static uint64_t get_ul_packet_cnt_r(sctrltp::ARQStream<>* const);
-		static uint64_t get_ul_packet_cnt_w(sctrltp::ARQStream<>* const);
-		static uint32_t get_bitfile_git_hash(sctrltp::ARQStream<>* const);
-		static bool get_git_dirty_flag(sctrltp::ARQStream<>* const);
-		static bool get_pb_release_error(sctrltp::ARQStream<>* const);
-		static bool get_pb2arq_fifo_overflow(sctrltp::ARQStream<>* const);
-		static bool get_crc_counter(sctrltp::ARQStream<>* const);
+		static uint64_t get_trace_pulse_count(sctrltp::ARQStream<sctrltp::ParametersFcpBss1>* const);
+		static uint64_t get_pb_pulse_count(sctrltp::ARQStream<sctrltp::ParametersFcpBss1>* const);
+		static uint64_t get_network_debug_reg_rx(sctrltp::ARQStream<sctrltp::ParametersFcpBss1>* const);
+		static uint64_t get_network_debug_reg_tx(sctrltp::ARQStream<sctrltp::ParametersFcpBss1>* const);
+		static uint64_t get_ul_packet_cnt_r(sctrltp::ARQStream<sctrltp::ParametersFcpBss1>* const);
+		static uint64_t get_ul_packet_cnt_w(sctrltp::ARQStream<sctrltp::ParametersFcpBss1>* const);
+		static uint32_t get_bitfile_git_hash(sctrltp::ARQStream<sctrltp::ParametersFcpBss1>* const);
+		static bool get_git_dirty_flag(sctrltp::ARQStream<sctrltp::ParametersFcpBss1>* const);
+		static bool get_pb_release_error(sctrltp::ARQStream<sctrltp::ParametersFcpBss1>* const);
+		static bool get_pb2arq_fifo_overflow(sctrltp::ARQStream<sctrltp::ParametersFcpBss1>* const);
+		static bool get_crc_counter(sctrltp::ARQStream<sctrltp::ParametersFcpBss1>* const);
 
 	private:
 		virtual std::string ClassName() { return "FPGAControl"; };
-		static uint64_t readStat(sctrltp::ARQStream<>* const arq_ptr, unsigned int const stat_id);
+		static uint64_t readStat(sctrltp::ARQStream<sctrltp::ParametersFcpBss1>* const arq_ptr, unsigned int const stat_id);
 		unsigned int fpga_id;
-		sctrltp::ARQStream<>* m_arq_ptr;
+		sctrltp::ARQStream<sctrltp::ParametersFcpBss1>* m_arq_ptr;
 
 };
 

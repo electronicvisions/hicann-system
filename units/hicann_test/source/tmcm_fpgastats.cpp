@@ -37,7 +37,7 @@ public:
 
 	//initializing sending values
 	static struct sctp_descr<>* desc;
-	desc = open_conn<sctrltp::Parameters<>>(shm_name.c_str());
+	desc = open_conn<sctrltp::ParametersFcpBss1>(shm_name.c_str());
 	if (!desc) {
 		std::cerr << "Error: make sure Core and testbench are up\n";
 		return 1;
