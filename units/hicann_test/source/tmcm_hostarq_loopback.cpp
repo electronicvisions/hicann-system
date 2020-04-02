@@ -35,6 +35,7 @@ extern "C" {
 #pragma GCC diagnostic warning "-Wall -Wextra"
 
 using namespace facets;
+using namespace sctrltp;
 
 #define RX_SLEEPTIME 1000 /*us*/
 #define SLOWMODE_WAIT 20 /* 20 ~20mb/s */

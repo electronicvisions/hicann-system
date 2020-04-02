@@ -28,6 +28,7 @@ extern "C" {
 #pragma GCC diagnostic warning "-Wall -Wextra"
 
 using namespace facets;
+using namespace sctrltp;
 
 // cmd line parameters
 static size_t no_hicanns;

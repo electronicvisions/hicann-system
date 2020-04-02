@@ -37,6 +37,7 @@ extern "C" {
 #pragma GCC diagnostic warning "-Wall -Wextra"
 
 using namespace facets;
+using namespace sctrltp;
 
 // global parameters used by threads
 static size_t no_spikes;

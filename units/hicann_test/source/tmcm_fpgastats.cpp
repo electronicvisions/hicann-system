@@ -18,6 +18,7 @@ extern "C" {
 #include "sctrltp/us_sctp_if.h"
 
 using namespace facets;
+using namespace sctrltp;
 
 class TmCmFPGAStats : public Testmode {
 protected:
