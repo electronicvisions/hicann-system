@@ -87,7 +87,7 @@ jtag_lib_v2::jtag_ethernet::jtag_ethernet(const bool bUseSystemC)
 	  m_bNamedSocket(false)
 {}
 
-bool jtag_lib_v2::jtag_ethernet::createSession(std::shared_ptr<sctrltp::ARQStream> arq_stream)
+bool jtag_lib_v2::jtag_ethernet::createSession(std::shared_ptr<sctrltp::ARQStream<>> arq_stream)
 {
 	/* release socket if it is already created */
 	if (this->m_pEthSocket) {
@@ -1026,7 +1026,7 @@ uint16_t jtag_lib_v2::jtag_ethernet::receiveData(const uint16_t uiLength)
 		}
 #else
 		auto start_wait = std::chrono::steady_clock::now();
-		unsigned int sleep_duration_in_us = TO_RES;
+		unsigned int sleep_duration_in_us = sctrltp::Parameters<>::TO_RES;
 		std::chrono::duration<int, std::micro> timeout(ARQ_JTAG_TIMEOUT);
 		while (!m_pARQStream->received_packet_available()) {
 			if ((std::chrono::steady_clock::now() - start_wait) > timeout) {

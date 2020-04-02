@@ -3,8 +3,8 @@ Test for HostARQ communication:
 
 Sends either ascending loopback data, that is checked if continously acending,
 or flush data which gets dropped by FPGA. Ratio between flush and loopback can
-be set arbitrarily. Framesize can be constant, at max value MAX_PDUWORDS, or
-random between 1 and MAX_PDUWORDS. Ascending dummy data from FPGA can be
+be set arbitrarily. Framesize can be constant, at max value Parameters<>::MAX_PDUWORDS, or
+random between 1 and Parameters<>::MAX_PDUWORDS. Ascending dummy data from FPGA can be
 activated an checked. Arbitrary number of loopback data can be set.
 */
 
@@ -55,7 +55,7 @@ static double mytime() {
 
 /*struct to hand over parameters to sending function*/
 struct send_args_hostarq {
-	struct sctp_descr* desc;
+	struct sctp_descr<>* desc;
 	size_t no_cmds;
 	std::string testmode;
 	std::vector<int> frame_value;
@@ -65,8 +65,8 @@ struct send_args_hostarq {
 };
 
 /*sends given cfg to set dummy*/
-static void send_dummy_cfg(struct sctp_descr* desc, __u64 cfg) {
-	struct buf_desc send_buffer;
+static void send_dummy_cfg(struct sctp_descr<>* desc, __u64 cfg) {
+	struct buf_desc<> send_buffer;
 	cfg = htobe64(cfg);
 	acq_buf (desc, &send_buffer, 0);
 	init_buf (&send_buffer);
@@ -77,12 +77,12 @@ static void send_dummy_cfg(struct sctp_descr* desc, __u64 cfg) {
 //function that takes
 static void *sending(void *param) {
 	struct send_args_hostarq *args = (struct send_args_hostarq *) param;
-	struct buf_desc buffer;
-	__u64 data[MAX_PDUWORDS];
+	struct buf_desc<> buffer;
+	__u64 data[Parameters<>::MAX_PDUWORDS];
 	uint16_t packet_type = PTYPE_LOOPBACK;
 	uint64_t cnt = 0;
 	size_t cmds_left = args->no_cmds;
-	size_t frame_size = MAX_PDUWORDS;
+	size_t frame_size = Parameters<>::MAX_PDUWORDS;
 	size_t frame_cnt = 0;
 	size_t sent_flush_cmds = 0;
 	double start = mytime();
@@ -122,10 +122,10 @@ static void *sending(void *param) {
 			frame_size = args->frame_value[rand() % args->frame_value.size()];
 		}
 		if(args->testmode.compare("ascend") == 0) {
-			frame_size = (frame_cnt % MAX_PDUWORDS) + 1;
+			frame_size = (frame_cnt % Parameters<>::MAX_PDUWORDS) + 1;
 		}
 		if(args->testmode.compare("descend") == 0) {
-			frame_size = ((MAX_PDUWORDS - frame_cnt) % MAX_PDUWORDS) + 1;
+			frame_size = ((Parameters<>::MAX_PDUWORDS - frame_cnt) % Parameters<>::MAX_PDUWORDS) + 1;
 		}
 
 		if (cmds_left < frame_size)
@@ -175,7 +175,7 @@ static void *sending(void *param) {
 	/*stop fpga from sending dummy data*/
 	send_dummy_cfg(args->desc, 0b10);
 	// dump tx
-	send_buf (args->desc, NULL, MODE_FLUSH);
+	send_buf (args->desc, (buf_desc<>*)NULL, MODE_FLUSH);
 	// wait for tx dump
 	while(! tx_queues_empty(args->desc))
 		usleep(1000); // 1ms
@@ -194,7 +194,7 @@ static void *sending(void *param) {
 	pthread_exit(NULL);
 }
 
-static void is_data_ascending(struct buf_desc packet, uint64_t *cnt, uint64_t *skippedp, uint64_t *skippedn, size_t *errs, size_t frame_cnt) {
+static void is_data_ascending(struct buf_desc<> packet, uint64_t *cnt, uint64_t *skippedp, uint64_t *skippedn, size_t *errs, size_t frame_cnt) {
 	uint64_t data = 0;
 	for (size_t j = 0; j < sctpreq_get_len(packet.arq_sctrl); j++) {
 		data = be64toh(sctpreq_get_pload(packet.arq_sctrl)[j]);
@@ -282,20 +282,20 @@ public:
 		return TESTS2_FAILURE;
 	}
 	if((testmode.compare("const") == 0 || testmode.compare("array") == 0 || testmode.compare("randarray") == 0) && frame_value.size() == 0)
-		frame_value.push_back(MAX_PDUWORDS);
+		frame_value.push_back(Parameters<>::MAX_PDUWORDS);
 	if(testmode.compare("rand") == 0 && frame_value.size()<2) {
 		if(frame_value.size() == 0) {
 			frame_value.push_back(1);
-			frame_value.push_back(MAX_PDUWORDS);
+			frame_value.push_back(Parameters<>::MAX_PDUWORDS);
 		} else {
-			frame_value.push_back(MAX_PDUWORDS);
+			frame_value.push_back(Parameters<>::MAX_PDUWORDS);
 		}
 	}
 
 	//correcting wrong framesize values
 	for(int i = 0; i<frame_value.size(); i++) {
-		if(frame_value[i] > MAX_PDUWORDS)
-			frame_value[i] = MAX_PDUWORDS;
+		if(frame_value[i] > Parameters<>::MAX_PDUWORDS)
+			frame_value[i] = Parameters<>::MAX_PDUWORDS;
 		if(frame_value[i] < 1)
 			frame_value[i]=1;
 	}
@@ -307,12 +307,12 @@ public:
 	}
 	printf ("\nConnecting to HostARQ Shmem %s\n", shm_name.c_str());
 
-	struct buf_desc recv_buffer;
-	struct buf_desc send_buffer;
+	struct buf_desc<> recv_buffer;
+	struct buf_desc<> send_buffer;
 	struct send_args_hostarq descargs;
 
 	//initialising sending values
-	descargs.desc = open_conn(shm_name.c_str());
+	descargs.desc = open_conn<Parameters<>>(shm_name.c_str());
 	descargs.no_cmds = no_cmds;
 	descargs.frame_value = frame_value;
 	descargs.testmode = testmode;

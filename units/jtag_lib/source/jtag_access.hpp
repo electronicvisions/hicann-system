@@ -226,7 +226,7 @@ public:
 	virtual ~jtag_access();
 	bool initJtag(const enum eJtagInterface);
 	bool createSession(const char*, const uint16_t);
-	bool createSession(std::shared_ptr<sctrltp::ARQStream>);
+	bool createSession(std::shared_ptr<sctrltp::ARQStream<>>);
 	bool closeSession();
 	bool enumCables(uint8_t&, const bool bEnumOther = true);
 	bool getCableInfo(const uint8_t, cable_info&);

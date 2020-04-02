@@ -70,12 +70,12 @@ void HostALController::setJTAGInterface(myjtag_full* set_jtag)
 }
 #endif
 
-void HostALController::setARQStream(sctrltp::ARQStream *set_arq)
+void HostALController::setARQStream(sctrltp::ARQStream<> *set_arq)
 {
 	this->arq_ptr = set_arq;
 }
 
-sctrltp::ARQStream *HostALController::getARQStream()
+sctrltp::ARQStream<> *HostALController::getARQStream()
 {
 	return this->arq_ptr;
 }
@@ -192,7 +192,7 @@ bool HostALController::sendSingleFrame(
 		return false;
 	}
 
-	sctrltp::packet curr_pck;
+	sctrltp::packet<> curr_pck;
 	curr_pck.pid = frametype;
 	curr_pck.len = (pllength + 7) / 8; // 64bit words
 
@@ -230,7 +230,7 @@ bool HostALController::sendFPGAConfigPacket(uint64_t const payload)
 	}
 
 	// wait for response packet
-	sctrltp::packet curr_pck;
+	sctrltp::packet<> curr_pck;
 #ifndef NCSIM
 	auto chrono_start = std::chrono::system_clock::now();
 #endif
@@ -310,11 +310,11 @@ bool HostALController::sendJTAG(unsigned int pllength, void* payload, double tim
 }
 
 
-sctrltp::packet HostALController::getReceivedJTAGData()
+sctrltp::packet<> HostALController::getReceivedJTAGData()
 {
 	this->fill_receive_buffer(false);
 
-	sctrltp::packet curr_pck;
+	sctrltp::packet<> curr_pck;
 	if (this->jtag_receive_buffer.size()) {
 		curr_pck = this->jtag_receive_buffer.front();
 		this->jtag_receive_buffer.pop_front();
@@ -401,7 +401,7 @@ bool HostALController::sendFPGAPlayback(std::vector<uint32_t>& payload, double t
 	uint32_t* p_ptr = &(payload.front());
 	bool retval = true;
 
-	unsigned int max_frame = 2 * MAX_PDUWORDS;
+	unsigned int max_frame = 2 * sctrltp::Parameters<>::MAX_PDUWORDS;
 	for (unsigned int npos = 0; npos < payload.size(); npos += max_frame) {
 		unsigned int framesize_32bit =
 			(payload.size() - npos > max_frame) ? (max_frame) : (payload.size() - npos);
@@ -667,7 +667,7 @@ void HostALController::addHICANNConfigBulk(uint64_t payload, unsigned int dnc, u
 
 bool HostALController::sendHICANNConfigBulk(double timeout)
 {
-	unsigned int max_config_per_frame = MAX_PDUWORDS;
+	unsigned int max_config_per_frame = sctrltp::Parameters<>::MAX_PDUWORDS;
 
 	// currently rather ineffective: copy data to new send buffer
 	unsigned int pck_count = this->hiconf_bulk_buffer.size();
@@ -956,7 +956,7 @@ void HostALController::common_prepare()
 void HostALController::fill_receive_buffer(bool /*with_jtag*/)
 {
 	static size_t pck_count = 0;
-	sctrltp::packet curr_pck;
+	sctrltp::packet<> curr_pck;
 	while (arq_ptr->receive(curr_pck)) {
 		pck_count++;
 

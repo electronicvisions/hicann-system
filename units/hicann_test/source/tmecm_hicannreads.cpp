@@ -66,9 +66,9 @@ static void check_arq_registers(Stage2Comm* comm) {
 
 
 static void *sending(void *param) {
-	struct sctp_descr *desc = (struct sctp_descr *)param;
-	struct buf_desc buffer;
-	__u64 data[MAX_PDUWORDS];
+	struct sctp_descr<> *desc = (struct sctp_descr<> *)param;
+	struct buf_desc<> buffer;
+	__u64 data[Parameters<>::MAX_PDUWORDS];
 	__s32 ret;
 	uint16_t const packet_type = application_layer_packet_types::HICANNCONFIG;
 	uint16_t last_fpga_time = 0;
@@ -85,7 +85,7 @@ static void *sending(void *param) {
 	assert(no_hicanns > 0 && no_hicanns <= 8);
 
 	// fill packet
-	for (size_t i = 0; i < MAX_PDUWORDS; i++) {
+	for (size_t i = 0; i < Parameters<>::MAX_PDUWORDS; i++) {
 		size_t id = i % no_hicanns;
 		uint64_t cmd;
 		// verticle setup counts inverted
@@ -126,14 +126,14 @@ static void *sending(void *param) {
 		data[i] = htobe64(cmd);
 	}
 
-	size_t const full_frames = no_cmds / MAX_PDUWORDS;
-	size_t const last_frame_cmds = no_cmds - full_frames * MAX_PDUWORDS;
+	size_t const full_frames = no_cmds / Parameters<>::MAX_PDUWORDS;
+	size_t const last_frame_cmds = no_cmds - full_frames * Parameters<>::MAX_PDUWORDS;
 
 	double start = mytime();
 	for (size_t i = 0; i < full_frames; i++) {
 		acq_buf (desc, &buffer, 0);
 		init_buf (&buffer);
-		__s32 ret = append_words (&buffer, packet_type,  MAX_PDUWORDS, data);
+		__s32 ret = append_words (&buffer, packet_type,  Parameters<>::MAX_PDUWORDS, data);
 		send_buf (desc, &buffer, 0);
 	}
 
@@ -143,7 +143,7 @@ static void *sending(void *param) {
 		__s32 ret = append_words (&buffer, packet_type,  last_frame_cmds, data);
 		send_buf (desc, &buffer, 0);
 	}
-	send_buf (desc, NULL, MODE_FLUSH);
+	send_buf (desc, (buf_desc<>*)NULL, MODE_FLUSH);
 
 	while(! tx_queues_empty(desc))
 		usleep(1000); // 1ms
@@ -256,8 +256,8 @@ public:
 		comm->set_fpga_reset(comm->jtag->get_ip(), false, false, false, false, false);
 
 		printf ("Connecting to HostARQ Shmem %s", shm_name.c_str());
-		struct buf_desc buffer;
-		struct sctp_descr *desc = open_conn(shm_name.c_str());
+		struct buf_desc<> buffer;
+		struct sctp_descr<> *desc = open_conn<Parameters<>>(shm_name.c_str());
 		if (!desc) {
 			printf ("Error: make sure Core and testbench are up\n");
 			return false;

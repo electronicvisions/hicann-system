@@ -36,8 +36,8 @@ public:
 	bool test() {
 
 	//initializing sending values
-	static struct sctp_descr* desc;
-	desc = open_conn(shm_name.c_str());
+	static struct sctp_descr<>* desc;
+	desc = open_conn<sctrltp::Parameters<>>(shm_name.c_str());
 	if (!desc) {
 		std::cerr << "Error: make sure Core and testbench are up\n";
 		return 1;
