@@ -60,7 +60,7 @@ void FPGAControl::reset() {
 
 uint64_t FPGAControl::readStat(sctrltp::ARQStream<sctrltp::ParametersFcpBss1>* const arq_ptr, unsigned int const stat_id)
 {
-	sctrltp::packet curr_pck;
+	sctrltp::packet<sctrltp::ParametersFcpBss1> curr_pck;
 	curr_pck.pid = PTYPE_STATS;
 	curr_pck.len = 1;
 	curr_pck.pdu[0]= stat_id;

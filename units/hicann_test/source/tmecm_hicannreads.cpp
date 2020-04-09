@@ -66,7 +66,7 @@ static void check_arq_registers(Stage2Comm* comm) {
 
 
 static void *sending(void *param) {
-	struct sctp_descr<> *desc = (struct sctp_descr<> *)param;
+	struct sctp_descr<ParametersFcpBss1>* desc = (struct sctp_descr<ParametersFcpBss1>*) param;
 	struct buf_desc<ParametersFcpBss1> buffer;
 	__u64 data[ParametersFcpBss1::MAX_PDUWORDS];
 	__s32 ret;
@@ -257,7 +257,7 @@ public:
 
 		printf ("Connecting to HostARQ Shmem %s", shm_name.c_str());
 		struct buf_desc<ParametersFcpBss1> buffer;
-		struct sctp_descr<> *desc = open_conn<ParametersFcpBss1>(shm_name.c_str());
+		struct sctp_descr<ParametersFcpBss1>* desc = open_conn<ParametersFcpBss1>(shm_name.c_str());
 		if (!desc) {
 			printf ("Error: make sure Core and testbench are up\n");
 			return false;

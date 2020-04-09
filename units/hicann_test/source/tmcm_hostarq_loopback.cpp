@@ -55,7 +55,7 @@ static double mytime() {
 
 /*struct to hand over parameters to sending function*/
 struct send_args_hostarq {
-	struct sctp_descr<>* desc;
+	struct sctp_descr<ParametersFcpBss1>* desc;
 	size_t no_cmds;
 	std::string testmode;
 	std::vector<int> frame_value;
@@ -65,7 +65,8 @@ struct send_args_hostarq {
 };
 
 /*sends given cfg to set dummy*/
-static void send_dummy_cfg(struct sctp_descr<>* desc, __u64 cfg) {
+static void send_dummy_cfg(struct sctp_descr<ParametersFcpBss1>* desc, __u64 cfg)
+{
 	struct buf_desc<ParametersFcpBss1> send_buffer;
 	cfg = htobe64(cfg);
 	acq_buf (desc, &send_buffer, 0);

@@ -38,7 +38,7 @@ struct perftest_result
 static perftest_result do_perftest(
 	sctrltp::ARQStream<sctrltp::ParametersFcpBss1>* arq, size_t no_cmds, std::bitset<16> testmask)
 {
-	sctrltp::packet packet;
+	sctrltp::packet<sctrltp::ParametersFcpBss1> packet;
 
 	// send parameters to FPGA whcih start test
 	packet.pdu[0] = testmask.to_ullong();

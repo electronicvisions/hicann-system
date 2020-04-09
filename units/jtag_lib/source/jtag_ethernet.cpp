@@ -934,7 +934,7 @@ bool jtag_lib_v2::jtag_ethernet::sendData(const uint16_t uiLength)
 			return false;
 		}
 	} else if (this->m_pARQStream) {
-		sctrltp::packet curr_pck;
+		sctrltp::packet<sctrltp::ParametersFcpBss1> curr_pck;
 		curr_pck.pid = application_layer_packet_types::JTAGBULK;
 		curr_pck.len = ((uiLength + 4) + 7) / 8; // 64bit words
 		size_t padded_length = curr_pck.len * 8 - 4;
@@ -1044,7 +1044,7 @@ uint16_t jtag_lib_v2::jtag_ethernet::receiveData(const uint16_t uiLength)
 #endif
 
 		// receive packet
-		sctrltp::packet curr_pck;
+		sctrltp::packet<sctrltp::ParametersFcpBss1> curr_pck;
 		m_pARQStream->receive(curr_pck);
 
 		// re-order 32bit words in host byte order

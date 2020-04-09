@@ -35,7 +35,7 @@ void* sending_loop(void* p) {
 
 	std::cout << "sending " << (8.0 * sctrltp::ParametersFcpBss1::MAX_PDUWORDS * NUM_PACKETS / 1024 / 1024) << "MB" << std::endl;
 
-	sctrltp::packet tmp;
+	sctrltp::packet<sctrltp::ParametersFcpBss1> tmp;
 	tmp.pid = HOSTARQ_LOOPBACK_TYPE;
 	tmp.len = sctrltp::ParametersFcpBss1::MAX_PDUWORDS;
 
@@ -61,7 +61,7 @@ void* receiving_loop(void* p) {
 	sctrltp::ARQStream<sctrltp::ParametersFcpBss1>& arq = *static_cast<sctrltp::ARQStream<sctrltp::ParametersFcpBss1>*>(p);
 
 	size_t errors = 0;
-	sctrltp::packet tmp;
+	sctrltp::packet<sctrltp::ParametersFcpBss1> tmp;
 
 	double timediff = mytime();
 	for (size_t i = 0; i < NUM_PACKETS; i++) {
