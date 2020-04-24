@@ -178,7 +178,7 @@ static void *sending(void *param) {
 	// dump tx
 	send_buf (args->desc, (buf_desc<ParametersFcpBss1>*)NULL, MODE_FLUSH);
 	// wait for tx dump
-	while(! tx_queues_empty(args->desc))
+	while(! tx_queue_empty(args->desc))
 		usleep(1000); // 1ms
 	double stop = mytime();
 	// infodump
@@ -350,7 +350,7 @@ public:
 
 		while(true) {
 			/*check if there are packets to read*/
-			if (!rx_queues_empty(descargs.desc)) {
+			if (!rx_queue_empty(descargs.desc)) {
 				/*there are packets in queue*/
 				recv_buf(descargs.desc, &recv_buffer, 0);
 				frame_cnt++;
@@ -385,7 +385,7 @@ public:
 				if (send_finished) {
 					/*wait and check if still no packets*/
 					usleep(RX_SLEEPTIME);
-					if (rx_queues_empty(descargs.desc)) {
+					if (rx_queue_empty(descargs.desc)) {
 						/*no packets to recieve and sending is finish, test is done*/
 						printf("No more data to read...\n");
 						break;

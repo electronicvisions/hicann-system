@@ -205,9 +205,9 @@ static void *sending(void *param) {
 	double stop = mytime(); // not totally correct ;p
 	printf("done\n");
 
-	for (size_t qei = 0; ! tx_queues_empty(desc); qei++) {
+	for (size_t qei = 0; ! tx_queue_empty(desc); qei++) {
 		if (!qei)
-			std::cout << "(after sending pulses) tx_queues not empty: " << std::flush;
+			std::cout << "(after sending pulses) tx_queue not empty: " << std::flush;
 		std::cout << "." << std::flush;
 		usleep(100*1000);
 		if (qei > 100) {
@@ -259,9 +259,9 @@ static void *sending(void *param) {
 	printf("wait for data... 5s\n");
 	sleep(5);
 
-	for (size_t qei = 0; ! tx_queues_empty(desc); qei++) {
+	for (size_t qei = 0; ! tx_queue_empty(desc); qei++) {
 		if (!qei)
-			std::cout << "(after experiment) tx_queues not empty: " << std::flush;
+			std::cout << "(after experiment) tx_queue not empty: " << std::flush;
 		std::cout << "." << std::flush;
 		usleep(100*1000);
 		if (qei > 100) {

@@ -145,7 +145,7 @@ static void *sending(void *param) {
 	}
 	send_buf (desc, (buf_desc<ParametersFcpBss1>*)NULL, MODE_FLUSH);
 
-	while(! tx_queues_empty(desc))
+	while(! tx_queue_empty(desc))
 		usleep(1000); // 1ms
 	double stop = mytime();
 
@@ -286,7 +286,7 @@ public:
 			log(Logger::INFO) << "Waiting for data...";
 			double start = mytime();
 			while(true) {
-				if (!rx_queues_empty(desc)) {
+				if (!rx_queue_empty(desc)) {
 					recv_buf (desc, &buffer, 0);
 
 					// FIXME: add data verify here
@@ -312,7 +312,7 @@ public:
 					if (send_finished) {
 						/*wait and check if still no packets*/
 						usleep(10000);
-						if (rx_queues_empty(desc)) {
+						if (rx_queue_empty(desc)) {
 							/*no packets to recieve and sending is finish, test is done*/
 							printf("Data underflow: cmds sent: %d cmds recvd: %d\n", no_cmds, recvd_cmds);
 							return false;
