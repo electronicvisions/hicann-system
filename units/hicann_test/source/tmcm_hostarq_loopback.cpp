@@ -302,18 +302,20 @@ public:
 	}
 
 	// infodump
-	printf("shm_name: %s no_cmds: %lld testmode: %s slowmode: %u", shm_name.c_str(), no_cmds, testmode.c_str(), slow);
+	printf("no_cmds: %lld testmode: %s slowmode: %u", no_cmds, testmode.c_str(), slow);
 	for (std::vector<int>::iterator fvalue = frame_value.begin(); fvalue != frame_value.end(); ++fvalue) {
 		printf (" frame_value: %d", *fvalue);
 	}
-	printf ("\nConnecting to HostARQ Shmem %s\n", shm_name.c_str());
 
 	struct buf_desc<ParametersFcpBss1> recv_buffer;
 	struct buf_desc<ParametersFcpBss1> send_buffer;
 	struct send_args_hostarq descargs;
 
 	//initialising sending values
-	descargs.desc = open_conn<ParametersFcpBss1>(shm_name.c_str());
+	S2C_JtagPhys2FpgaArq* my_comm = dynamic_cast<S2C_JtagPhys2FpgaArq*>(comm);
+	sctrltp::ARQStream<sctrltp::ParametersFcpBss1>* my_arq = my_comm->getHostAL()->getARQStream();
+	printf ("Connecting to HostARQ Shmem %s", my_arq->get_name().c_str());
+	descargs.desc = open_conn<ParametersFcpBss1>(my_arq->get_name().c_str());
 	descargs.no_cmds = no_cmds;
 	descargs.frame_value = frame_value;
 	descargs.testmode = testmode;

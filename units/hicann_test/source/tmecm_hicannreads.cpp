@@ -180,7 +180,6 @@ public:
 
 		// custom testmode options
 	    std::vector<boost::program_options::basic_option<char> >::iterator it;
-	    log(Logger::INFO) << "shm_name is " << shm_name;
 
 	    no_hicanns = 8;
 	    for (it = argv_options->options.begin(); it != argv_options->options.end(); it++) {
@@ -255,9 +254,13 @@ public:
 		// unset ARQ reset
 		comm->set_fpga_reset(comm->jtag->get_ip(), false, false, false, false, false);
 
-		printf ("Connecting to HostARQ Shmem %s", shm_name.c_str());
+
+		S2C_JtagPhys2FpgaArq* my_comm = dynamic_cast<S2C_JtagPhys2FpgaArq*>(comm);
+		sctrltp::ARQStream<sctrltp::ParametersFcpBss1>* my_arq = my_comm->getHostAL()->getARQStream();
+		// FIXME use ARQStream interface
+		printf ("Connecting to HostARQ Shmem %s", my_arq->get_name().c_str());
 		struct buf_desc<ParametersFcpBss1> buffer;
-		struct sctp_descr<ParametersFcpBss1>* desc = open_conn<ParametersFcpBss1>(shm_name.c_str());
+		struct sctp_descr<ParametersFcpBss1>* desc = open_conn<ParametersFcpBss1>(my_arq->get_name().c_str());
 		if (!desc) {
 			printf ("Error: make sure Core and testbench are up\n");
 			return false;

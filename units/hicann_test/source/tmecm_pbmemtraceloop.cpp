@@ -297,18 +297,7 @@ public:
 	// -----------------------------------------------------
 	bool test() {
 
-		// custom testmode options
-	    std::string shm_name = "testit";
-	    std::vector<boost::program_options::basic_option<char> >::iterator it;
-	    for (it = argv_options->options.begin(); it != argv_options->options.end(); it++) {
-			if (std::string("shm_name").compare(it->string_key) == 0) {
-				std::istringstream buffer(it->value[0]);
-				buffer >> shm_name;
-				break;
-			}
-	    }
-	    log(Logger::INFO) << "shm_name is " << shm_name << std::endl;
-
+		std::vector<boost::program_options::basic_option<char> >::iterator it;
 	    no_spikes = 1027*176;
 	    for (it = argv_options->options.begin(); it != argv_options->options.end(); it++) {
 			if (std::string("no_spikes").compare(it->string_key) == 0) {
@@ -337,14 +326,12 @@ public:
 		// get ARQ comm pointer, if available
 		fpga_comm = dynamic_cast<S2C_JtagPhys2Fpga*>(comm);
 
-		std::cout << "verify that software ARQ server runs (shm_name is " << shm_name << ") and enter some char and press <Enter>: " << std::flush;
-		char a;
-		std::cin >> a;
 
-
-		printf ("Connecting to HostARQ Shmem %s", shm_name.c_str());
+		S2C_JtagPhys2FpgaArq* my_comm = dynamic_cast<S2C_JtagPhys2FpgaArq*>(comm);
+		sctrltp::ARQStream<sctrltp::ParametersFcpBss1>* my_arq = my_comm->getHostAL()->getARQStream();
+		printf ("Connecting to HostARQ Shmem %s", my_arq->get_name().c_str());
 		struct buf_desc<ParametersFcpBss1> buffer;
-		struct sctp_descr<ParametersFcpBss1>* desc = open_conn<ParametersFcpBss1>(shm_name.c_str());
+		struct sctp_descr<ParametersFcpBss1>* desc = open_conn<ParametersFcpBss1>(my_arq->get_name().c_str());
 		if (!desc) {
 			printf ("Error: make sure Core and testbench are up\n");
 			return 1;

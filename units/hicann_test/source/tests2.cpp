@@ -87,7 +87,6 @@ const char usagestr[]="usage: tests2 [-option [Argument]]\n"\
         "         -k7                     use Kintex7 setup\n"\
         "         -kill                   kill testmode upon \"recvfrom error 11\"\n"\
         "         -bulksize               choose bulk size of ARQ stuff (DONT PUSH THIS)\n"\
-        "         -shm_name               shared memory name used by HostARQ (cf. program start_core)\n"\
         "         -bitmask                bitmask of connected hicanns\n"\
 		"options following \"--\" will be added to testmodes (std::vector<std::string>) argv_options\n"
 /*      "         -v / -d                 verbose output / debug output\n"*/;
@@ -123,7 +122,6 @@ int main(int argc, char* argv[])
 		jpset,
 		onret,
 		bulksize,
-		shared_memory_name,
 		hicann_bitmask
 	} actopt = none;                        ///< check for command line options
 	commodels commodel = jtag;              ///< available communication models see s2_types
@@ -153,7 +151,6 @@ int main(int argc, char* argv[])
 		"Default FPGA IP address: %d.%d.%d.%d\n", fpga_ip[0], fpga_ip[1], fpga_ip[2], fpga_ip[3]);
 	bool kill_on_recvfromerror = false;
 	bool k7_setup = false;
-	string shm_name;
 	bitset<8> active_hicanns;
 
 	int j = 1;
@@ -278,10 +275,6 @@ int main(int argc, char* argv[])
 			on_reticle = true;
 			continue;
 		}
-		if ((actopt == none) && !strcmp(argv[j], "-shm_name")) {
-			actopt = shared_memory_name;
-			continue;
-		}
 		if ((actopt == none) && !strcmp(argv[j], "-bitmask")) {
 			actopt = hicann_bitmask;
 			continue;
@@ -356,13 +349,6 @@ int main(int argc, char* argv[])
 			actopt = none;
 			continue;
 		}
-		if (actopt == shared_memory_name) {
-			stringstream shm_string;
-			shm_string << argv[j];
-			shm_name = shm_string.str();
-			actopt = none;
-			continue;
-		}
 		if (actopt == hicann_bitmask) {
 			stringstream shm_string;
 			shm_string << argv[j];
@@ -380,11 +366,6 @@ int main(int argc, char* argv[])
 		if (actopt == ipset) {
 			sscanf(
 				argv[j], "%hhd.%hhd.%hhd.%hhd", &fpga_ip[0], &fpga_ip[1], &fpga_ip[2], &fpga_ip[3]);
-			if (shm_name.empty()) {
-				stringstream shm_string;
-				shm_string << argv[j];
-				shm_name = shm_string.str();
-			}
 			printf(
 				"Changing IP address to %d.%d.%d.%d\n", fpga_ip[0], fpga_ip[1], fpga_ip[2],
 				fpga_ip[3]);
@@ -684,7 +665,6 @@ int main(int argc, char* argv[])
 		t->comm = comm;
 		t->active_hicanns = active_hicanns;
 		t->jtag = jtf;
-		t->shm_name = shm_name;
 		t->conf = conf;
 		t->label = label;
 		t->keys = keysequence;

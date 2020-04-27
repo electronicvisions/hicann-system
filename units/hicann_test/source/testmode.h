@@ -42,7 +42,6 @@ protected:
 
 public:	
     std::vector<facets::Stage2Ctrl *> chip;
-	std::string shm_name;
     facets::Stage2Comm *comm;
 	stage2_conf* conf;
 	std::string label;
