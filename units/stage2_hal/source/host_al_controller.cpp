@@ -236,13 +236,23 @@ bool HostALController::sendFPGAConfigPacket(uint64_t const payload)
 #endif
 	// FIXME remove all communication timeouts and let HostARQ handle timeouts with throws
 	// (ISSUE:2526)
+#ifdef NCSIM
+	double start = sc_simulation_time();
+	double const cable_plug_timeout = 1000000.0; // nanoseconds
+	while ( (sc_simulation_time()-start) < cable_plug_timeout ) {
+#else
 	time_t const start = time(NULL);
 	time_t now = start;
 	double const cable_plug_timeout = 15; // seconds
 	while (difftime(now, start) < cable_plug_timeout) {
+#endif
 		if (!arq_ptr->received_packet_available()) {
+#ifdef NCSIM
+                       wait(10.0, SC_US);
+#else
 			usleep(50);
 			now = time(NULL);
+#endif
 			continue;
 		}
 		arq_ptr->receive(curr_pck);
