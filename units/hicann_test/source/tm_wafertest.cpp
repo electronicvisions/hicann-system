@@ -82,10 +82,16 @@ public:
   static const int MEM_TEST_NUM    = 2; // times size
   static const int REG_BASE        = 0x40;  // bit #6 set 
 
-		// SRAM controller timing (used for all controllers)
-	static const uint read_delay      = 32;
-	static const uint setup_precharge = 8;
-	static const uint write_delay     = 8;
+  // SRAM controller timing (used for all but synram controllers)
+  static const uint read_delay      = 0x8;   // reset: 0x8, max: 0xff
+  static const uint setup_precharge = 0x1;   // reset: 0x1, max: 0xf
+  static const uint write_delay     = 0x1;   // reset: 0x1, max: 0xf
+
+  // Synram controller timing 
+  static const uint synram_predel = 0xf;   // reset: 0xf, max: 0xf
+  static const uint synram_endel  = 0xf;   // reset: 0xf, max: 0xf
+  static const uint synram_oedel  = 0x2;   // reset: 0x2, max: 0xf
+  static const uint synram_wrdel  = 0x2;   // reset: 0x2, max: 0x3
 
 	// Wafer tester
   Serial *s_port_ct;
@@ -300,7 +306,6 @@ public:
 							bino(tdata[i],8)<<endl;
 					}
 				}
-				delete rc;
 			}
 			rf <<"Repeater SRAM test loop " << l << ", errors: " << lerror << ", total errors: " << error << endl;
 		}
@@ -433,10 +438,10 @@ public:
         cfg.gen[3] = true;
         cfg.pattern[0] = Syn_trans::CORR_READ_CAUSAL;
         cfg.pattern[1] = Syn_trans::CORR_READ_ACAUSAL;
-        cfg.predel = 0xf;
-        cfg.endel = 0xf;
-        cfg.oedel = 0xf;
-        cfg.wrdel = 0x2;
+        cfg.predel = synram_predel; // reset: 0xf
+        cfg.endel = synram_endel;   // reset: 0xf
+        cfg.oedel = synram_oedel;   // reset: 0x2
+        cfg.wrdel = synram_wrdel;   // reset: 0x2
 
         syn.set_config_reg(cfg);
 
@@ -586,13 +591,15 @@ public:
 
         syn.set_synrst(synrst);
 
+        log(Logger::INFO) << "Starting synapse weights ramtest (" << synapse_ramtest_loops << "x)...";
         rf << "Starting synapse weights ramtest (" << synapse_ramtest_loops << "x)..." << endl;
-        for(int i=0; i<synapse_ramtest_loops; i++)
+       for(int i=0; i<synapse_ramtest_loops; i++)
             test_report.syn_weight = syn_ramtest(syn, rf, 
                     syn_ramtest_start, 
                     syn_ramtest_stop)
                 && test_report.syn_weight;
 
+        log(Logger::INFO) << "Starting synapse decoder addresses ramtest (" << synapse_ramtest_loops << "x)...";
         rf << "Starting synapse decoder addresses ramtest (" << synapse_ramtest_loops << "x)..." << endl;
         for(int i=0; i<synapse_ramtest_loops; i++)
             test_report.syn_dec = syn_ramtest_dec(syn, rf,
@@ -602,16 +609,19 @@ public:
 
         // read again with correlation activated (only one run each)
 				uint corr_runs = 1;
+        log(Logger::INFO) << "Starting synapse weights ramtest with correlation readout (" << corr_runs << "x)...";
         rf << "Starting synapse weights ramtest with correlation readout (" << corr_runs << "x)..." << endl;
         for(int i=0; i<corr_runs; i++)
             test_report.syn_weight_encr = syn_ramtest(syn, rf, syn_ramtest_start, syn_ramtest_stop, false)
                 && test_report.syn_weight_encr;
 
+        log(Logger::INFO) << "Starting synapse decoder addresses ramtest with correlation readout (" << corr_runs << "x)...";
         rf << "Starting synapse decoder addresses ramtest with correlation readout (" << corr_runs << "x)..." << endl;
         for(int i=0; i<corr_runs; i++)
             test_report.syn_dec_encr = syn_ramtest_dec(syn, rf, syn_ramtest_start, syn_ramtest_stop, false)
                 && test_report.syn_dec_encr;
 
+        log(Logger::INFO) << "Starting synapse driver SRAM ramtest on CTRL block (" << syndrv_ramtest_loops << "x)...";
         rf << "Starting synapse driver SRAM ramtest on CTRL block (" << syndrv_ramtest_loops << "x)..." << endl;
         for(int i=0; i<syndrv_ramtest_loops; i++)
             test_report.syndrv_sram = ramtest(rc.get(), Syn_trans::syndrv_ctrl,
@@ -619,6 +629,7 @@ public:
                     rf, true)
                 && test_report.syndrv_sram;
 
+        log(Logger::INFO) << "Starting synapse driver SRAM ramtest on DRV block (" << syndrv_ramtest_loops << "x)...";
         rf << "Starting synapse driver SRAM ramtest on DRV block (" << syndrv_ramtest_loops << "x)..." << endl;
         for(int i=0; i<syndrv_ramtest_loops; i++)
             test_report.syndrv_sram = test_report.syndrv_sram && ramtest(rc.get(), Syn_trans::syndrv_drv,
@@ -626,6 +637,7 @@ public:
                     rf, true)
                 && test_report.syndrv_sram;
         
+        log(Logger::INFO) << "Starting synapse driver SRAM ramtest on GMAX block (" << syndrv_ramtest_loops << "x)...";
         rf << "Starting synapse driver SRAM ramtest on GMAX block (" << syndrv_ramtest_loops << "x)..." << endl;
         for(int i=0; i<syndrv_ramtest_loops; i++)
             test_report.syndrv_sram = test_report.syndrv_sram && ramtest(rc.get(), Syn_trans::syndrv_gmax,
@@ -661,7 +673,9 @@ public:
             && test_report.syndrv_sram
             && test_report.syndrv_sram_ext;
 
-        rf << "<<<< STDP report >>>>"
+        ostringstream rep;
+        
+        rep << "\n<<<< Syn and STDP test report >>>>"
             << dec
             << "\nreg_loops         = " << reg_loops
             << "\nstart_row         = " << syn_ramtest_start << " (full: 0)"
@@ -678,8 +692,15 @@ public:
             << "\n +with encr:.." << (test_report.syn_dec_encr? "ok" : "failed")
             << "\nsyndrv sram:.." << (test_report.syndrv_sram ? "ok" : "failed")
             << "\n +ext:........" << (test_report.syndrv_sram_ext ? "ok" : "failed")
-            << endl << endl;
+            << endl;
 
+        if(result)
+			log(Logger::INFO) << rep.str();
+		else
+			log(Logger::ERROR) << rep.str();
+        
+        rf << rep.str();
+        
         return result;
     }
 
@@ -1426,9 +1447,11 @@ void write_summary(fstream& resf){
       case '3':{
 				uint hs_testpckts = 1000;
 				uint hs_err_threshold = 5;
-				uint loops = 1;
-				uint synramloops = 1;
+				uint loops = 10;
+				uint synramloops = 3;
 				uint spl1loops = 100;
+				
+				bool overall_result = true;
 
 				// backup comm opject in case hs not working
 				S2C_JtagPhys* s2c_jtag = NULL;
@@ -1459,7 +1482,7 @@ void write_summary(fstream& resf){
 				// open report file
 				fstream resf;
 				stringstream filename;
-				filename << "wafer_results/digital_test_single.txt";
+				filename << "./digital_test_single.txt";
 				resf.open(filename.str().c_str(), fstream::out | fstream::trunc);
 
 				// reset FPGA and HICANN
@@ -1468,28 +1491,30 @@ void write_summary(fstream& resf){
 
 				// perform tests...
 				if(!test_jtag_id(resf)){
-					cout << "JTAG ID could not be read. Quit this HICANN and continue..." << endl;
+					log(Logger::ERROR) << "JTAG ID could not be read. Quit this HICANN and continue...";
 					//power_supply->PowerOff();
 					test_id = fail;
 					write_summary(resf); break;
 				} test_id = pass;
 				
 				// try initializing FPGA communication
- 				cout << "Initializing FPGA-HICANN Gigabit connection... " << flush;
+ 				log(Logger::INFO) << "Initializing FPGA-HICANN Gigabit connection... ";
  				resf << "Initializing FPGA-HICANN Gigabit connection... " << flush;
  				test_fpga_hicann_init = (hc->GetCommObj()->Init(hc->addr()) == Stage2Comm::ok) ? pass : fail;
- 				cout << test_fpga_hicann_init << endl;
+ 				log(test_fpga_hicann_init == pass ? Logger::INFO : Logger::ERROR) << test_fpga_hicann_init;
  				resf << test_fpga_hicann_init << endl;
+ 				overall_result &= (test_fpga_hicann_init == pass);
 
 				// test high-speed comm
- 				cout << "Testing FPGA-HICANN Gigabit connection... " << flush;
+ 				log(Logger::INFO) << "Testing FPGA-HICANN Gigabit connection... ";
  				resf << "Testing FPGA-HICANN Gigabit connection... " << flush;
 				uint hs_errors = hs_comm->test_transmission(comm->jtag2dnc(hc->addr()), hs_testpckts);
-				cout << hs_errors << " errors in " << hs_testpckts << " packets " << endl;
+				log(Logger::INFO) << hs_errors << " errors in " << hs_testpckts << " packets ";
 				resf << hs_errors << " errors in " << hs_testpckts << " packets " << endl;
 
 				// carry on JTAG-only in case of too many high-speed errors
 				if(test_fpga_hicann_init != pass || hs_errors > hs_err_threshold){
+					overall_result = false;
 					s2c_jtag = new S2C_JtagPhys(comm->getConnId(), jtag);
 					local_comm = static_cast<Stage2Comm*>(s2c_jtag);
 					// construct control objects
@@ -1503,14 +1528,14 @@ void write_summary(fstream& resf){
 					jtag->reset_jtag();
 					fc->reset();
 
-					cout << "Try JTAG Init() ..." ; resf << "Try JTAG Init() ..." ;
+					log(Logger::WARNING) << "Try JTAG Init() ..." ; resf << "Try JTAG Init() ..." ;
 					if (hc->GetCommObj()->Init(hc->addr()) != Stage2Comm::ok) {
-						cout << "ERROR: JTAG Init failed, continue with next HICANN..." << endl;
+						log(Logger::ERROR) << "ERROR: JTAG Init failed, continue with next HICANN..." << endl;
 						resf << "ERROR: JTAG Init failed, continue with next HICANN..." << endl;
 						//power_supply->PowerOff();
 						write_summary(resf); break;
 					}
-					cout << "Init() ok" << endl; resf << "Init() ok" << endl;
+					log(Logger::WARNING) << "Init() ok, continue with JTAG access" << endl; resf << "Init() ok, continue with JTAG access" << endl;
 				}
 
 				// ********** now continue testing using **********						
@@ -1519,34 +1544,40 @@ void write_summary(fstream& resf){
 				//test_spl1_jtag = test_spl1_loopback(false, spl1loops, resf) ? pass : fail;
 				//cout << test_spl1_jtag << endl;
 
-				cout << "Testing   Switch ram... " << flush;
+				log(Logger::INFO) << "Testing   Switch ram... (" << loops << "x)";
 				test_sw = test_switchram(loops, resf) ? pass : fail;
-				cout << test_sw << endl;
+				log(test_sw == pass ? Logger::INFO : Logger::ERROR) << test_sw;
+				overall_result &= (test_sw == pass);
 
-				cout << "Testing Repeater ram... " << flush;
+				log(Logger::INFO) << "Testing Repeater ram... (" << loops << "x)";
 				test_rep = test_repeaterram(loops, resf) ? pass : fail;
-				cout << test_rep << endl;
+				log(test_rep == pass ? Logger::INFO : Logger::ERROR) << test_rep;
+				overall_result &= (test_rep == pass);
 
-				cout << "Testing Floating Gate Controller ram... " << flush;
+				log(Logger::INFO) << "Testing Floating Gate Controller ram... (" << loops << "x)";
 				test_fg = test_fgram(loops, resf) ? pass : fail;
-				cout << test_fg << endl;
+				log(test_fg == pass ? Logger::INFO : Logger::ERROR) << test_fg;
+				overall_result &= (test_fg == pass);
 
 				// skip synapse memory tests in case previous tests all failed
 				if(test_spl1_jtag==fail && test_sw==fail && test_rep==fail && test_fg==fail){
-					cout << "Skipping time consuming synapse memory test due to previous errors..." << endl;
+					log(Logger::WARNING) << "Skipping time consuming synapse memory test due to previous errors..." << endl;
 					resf << "Skipping time consuming synapse memory test due to previous errors..." << endl;
 					//power_supply->PowerOff();
 					write_summary(resf); break;
 				} else {
-					cout << "Testing  Syn Block 0... " << flush;
+					log(Logger::INFO) << "Testing  Syn Block 0... ";
 					test_synblk0 = test_block(hc, 0, loops, synramloops, loops, resf) ? pass : fail;
-					cout << test_synblk0 << endl;
+					log(test_synblk0 == pass ? Logger::INFO : Logger::ERROR) << test_synblk0 << endl;
+					overall_result &= (test_synblk0 == pass);
 
-					cout << "Testing  Syn Block 1... " << flush;
+					log(Logger::INFO) << "Testing  Syn Block 1... ";
 					test_synblk1 = test_block(hc, 1, loops, synramloops, loops, resf) ? pass : fail;
-					cout << test_synblk1 << endl;
+					log(test_synblk1 == pass ? Logger::INFO : Logger::ERROR) << test_synblk1 << endl;
+					overall_result &= (test_synblk1 == pass);
 				}
 				
+				log(overall_result ? Logger::INFO : Logger::ERROR) << "Overall test result: " << overall_result?"pass":"fail";
 				write_summary(resf);
 				
 				if(s2c_jtag){
