@@ -10,7 +10,7 @@
 
 int main(int argc, char const * argv[])
 {
-	RCF::RcfInitDeinit rcfInit;
+	RCF::RcfInit rcfInit;
 	RcfClient<I_Tests2> client(RCF::TcpEndpoint(6668));
 	std::cout << std::numeric_limits<unsigned int>::max() << std::endl;
 	client.getClientStub().setRemoteCallTimeoutMs(std::numeric_limits</*unsigned didn't work here*/int>::max());

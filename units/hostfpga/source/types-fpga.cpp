@@ -18,7 +18,3 @@ void serialize(SF::Archive &ar, fpga_pulse_packet_t& p) {
 		ar.getIstream()->read(reinterpret_cast<char*>(&p), byteCnt);
 	}
 }
-
-// Boost Serialization
-#include <boost/serialization/is_bitwise_serializable.hpp>
-BOOST_IS_BITWISE_SERIALIZABLE(fpga_pulse_packet_t)

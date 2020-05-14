@@ -1969,7 +1969,7 @@ void JDMappingMaster::read_trace_pulses(
 void JDMappingMaster::start_rcf() {
 	using namespace RCF;
 
-	RcfInitDeinit rcfInit;
+	RcfInit rcfInit;
 	RcfServer* _rpc_server = new RCF::RcfServer(RCF::TcpEndpoint(server_port));
 	std::cout << "starting RCF server" << std::endl;
 

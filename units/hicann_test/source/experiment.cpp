@@ -29,7 +29,7 @@ int main(int argc, char const * argv[])
 	using namespace RCF;
 	int const server_port = 6668; // another elaborate guess
 
-	RcfInitDeinit rcfInit;
+	RcfInit rcfInit;
 	RcfServer* server = new RCF::RcfServer(RCF::TcpEndpoint(server_port));
 
 	// set max msg size

@@ -108,7 +108,7 @@ public:
 
 
 	void initRCF(std::string const host) {
-		RCF::RcfInitDeinit rcfInit;
+		RCF::RcfInit rcfInit;
 		client = new RcfClient<I_Experiment>(RCF::TcpEndpoint(host.c_str(), server_port));
 
 		client->getClientStub().ping();
