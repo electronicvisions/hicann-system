@@ -152,7 +152,8 @@ int stage2_conf::updateFG(const int fgId, const int lineId, const int valueId, c
 
 		XMLCh* newValue = XMLString::transcode( strValue );
 		valueElem->setTextContent( newValue );
-		log(Logger::DEBUG2) << "), setting " << newValue << std::endl;
+		// ECM (2020-05-19) Not sure what to print here, XMLCh is uint16_t; let's just print the lower 8 bits
+		log(Logger::DEBUG2) << "), setting " << reinterpret_cast<char*>(newValue) << std::endl;
 		XMLString::release( &newValue );
 	}
 
