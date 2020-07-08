@@ -86,7 +86,7 @@ public:
 		
 		sc = &hc->getSC(HicannCtrl::SYNAPSE_TOP);
 		
-		// generate JTAG-only comm stuff for readback:
+		// OPTIONAL - Debug only: generate JTAG-only comm stuff for readback:
 		//S2C_JtagPhys* s2c_jtag;
 		//Stage2Comm *local_comm;
 		//s2c_jtag   = new S2C_JtagPhys(comm->getConnId(), jtag, false);
@@ -102,60 +102,34 @@ public:
 		fpga->reset();
 
 		jtag->reset_jtag();
-		jtag->FPGA_set_fpga_ctrl(0x1);
 		
 		uint64_t jtagid=0xf;
 		jtag->read_id(jtagid,jtag->pos_hicann);
-		cout << "HICANN ID: 0x" << hex << jtagid << endl;
-
-#ifndef HICANN_DESIGN
-		// get ARQ comm pointer, if available
-		S2C_JtagPhys2FpgaArq * arq_comm = dynamic_cast<S2C_JtagPhys2FpgaArq*>(comm);
+		log(Logger::INFO) << "HICANN ID: 0x" << hex << jtagid;
 
 		// set arbiter delay to determine wether we can trigger DNC bug...
 		if (!comm->is_k7fpga())
 			comm->jtag->SetARQTimings(0x4, 0x0c8, 0x032);
 
-		comm->set_fpga_reset(comm->jtag->get_ip(), false, false, false, false, true); // set reset
-		comm->set_fpga_reset(comm->jtag->get_ip(), false, false, false, false, false); // unset reset
-#endif
-
-
-		/*
-		// ----------------------------------------------------
-		// Initialize JTAG only comm for initial readback: ARQ reset and other stuff
-		// ----------------------------------------------------
-		if (hc_jtag->GetCommObj()->Init(hc_jtag->addr()) != Stage2Comm::ok) {
-			dbg(0) << "ERROR: Init failed, abort" << endl;
-			return 0;
-		}
-
-		for(uint i=startaddr;i<=maxaddr;i++){
-			lc_jtag->read_cfg(i);
-			lc_jtag->get_read_cfg(rcvaddr, rcvdata);
-			cout << hex << "read 0x" << rcvaddr << ", \t0x" << rcvdata << endl;
-		}
-		*/
-
 		// ----------------------------------------------------
 		// Initialize high-speed comm for ram write via FPGA-ARQ
 		// ----------------------------------------------------
-	 	dbg(0) << "Try Init() ..." ;
+	 	log(Logger::INFO) << "Try Init() ...";
 
 		if (hc->GetCommObj()->Init(hc->addr(), false, true) != Stage2Comm::ok) {
-		 	dbg(0) << "ERROR: Init failed, abort" << endl;
+		 	log(Logger::ERROR) << "ERROR: Init failed, abort";
 			return 0;
 		}
-	 	dbg(0) << "Init() ok" << endl;
+	 	log(Logger::INFO) << "Init() ok";
 
 
 		// ----------------------------------------------------
 		// write to switch ram using FPGA ARQ
 		// ----------------------------------------------------
 
-		dbg(0)<<"start SwitchCtrl access..."<<endl;
+		log(Logger::INFO) << "start SwitchCtrl access...";
 
-		// test read on tag 1
+		// Debug only: test read on tag 1
 		//sc->read_cmd(0x4002, 0);
 		
 		std::vector<int> testdatas;
@@ -168,21 +142,12 @@ public:
 			lc->write_cfg(i, testdata);
 			testdatas.push_back(testdata);
 		}
-		// but read via jtag
-#ifndef HICANN_DESIGN
-		comm->Flush();
-#endif
 
 		// ----------------------------------------------------
-		// Initialize JTAG only comm for readback: ARQ reset and other stuff
+		// OPTIONAL - Debug only: Initialize JTAG only comm for readback: ARQ reset and other stuff
 		// ----------------------------------------------------
 		// This will crash High-Speed communication to HICANN -> do only after timeout in simulation
-// #ifdef NCSIM
-// 		wait(200,SC_US);
-// #else
-// 		usleep(200);
-// #endif
-		
+
 // 		if (hc_jtag->GetCommObj()->Init(hc_jtag->addr()) != Stage2Comm::ok) {
 // 			dbg(0) << "ERROR: Init failed, abort" << endl;
 // 			return 0;
@@ -208,38 +173,15 @@ public:
 // 			}
 // 		}
 
-#ifdef NCSIM
-		wait(10,SC_US);
-#else
-		usleep(500);
-#endif
-
-		uint32_t rbulks = 1;
+		uint32_t rbulks = 37;   // for testing: just a random, non-power-of-2 (esp. not 1 or 16), number...
+		                        // -> this way, problems that are related to multiple-commands-in-one-packet, or 
+		                        //    are related to the ARQ (window size 16) will be more clearly separable
 		for(uint i=startaddr;i<=maxaddr;i++){
 			lc->read_cfg(i);
 
-            std::cout << "reading value " << i << std::endl;
+			log(Logger::DEBUG0)  << "reading value " << i;
 
 			if(i%rbulks == (rbulks-1) || i == maxaddr){
-
-#ifndef HICANN_DESIGN
-				if (arq_comm) {
-					arq_comm->Flush();
-
-					// ARQ counters for infering state of ARQ / high-speed links
-#ifdef NCSIM
-					std::cout << "Starting JTAG access at time " << sc_simulation_time()
-							  << "ns" << std::endl;
-#endif
-				}
-#endif
-
-
-// #ifdef NCSIM
-// 				wait(50,SC_US);
-// #else
-// 				usleep(50);
-// #endif
 
 				uint start = i-(i%rbulks);
 				for(uint a=start; a<=i; a++){
@@ -247,32 +189,15 @@ public:
 
 					lc->get_read_cfg(rcvaddr, rcvdata);
 			
-					cout << hex << "test \t0x" << a << ", \t0x" << testdata << " against \t0x" << rcvaddr << ", \t0x" << rcvdata << ": ";
+					log(Logger::INFO) << hex << "test \t0x" << a << ", \t0x" << testdata << " against \t0x" << rcvaddr << ", \t0x" << rcvdata << ": " << ((a==rcvaddr && testdata==rcvdata) ? "OK :-)" : "ERROR :-(");
 			
-					if(a==rcvaddr && testdata==rcvdata)
-						cout << "OK :-)" << endl;
-					else{
-						cout << "ERROR :-(" << endl;
+					if(!(a==rcvaddr && testdata==rcvdata)) {
 						result = false;
 //						break;
 					}
 				}
 			}
 		}
-
-#ifndef HICANN_DESIGN
-		if (arq_comm) {
-			for (uint i = 0; i < 1; i++) {
-				// ARQ counters for infering state of ARQ / high-speed links
-				if (arq_comm->is_k7fpga()) {
-#ifdef NCSIM
-					std::cout << "Starting JTAG access at time " << sc_simulation_time()
-							  << "ns" << std::endl;
-#endif
-				}
-			}
-		}
-#endif
 
 //  		// ----------------------------------------------------
 //  		// shutdown any remaining arq activity in HICANN...
