@@ -125,13 +125,12 @@ class TmL2Pulses : public Testmode{
       // ----------------------------------------------------
       // reset test logic and FPGA
       // ----------------------------------------------------
-#ifndef NCSIM
       FPGAControl *fpga = (FPGAControl*) chip[0];
       fpga->reset();
 
       jtag->reset_jtag();
-#endif
 
+#ifndef NCSIM
       if (!is_k7fpga)
       jtag->FPGA_set_fpga_ctrl(0x1); // "DNC" reset
 
@@ -141,6 +140,7 @@ class TmL2Pulses : public Testmode{
 
       if (!is_k7fpga) // design version read out via I2C in Kintex7 system
       log(Logger::INFO) << "Design Version: 0x" << hex << jtag->GetFPGADesignVersion() << endl;
+#endif
 
 
       // ----------------------------------------------------
@@ -211,6 +211,8 @@ class TmL2Pulses : public Testmode{
 
 	  if (block_trace_recording)
 	    hostal->addPlaybackFPGAConfig(0, false, false, false, true);
+		else
+	    hostal->addPlaybackFPGAConfig(0, false, false, false, false);
 
 	  if (!use_pulse_gen)
 	  {
@@ -220,7 +222,7 @@ class TmL2Pulses : public Testmode{
 
 	  // send end-of-data marker to playback
 	  // -> wait 100 FPGA clks after last pulse, activate trace stop and read-out
-	  hostal->addPlaybackFPGAConfig(uint64_t(send_pulses.back().time*1e9/8.0)+100, true, true, true, false);
+	  hostal->addPlaybackFPGAConfig(uint64_t(send_pulses.back().time*1e9/8.0)+500, true, true, true, false);
 	  hostal->flushPlaybackPulses();
 
 	  // wait for playback to acknowledge end of data
@@ -314,8 +316,14 @@ class TmL2Pulses : public Testmode{
 	  }
           }
 
+		// read back and reset tx pulse drop counter
+		uint64_t hicannif_status = 0;
+		jtag->K7FPGA_get_hicannif_status(hicannif_status);
+		jtag->K7FPGA_set_hicannif_control(0x20);   // resets counters - TODO: introduce names for bit positions (in jtag_cmdbase...)
+		log(Logger::INFO) << "Dropped pulses at FPGA TX FIFO: " << ((hicannif_status>>52) & 0xfff);
 
-	  if( !use_pulse_gen && (rec_pulses.size() != send_pulses.size()) ) {
+	  
+		if( !use_pulse_gen && (rec_pulses.size() != send_pulses.size()) ) {
 	    log(Logger::ERROR) << "Mismatch between number of sent pulses = "
 	      << send_pulses.size()
 	      << " and number of received pulses "

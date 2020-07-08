@@ -2032,10 +2032,11 @@ public:
 	// bits 35:30: current state of highspeed initialization state machine
 	// bits 43:36: current rx data
 	// bits 51:44: current tx data
+	// bits 63:52: number of dropped pulses at FPGA TX FIFO
 	bool K7FPGA_get_hicannif_status(uint64_t& status)
 	{
 		set_jtag_instr_chain(K7CMD_DNCIF_STATE, pos_fpga);
-		get_jtag_data_chain(status, 52, pos_fpga);
+		get_jtag_data_chain(status, 64, pos_fpga);
 		return true;
 	}
 
@@ -2093,11 +2094,12 @@ public:
 	// bit      2: routing_data_en
 	// bit      3: channel_reset
 	// bit      4: crc_count_rst
+	// bit      5: reset tx dropped pulse count
 	template <typename T>
 	bool K7FPGA_set_hicannif_control(T control)
 	{
 		set_jtag_instr_chain(K7CMD_DNCIF_CTRLS, pos_fpga);
-		set_jtag_data_chain(control, 5, pos_fpga);
+		set_jtag_data_chain(control, 6, pos_fpga);
 		return true;
 	}
 
