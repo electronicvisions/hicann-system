@@ -237,11 +237,17 @@ S2C_JtagPhys2Fpga::Commstate S2C_JtagPhys2Fpga::Init(std::bitset<8> hicann, std:
 			link_layers[i][j].arq.Reset();
 
 	for (size_t hicann_nr = 0; hicann_nr < hicann.size(); hicann_nr++) {
+		// this slows down sim and is not required, there -> don't use.
+		// -> could be enabled for debugging spurious hicann_if output (which should not be neccessary)
 		// disable forwarding of data to ARQ in FPGA for JTAG-only and/or unavailable HICANNs
 		if (!link_states[hicann_nr]) {
+#ifndef NCSIM
 			log(Logger::WARNING) << "Disabling forwarding of highspeed data in FPGA for channel: " << hicann_nr;
 			jtag->K7FPGA_set_hicannif(hicann_nr);
 			jtag->K7FPGA_disable_hicannif_config_output();
+#else
+			log(Logger::WARNING) << "Sim-only: Skip disabling forwarding of highspeed data in FPGA for channel: " << hicann_nr;
+#endif
 		}
 
 		// proceed only on available HICANNs (relevant e.g. on Cube setup!)
