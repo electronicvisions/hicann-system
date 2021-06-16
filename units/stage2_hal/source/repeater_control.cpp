@@ -102,6 +102,9 @@ void RepeaterControl::reset() {  //clear repeater SRAM
 		write_data(repaddr(r),0);
 		config[r]=0;
 	}
+	// Design bug in FPGA init, rc_drvresetb is set to 0 but not released to 1 after init
+	// -> released here via jtag.
+	// cf. https://brainscales-r.kip.uni-heidelberg.de/meetings/531#status-of-user-softwareecm
 	startconf=rc_drvresetb; //release driver reset, but keep DLL
 	write_data(rc_config, startconf);
 	outputflag[0] = 65;
