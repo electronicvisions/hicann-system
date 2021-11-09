@@ -781,7 +781,7 @@ enum rc_config
 				//enable preout on analog output mux
 				NeuronBuilderControl *nbc;
 				nbc = &hc->getNBC();
-				nbc->setOutputMux(1,4);//(0,0 für vctrl, 1,1 für pre)
+				nbc->setOutputMux(1,4);//(0,0 fÃ¼r vctrl, 1,1 fÃ¼r pre)
 				nbc->setOutputEn(true,true);
 			
 				

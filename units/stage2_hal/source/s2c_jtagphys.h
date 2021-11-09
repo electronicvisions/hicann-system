@@ -3,7 +3,7 @@
 	CONFIDENTIAL - FOR USE WITHIN THE FACETS PROJECT ONLY
 	UNLESS STATED OTHERWISE BY AUTHOR
 
-	Andreas Grübl
+	Andreas GrÃ¼bl
 	Vision/ASIC-LAB, KIP, University of Heidelberg
 	
 	June 2010

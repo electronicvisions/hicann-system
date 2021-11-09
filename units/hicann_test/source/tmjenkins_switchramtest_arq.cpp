@@ -1,5 +1,5 @@
 // Company         :   kip
-// Author          :   Andreas Grübl
+// Author          :   Andreas GrÃ¼bl
 // E-Mail          :   agruebl@kip.uni-heidelberg.de
 //                    			
 // Filename        :   tmjenkins_switchramtest_arq.cpp
