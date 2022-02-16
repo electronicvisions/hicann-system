@@ -72,7 +72,7 @@
 #define CMD_JTAG 0x0C
 #define CMD_SINGLE 0x3A
 #define CMD_BULK 0x33
-#define ARQ_JTAG_TIMEOUT 400000 // us
+#define ARQ_JTAG_TIMEOUT 4000000 // us
 
 jtag_lib_v2::jtag_ethernet::jtag_ethernet(const bool bUseSystemC)
 	: m_pEthSocket(0),
