@@ -211,7 +211,7 @@ ReticleControl::~ReticleControl()
 			"There was a collision with reticle instances (" << s_number << ") at destructor");
 		LOG4CXX_WARN(logger, "Active reticle instances:");
 		if (instantiated().empty()) {
-			LOG4CXX_WARN(logger, "No reticles have been instantiated so far")
+			LOG4CXX_WARN(logger, "No reticles have been instantiated so far");
 		} else {
 			std::stringstream msg;
 			msg << "The following reticles have already been instantiated:" << endl;
